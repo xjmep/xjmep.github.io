@@ -17,7 +17,7 @@
   *{margin:0;padding:0;box-sizing:border-box;}
   html{-webkit-text-size-adjust:100%;}
   body{
-    font-family:"Source Han Serif SC","思源宋体","Source Han Serif CN","Noto Serif SC","Noto Serif CJK SC","Songti SC","SimSun",serif;
+    font-family:"Source Han Serif SC","思源宋体","Source Han Serif CN","Noto Serif SC","Noto Serif CJK SC",serif;
     background:var(--paper);
     color:var(--ink);
     line-height:1.7;
@@ -27,7 +27,7 @@
   h1,h2,h3,h4,
   .hero h1,.hero .sub,.sub-line,
   .sec-title,.cta,.step .num,th,footer,footer small{
-    font-family:"Source Han Sans SC","思源黑体","Source Han Sans CN","Noto Sans SC","Noto Sans CJK SC","PingFang SC","Microsoft YaHei",sans-serif;
+    font-family:"Source Han Sans SC","思源黑体","Source Han Sans CN","Noto Sans SC","Noto Sans CJK SC",sans-serif;
   }
 
   /* ===== Hero 首屏 ===== */
@@ -48,7 +48,7 @@
   .sub-line{
     margin-top:16px;font-size:clamp(.95rem,3.4vw,1.3rem);font-weight:800;color:#000000;
     text-align:center;letter-spacing:.04em;
-    font-family:"Source Han Sans SC","思源黑体","Source Han Sans CN","Noto Sans SC","PingFang SC","Microsoft YaHei",sans-serif;
+    font-family:"Source Han Sans SC","思源黑体","Source Han Sans CN","Noto Sans SC","Noto Sans CJK SC",sans-serif;
   }
   .sub-line .nw{display:inline-block;white-space:nowrap;margin:0 .12em;}
 
@@ -136,7 +136,7 @@
   /* ===== 手机端适配 ===== */
   .card-link{display:block;text-decoration:none;color:inherit;}
   .preview-hint{
-    display:block;font-family:"Source Han Serif SC","思源宋体","Source Han Serif CN","Noto Serif SC","Noto Serif CJK SC","Songti SC","SimSun",serif;
+    display:block;font-family:"Source Han Serif SC","思源宋体","Source Han Serif CN","Noto Serif SC","Noto Serif CJK SC",serif;
     font-size:.8em;font-weight:400;color:#c47f0a;letter-spacing:.05em;margin-top:2px;
   }
   @media(max-width:480px){
@@ -290,7 +290,9 @@
 </div>
 
 <footer id="contact">
-  <small style="margin-top:6px;">Designed by YANG KANSHAN</small>
+  <a href="explain.html" target="_blank" rel="noopener noreferrer"
+     style="display:block;margin-top:6px;color:#FFFFFF;font-weight:400;letter-spacing:.05em;font-size:1rem;font-family:'Source Han Serif SC','思源宋体','Source Han Serif CN','Noto Serif SC','Noto Serif CJK SC',serif;text-decoration:none;">点击查看相关说明</a>
+  <small style="margin-top:6px;">Designed by www.xjmep.design</small>
   <small style="margin-top:6px;">Email：dxj@xjmep.com</small>
   <small style="margin-top:2px;">Copyright © 2026 www.xjmep.com</small>
 </footer>
@@ -331,7 +333,6 @@ function tryOpenScheme(scheme, webUrl){
   }, 2000);
 }
 </script>
-
 
 <!-- 微信二维码弹窗 -->
 <div id="qr-modal" onclick="if(event.target===this)this.style.display='none'">
