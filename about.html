@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>相关说明</title>
+    <style>
+        /* 基本重置与全局样式，优先适配移动端和微信浏览器 */
+        html, body {
+            background-color: #ffffff;
+            /* 内容默认使用思源宋体，开源免费可商用 */
+            font-family: "Source Han Serif SC", "Source Han Serif", "Noto Serif CJK SC", "Noto Serif SC", "思源宋体", serif;
+            color: #333333;
+            line-height: 1.8;
+            margin: 0;
+            padding: 0;
+            font-size: 15px;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            -webkit-text-size-adjust: 100%; /* 防止微信字体缩放 */
+        }
+
+        /* 标题类统一使用思源黑体，开源免费可商用 */
+        h1,
+        .slogan,
+        .section-title {
+            font-family: "Source Han Sans SC", "Source Han Sans", "Noto Sans CJK SC", "Noto Sans SC", "思源黑体", sans-serif;
+        }
+
+        /* 主容器 */
+        .container {
+            width: 100%;
+            box-sizing: border-box;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+
+        /* 标题区域 */
+        .header-title {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header-title h1 {
+            font-size: 28px;
+            font-weight: bold;
+            margin: 0;
+            letter-spacing: 2px;
+        }
+
+        /* 强调标语 */
+        .slogan {
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+            color: #333333;
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+
+        /* 通用段落 */
+        p {
+            margin-top: 0;
+            margin-bottom: 20px;
+            text-align: justify;
+            color: #4a4a4a;
+        }
+
+        /* 章节卡片样式 */
+        .section-card {
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            font-size: 17px;
+            font-weight: bold;
+            margin-bottom: 18px;
+            padding: 10px 15px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03);
+        }
+
+        .section-icon {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            width: 18px;
+            height: 18px;
+            background-color: #ffffff;
+            border: 2px solid #FF9800;
+            border-radius: 50%;
+            color: #FF9800;
+            font-size: 13px;
+            font-weight: bold;
+            margin-right: 10px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            flex-shrink: 0;
+        }
+
+        /* 列表样式 */
+        ol {
+            padding-left: 20px;
+            margin-top: 0;
+            margin-bottom: 20px;
+            color: #4a4a4a;
+        }
+
+        ol li {
+            margin-bottom: 12px;
+            text-align: justify;
+        }
+
+        /* 合作流程特殊样式 */
+        .workflow {
+            margin-bottom: 30px;
+            color: #4a4a4a;
+            text-align: justify;
+            padding-left: 2px;
+        }
+
+        /* 底部邮箱区域 */
+        .footer-email {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 45px;
+            margin-bottom: 10px;
+        }
+
+        /* 邮箱链接样式 */
+        .footer-email a {
+            display: inline-flex;
+            align-items: center;
+            color: #666666;
+            text-decoration: none;
+            font-size: 14px;
+            gap: 8px; /* 图标与文字的间距 */
+        }
+
+        /* 邮箱 SVG 图标样式 */
+        .footer-email svg {
+            width: 18px;
+            height: 18px;
+            flex-shrink: 0;
+        }
+
+        /* 适配极小屏幕的手机 */
+        @media (max-width: 480px) {
+            .container {
+                padding: 20px 15px;
+            }
+            .slogan {
+                font-size: 17px;
+            }
+            .header-title h1 {
+                font-size: 24px;
+            }
+            .section-title {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- 头部 -->
+    <div class="header-title">
+        <h1>相关说明</h1>
+    </div>
+
+    <!-- 标语 -->
+    <div class="slogan">
+        尊重设计价值，珍惜劳动成果<br>
+        用沟通换理解，勿随意中差评
+    </div>
+
+    <!-- 词语释义 -->
+    <div class="section-card">
+        <div class="section-title">
+            <span class="section-icon">!</span> 词语释义
+        </div>
+        <ol>
+            <li>产品：本文中的产品系指图纸或方案。</li>
+            <li>平台：第三方平台，淘宝、闲鱼等。</li>
+            <li>源文件：包括但不限于可编辑的dwg、ai、docx格式文件。</li>
+        </ol>
+    </div>
+
+    <!-- 友情提示 -->
+    <div class="section-card">
+        <div class="section-title">
+            <span class="section-icon">!</span> 友情提示
+        </div>
+        <ol>
+            <li>产品为定制，不支持无理由退换货。</li>
+            <li>委托方须准确提供定制产品所需的相关资料，因信息提供错误或者不完整造成的错误将不在免费修改范围内。</li>
+            <li>设计要求、完成内容和完成时间请在下单前确定，下单后改变上述任意一项要求的，需要重新核算工作量，补增费用后继续进行，如客户改变原约定的要求、内容或时间且不愿意补增费用，导致设计过程终止，设计费概不支持退款。</li>
+        </ol>
+    </div>
+
+    <!-- 合作流程 -->
+    <div class="section-card">
+        <div class="section-title">
+            <span class="section-icon">!</span> 合作流程
+        </div>
+        <div class="workflow">
+            　　沟通要求——下单付款（付款前再次核对设计要求）——制图——出初版图（加水印）——确认定稿（未满意沟通修改）——发送源文件——售后服务
+        </div>
+    </div>
+
+    <!-- 关于定稿 -->
+    <div class="section-card">
+        <div class="section-title">
+            <span class="section-icon">!</span> 关于定稿
+        </div>
+        <p>
+            　　为保障您的利益，在定稿前我们所有设计文件均以加水印或密码的JPG、PDF格式发送，如需去水印，我们视为定稿。一旦您要求去水印我们默认您已定稿，去水印后我们不支持任何形式的退款，但我们仍会提供售后服务，具体以合同约定为准。
+        </p>
+    </div>
+
+    <!-- 图纸格式 -->
+    <div class="section-card">
+        <div class="section-title">
+            <span class="section-icon">!</span> 图纸格式
+        </div>
+        <ol>
+            <li>本条目针对平台下定的网络单。</li>
+            <li>评价前我们交付的文件均为JPG图片或PDF文件。</li>
+            <li>评价后方可发送源文件。</li>
+            <li>产品价格由设计内容决定，需咨询后再下单。</li>
+        </ol>
+    </div>
+
+    <!-- 退款须知 -->
+    <div class="section-card">
+        <div class="section-title">
+            <span class="section-icon">!</span> 退款须知
+        </div>
+        <ol>
+            <li>初稿不满意退款可退订金的50%。</li>
+            <li>多次修改后仍不满意可退订单金额20%。</li>
+            <li>产品交付后不支持退款。</li>
+            <li>终稿交付后，务必仔细查看，7天内免费微调3次，超过7天无任何反馈，后续修改需要额外收取修改费。</li>
+            <li>若发生退款，退款后我们将收回所制作产品的知识产权，如发现商业用途，将保留法律诉讼的权利。</li>
+            <li>本产品仅支持买卖双方沟通的要求，若需参考第三方意见，请在下单前提供。</li>
+        </ol>
+    </div>
+
+    <!-- 特别提醒 -->
+    <div class="section-card">
+        <div class="section-title">
+            <span class="section-icon">!</span> 特别提醒
+        </div>
+        <ol>
+            <li>我们始终认真对待每一笔订单。但产品交付后，如果您再提出设计修改要求，我们会收取相应费用，修改程度不同，收费也不同，具体价格会根据您提出的要求、完成时间等因素作出相应调整。需要说明的是，修改并不等于重新制作，具体以合同约定为准。</li>
+            <li>由于本产品需要人工定制，若无要求，默认为30天内发货。如有特殊时间要求需双方约定清楚，且我们约定的时间均为初稿交付时间，如果客户收到初稿后需要修改，最终交付时间需要按照修改时间顺延。</li>
+        </ol>
+    </div>
+
+    <!-- 底部服务邮箱（带有邮箱图标，点击唤起邮箱应用） -->
+    <div class="footer-email">
+        <a href="mailto:dxj@xjmep.com">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                <polyline points="22,6 12,13 2,6"></polyline>
+            </svg>
+            <span>dxj@xjmep.com</span>
+        </a>
+    </div>
+
+</div>
+
+</body>
+</html>
