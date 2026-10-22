@@ -23,48 +23,96 @@
     justify-content: center;
     min-height: 100vh;
     overflow: hidden;
-    background: #0f172a;
+    background: #060913;
     color: #e2e8f0;
     position: relative;
     -webkit-tap-highlight-color: transparent;
   }
 
-  /* 网格纹理 */
-  .grid-overlay {
+  /* ===== 新背景：极光渐变光斑 ===== */
+  .aurora {
     position: absolute;
-    inset: 0;
-    background-image:
-      linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px);
-    background-size: 48px 48px;
-    mask-image: radial-gradient(circle at 50% 50%, #000 20%, transparent 78%);
-    -webkit-mask-image: radial-gradient(circle at 50% 50%, #000 20%, transparent 78%);
+    border-radius: 50%;
+    filter: blur(90px);
+    will-change: transform;
     pointer-events: none;
   }
 
-  /* 漂浮的小圆点 */
-  .dot {
+  .aurora.a1 {
+    width: 62vmax; height: 62vmax;
+    top: -28vmax; left: -18vmax;
+    background: radial-gradient(circle, rgba(56, 89, 199, 0.55) 0%, transparent 62%);
+    -webkit-animation: drift1 22s ease-in-out infinite alternate;
+    animation: drift1 22s ease-in-out infinite alternate;
+  }
+
+  .aurora.a2 {
+    width: 55vmax; height: 55vmax;
+    bottom: -26vmax; right: -16vmax;
+    background: radial-gradient(circle, rgba(124, 58, 168, 0.42) 0%, transparent 62%);
+    -webkit-animation: drift2 26s ease-in-out infinite alternate;
+    animation: drift2 26s ease-in-out infinite alternate;
+  }
+
+  .aurora.a3 {
+    width: 42vmax; height: 42vmax;
+    top: 32%; left: 46%;
+    background: radial-gradient(circle, rgba(13, 148, 136, 0.30) 0%, transparent 60%);
+    -webkit-animation: drift3 30s ease-in-out infinite alternate;
+    animation: drift3 30s ease-in-out infinite alternate;
+  }
+
+  @-webkit-keyframes drift1 {
+    from { -webkit-transform: translate3d(0, 0, 0) scale(1); }
+    to   { -webkit-transform: translate3d(9vmax, 6vmax, 0) scale(1.18); }
+  }
+  @keyframes drift1 {
+    from { transform: translate3d(0, 0, 0) scale(1); }
+    to   { transform: translate3d(9vmax, 6vmax, 0) scale(1.18); }
+  }
+  @-webkit-keyframes drift2 {
+    from { -webkit-transform: translate3d(0, 0, 0) scale(1.1); }
+    to   { -webkit-transform: translate3d(-8vmax, -5vmax, 0) scale(0.95); }
+  }
+  @keyframes drift2 {
+    from { transform: translate3d(0, 0, 0) scale(1.1); }
+    to   { transform: translate3d(-8vmax, -5vmax, 0) scale(0.95); }
+  }
+  @-webkit-keyframes drift3 {
+    from { -webkit-transform: translate3d(0, 0, 0) scale(0.9) rotate(0deg); }
+    to   { -webkit-transform: translate3d(-10vmax, 5vmax, 0) scale(1.15) rotate(40deg); }
+  }
+  @keyframes drift3 {
+    from { transform: translate3d(0, 0, 0) scale(0.9) rotate(0deg); }
+    to   { transform: translate3d(-10vmax, 5vmax, 0) scale(1.15) rotate(40deg); }
+  }
+
+  /* 暗角，让中心更聚焦 */
+  .vignette {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 50% 46%, transparent 34%, rgba(3, 5, 12, 0.78) 100%);
+    pointer-events: none;
+  }
+
+  /* 星光粒子（闪烁） */
+  .star {
     position: absolute;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.6);
-    opacity: 0;
-    will-change: transform, opacity;
-    -webkit-animation: rise linear infinite;
-    animation: rise linear infinite;
+    background: #cbd5e1;
+    will-change: opacity, transform;
+    -webkit-animation: twinkle ease-in-out infinite;
+    animation: twinkle ease-in-out infinite;
+    pointer-events: none;
   }
 
-  @-webkit-keyframes rise {
-    0%   { -webkit-transform: translate3d(0, 0, 0) scale(0.5); opacity: 0; }
-    15%  { opacity: 0.8; }
-    85%  { opacity: 0.5; }
-    100% { -webkit-transform: translate3d(0, -110vh, 0) scale(1.2); opacity: 0; }
+  @-webkit-keyframes twinkle {
+    0%, 100% { opacity: 0.08; -webkit-transform: scale(0.7); }
+    50%      { opacity: 0.85; -webkit-transform: scale(1.15); }
   }
-
-  @keyframes rise {
-    0%   { transform: translate3d(0, 0, 0) scale(0.5); opacity: 0; }
-    15%  { opacity: 0.8; }
-    85%  { opacity: 0.5; }
-    100% { transform: translate3d(0, -110vh, 0) scale(1.2); opacity: 0; }
+  @keyframes twinkle {
+    0%, 100% { opacity: 0.08; transform: scale(0.7); }
+    50%      { opacity: 0.85; transform: scale(1.15); }
   }
 
   /* 主内容 */
@@ -77,88 +125,156 @@
     width: 100%;
   }
 
-  /* 齿轮图标 */
+  /* ===== 新图标动画：脉冲核心 + 双层轨道 ===== */
   .icon-wrap {
     position: relative;
-    width: 130px;
-    height: 130px;
+    width: 132px;
+    height: 132px;
     margin: 0 auto 38px;
   }
 
-  .ring {
+  .orbit {
     position: absolute;
     inset: 0;
     border-radius: 50%;
-    border: 2px dashed rgba(129, 140, 248, 0.55);
+    border: 1px solid rgba(148, 163, 184, 0.22);
     will-change: transform;
-    -webkit-animation: spin 12s linear infinite;
-    animation: spin 12s linear infinite;
   }
 
-  .ring.inner {
-    inset: 22px;
-    border-style: solid;
-    border-color: rgba(236, 72, 153, 0.35);
-    border-top-color: rgba(236, 72, 153, 0.9);
-    -webkit-animation: spin 2.4s linear infinite reverse;
-    animation: spin 2.4s linear infinite reverse;
+  .orbit::before {
+    content: "";
+    position: absolute;
+    top: -4px;
+    left: 50%;
+    width: 8px;
+    height: 8px;
+    margin-left: -4px;
+    border-radius: 50%;
+    background: #7dd3fc;
+    box-shadow: 0 0 12px 2px rgba(125, 211, 252, 0.8);
   }
 
-  /* 关键修复：显式 from/to，函数列表保持一致 */
-  @-webkit-keyframes spin {
-    from { -webkit-transform: translate3d(0, 0, 0) rotate(0deg); }
-    to   { -webkit-transform: translate3d(0, 0, 0) rotate(360deg); }
+  .orbit.o1 {
+    -webkit-animation: spin 3.6s linear infinite;
+    animation: spin 3.6s linear infinite;
   }
 
-  @keyframes spin {
-    from { transform: translate3d(0, 0, 0) rotate(0deg); }
-    to   { transform: translate3d(0, 0, 0) rotate(360deg); }
+  .orbit.o2 {
+    inset: 16px;
+    border-style: dashed;
+    border-color: rgba(196, 181, 253, 0.35);
   }
 
-  .gear {
+  .orbit.o2::before {
+    width: 6px;
+    height: 6px;
+    margin-left: -3px;
+    background: #c4b5fd;
+    box-shadow: 0 0 10px 2px rgba(196, 181, 253, 0.8);
+    -webkit-animation: none;
+    animation: none;
+  }
+
+  .orbit.o2 { -webkit-animation: spinRev 5.4s linear infinite; animation: spinRev 5.4s linear infinite; }
+
+  /* 发光核心 */
+  .core {
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 52px;
-    height: 52px;
-    margin: -26px 0 0 -26px;
-    color: #a5b4fc;
-    will-change: transform;
-    -webkit-animation: spin 6s linear infinite;
-    animation: spin 6s linear infinite;
+    width: 46px;
+    height: 46px;
+    margin: -23px 0 0 -23px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 32%, #a5f3fc 0%, #38bdf8 42%, #1d4ed8 100%);
+    box-shadow:
+      0 0 22px 4px rgba(56, 189, 248, 0.45),
+      0 0 60px 12px rgba(59, 130, 246, 0.25);
+    will-change: transform, box-shadow;
+    -webkit-animation: pulse 2.1s ease-in-out infinite;
+    animation: pulse 2.1s ease-in-out infinite;
   }
 
-  .gear svg {
-    width: 100%;
-    height: 100%;
-    display: block;
+  @-webkit-keyframes pulse {
+    0%, 100% {
+      -webkit-transform: scale(1);
+      box-shadow: 0 0 22px 4px rgba(56, 189, 248, 0.45), 0 0 60px 12px rgba(59, 130, 246, 0.25);
+    }
+    50% {
+      -webkit-transform: scale(1.14);
+      box-shadow: 0 0 32px 8px rgba(56, 189, 248, 0.65), 0 0 84px 20px rgba(99, 102, 241, 0.35);
+    }
+  }
+  @keyframes pulse {
+    0%, 100% {
+      transform: scale(1);
+      box-shadow: 0 0 22px 4px rgba(56, 189, 248, 0.45), 0 0 60px 12px rgba(59, 130, 246, 0.25);
+    }
+    50% {
+      transform: scale(1.14);
+      box-shadow: 0 0 32px 8px rgba(56, 189, 248, 0.65), 0 0 84px 20px rgba(99, 102, 241, 0.35);
+    }
   }
 
-  /* 标题（纯色） */
+  /* 扩散波纹 */
+  .ripple {
+    position: absolute;
+    inset: 34px;
+    border-radius: 50%;
+    border: 1px solid rgba(125, 211, 252, 0.5);
+    will-change: transform, opacity;
+    -webkit-animation: ripple 2.1s ease-out infinite;
+    animation: ripple 2.1s ease-out infinite;
+  }
+
+  .ripple.r2 {
+    -webkit-animation-delay: 1.05s;
+    animation-delay: 1.05s;
+  }
+
+  @-webkit-keyframes ripple {
+    0%   { -webkit-transform: scale(0.55); opacity: 0.85; }
+    100% { -webkit-transform: scale(1.85); opacity: 0; }
+  }
+  @keyframes ripple {
+    0%   { transform: scale(0.55); opacity: 0.85; }
+    100% { transform: scale(1.85); opacity: 0; }
+  }
+
+  @-webkit-keyframes spin {
+    from { -webkit-transform: rotate(0deg); }
+    to   { -webkit-transform: rotate(360deg); }
+  }
+  @keyframes spin {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+  }
+  @-webkit-keyframes spinRev {
+    from { -webkit-transform: rotate(360deg); }
+    to   { -webkit-transform: rotate(0deg); }
+  }
+  @keyframes spinRev {
+    from { transform: rotate(360deg); }
+    to   { transform: rotate(0deg); }
+  }
+
+  /* 标题（文字不变） */
   h1 {
     font-size: clamp(32px, 7.5vw, 50px);
     font-weight: 600;
     letter-spacing: 2px;
     line-height: 1.5;
-    color: #e2e8f0;
+    color: #f1f5f9;
+    text-shadow: 0 0 34px rgba(125, 211, 252, 0.35);
   }
 
-  /* 副标题 */
-  p.sub {
-    margin-top: 18px;
-    font-size: clamp(16px, 4.2vw, 20px);
-    color: #94a3b8;
-    letter-spacing: 1.5px;
-    line-height: 1.9;
-  }
-
-  /* 进度条（纯色 + transform 动画） */
+  /* 进度条：扫光效果 */
   .progress {
     margin: 42px auto 0;
     width: min(320px, 78%);
     height: 4px;
     border-radius: 999px;
-    background: rgba(148, 163, 184, 0.18);
+    background: rgba(148, 163, 184, 0.16);
     overflow: hidden;
     position: relative;
   }
@@ -168,25 +284,21 @@
     top: 0;
     left: 0;
     height: 100%;
-    width: 100%;
+    width: 42%;
     border-radius: 999px;
-    background: #818cf8;
-    transform-origin: left center;
+    background: linear-gradient(90deg, transparent, #38bdf8 30%, #a5f3fc 50%, #38bdf8 70%, transparent);
     will-change: transform;
-    -webkit-animation: slideTransform 2.2s cubic-bezier(0.65, 0, 0.35, 1) infinite;
-    animation: slideTransform 2.2s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+    -webkit-animation: sweep 1.9s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+    animation: sweep 1.9s cubic-bezier(0.45, 0, 0.55, 1) infinite;
   }
 
-  @-webkit-keyframes slideTransform {
-    0%   { -webkit-transform: translate3d(-100%, 0, 0) scaleX(0.4); }
-    50%  { -webkit-transform: translate3d(30%, 0, 0) scaleX(0.55); }
-    100% { -webkit-transform: translate3d(100%, 0, 0) scaleX(0.4); }
+  @-webkit-keyframes sweep {
+    from { -webkit-transform: translate3d(-110%, 0, 0); }
+    to   { -webkit-transform: translate3d(260%, 0, 0); }
   }
-
-  @keyframes slideTransform {
-    0%   { transform: translate3d(-100%, 0, 0) scaleX(0.4); }
-    50%  { transform: translate3d(30%, 0, 0) scaleX(0.55); }
-    100% { transform: translate3d(100%, 0, 0) scaleX(0.4); }
+  @keyframes sweep {
+    from { transform: translate3d(-110%, 0, 0); }
+    to   { transform: translate3d(260%, 0, 0); }
   }
 
   /* 三个跳动点 */
@@ -201,20 +313,19 @@
     width: 7px;
     height: 7px;
     border-radius: 50%;
-    background: #818cf8;
+    background: #7dd3fc;
     will-change: transform, opacity;
     -webkit-animation: bounce 1.4s ease-in-out infinite;
     animation: bounce 1.4s ease-in-out infinite;
   }
 
-  .loading-dots i:nth-child(2) { -webkit-animation-delay: 0.18s; animation-delay: 0.18s; background: #c084fc; }
-  .loading-dots i:nth-child(3) { -webkit-animation-delay: 0.36s; animation-delay: 0.36s; background: #f472b6; }
+  .loading-dots i:nth-child(2) { -webkit-animation-delay: 0.18s; animation-delay: 0.18s; background: #a5b4fc; }
+  .loading-dots i:nth-child(3) { -webkit-animation-delay: 0.36s; animation-delay: 0.36s; background: #c4b5fd; }
 
   @-webkit-keyframes bounce {
     0%, 80%, 100% { -webkit-transform: translate3d(0, 0, 0); opacity: 0.45; }
     40%           { -webkit-transform: translate3d(0, -9px, 0); opacity: 1; }
   }
-
   @keyframes bounce {
     0%, 80%, 100% { transform: translate3d(0, 0, 0); opacity: 0.45; }
     40%           { transform: translate3d(0, -9px, 0); opacity: 1; }
@@ -229,25 +340,26 @@
   }
 
   @media (max-width: 480px) {
-    .icon-wrap { width: 104px; height: 104px; margin-bottom: 30px; }
-    .gear { width: 42px; height: 42px; margin: -21px 0 0 -21px; }
+    .icon-wrap { width: 106px; height: 106px; margin-bottom: 30px; }
+    .core { width: 38px; height: 38px; margin: -19px 0 0 -19px; }
+    .ripple { inset: 27px; }
   }
 </style>
 </head>
 <body>
 
-  <div class="grid-overlay"></div>
+  <div class="aurora a1"></div>
+  <div class="aurora a2"></div>
+  <div class="aurora a3"></div>
+  <div class="vignette"></div>
 
   <main class="container">
     <div class="icon-wrap">
-      <div class="ring"></div>
-      <div class="ring inner"></div>
-      <div class="gear">
-        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-          <path d="M12 8.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7Zm0 5.5a2 2 0 1 1 0-4 2 2 0 0 1 0 4Z"/>
-          <path d="M21.7 13.35l-1.63-.94a7.9 7.9 0 0 0 0-1.82l1.63-.94a.75.75 0 0 0 .27-1.02l-1.5-2.6a.75.75 0 0 0-1.02-.27l-1.63.94a7.9 7.9 0 0 0-1.58-.91V3.75a.75.75 0 0 0-.75-.75h-3a.75.75 0 0 0-.75.75v1.88a7.9 7.9 0 0 0-1.58.91L8.53 5.6a.75.75 0 0 0-1.02.27l-1.5 2.6a.75.75 0 0 0 .27 1.02l1.63.94a7.9 7.9 0 0 0 0 1.82l-1.63.94a.75.75 0 0 0-.27 1.02l1.5 2.6a.75.75 0 0 0 1.02.27l1.63-.94c.48.38 1.01.68 1.58.91v1.88c0 .41.34.75.75.75h3c.41 0 .75-.34.75-.75v-1.88a7.9 7.9 0 0 0 1.58-.91l1.63.94a.75.75 0 0 0 1.02-.27l1.5-2.6a.75.75 0 0 0-.27-1.02Z" opacity=".55"/>
-        </svg>
-      </div>
+      <div class="orbit o1"></div>
+      <div class="orbit o2"></div>
+      <div class="ripple"></div>
+      <div class="ripple r2"></div>
+      <div class="core"></div>
     </div>
 
     <h1>页面更新中</h1>
@@ -259,27 +371,26 @@
   </main>
 
   <script>
-    // 生成漂浮粒子
-    (function createDots() {
-      const count = window.innerWidth < 600 ? 14 : 26;
+    // 生成闪烁星光
+    (function createStars() {
+      const count = window.innerWidth < 600 ? 28 : 52;
       const frag = document.createDocumentFragment();
 
       for (let i = 0; i < count; i++) {
-        const dot = document.createElement('span');
-        const size = Math.random() * 3.5 + 1.5;
+        const star = document.createElement('span');
+        const size = Math.random() * 2 + 1;
 
-        dot.className = 'dot';
-        dot.style.width = size + 'px';
-        dot.style.height = size + 'px';
-        dot.style.left = Math.random() * 100 + '%';
-        dot.style.bottom = '-10px';
-        dot.style.animationDuration = (Math.random() * 9 + 9) + 's';
-        dot.style.webkitAnimationDuration = dot.style.animationDuration;
-        dot.style.animationDelay = (Math.random() * 12) + 's';
-        dot.style.webkitAnimationDelay = dot.style.animationDelay;
-        dot.style.opacity = Math.random() * 0.5 + 0.2;
+        star.className = 'star';
+        star.style.width = size + 'px';
+        star.style.height = size + 'px';
+        star.style.left = Math.random() * 100 + '%';
+        star.style.top = Math.random() * 100 + '%';
+        star.style.animationDuration = (Math.random() * 3 + 2.5) + 's';
+        star.style.webkitAnimationDuration = star.style.animationDuration;
+        star.style.animationDelay = (Math.random() * 4) + 's';
+        star.style.webkitAnimationDelay = star.style.animationDelay;
 
-        frag.appendChild(dot);
+        frag.appendChild(star);
       }
       document.body.appendChild(frag);
     })();
