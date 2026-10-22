@@ -1,279 +1,289 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>相关说明</title>
-    <style>
-        /* 基本重置与全局样式，优先适配移动端和微信浏览器 */
-        html, body {
-            background-color: #ffffff;
-            /* 内容默认使用思源宋体，开源免费可商用 */
-            font-family: "Source Han Serif SC", "Source Han Serif", "Noto Serif CJK SC", "Noto Serif SC", "思源宋体", serif;
-            color: #333333;
-            line-height: 1.8;
-            margin: 0;
-            padding: 0;
-            font-size: 15px;
-            word-wrap: break-word;
-            overflow-wrap: break-word;
-            -webkit-text-size-adjust: 100%; /* 防止微信字体缩放 */
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>页面更新中</title>
+<style>
+  @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap");
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
 
-        /* 标题类统一使用思源黑体，开源免费可商用 */
-        h1,
-        .slogan,
-        .section-title {
-            font-family: "Source Han Sans SC", "Source Han Sans", "Noto Sans CJK SC", "Noto Sans SC", "思源黑体", sans-serif;
-        }
+  html, body {
+    height: 100%;
+  }
 
-        /* 主容器 */
-        .container {
-            width: 100%;
-            box-sizing: border-box;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 30px 20px;
-        }
+  body {
+    font-family: "Source Han Sans SC", "思源黑体", "Noto Sans CJK SC", "Noto Sans SC", sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    overflow: hidden;
+    background: #0f172a;
+    color: #e2e8f0;
+    position: relative;
+    -webkit-tap-highlight-color: transparent;
+  }
 
-        /* 标题区域 */
-        .header-title {
-            text-align: center;
-            margin-bottom: 40px;
-        }
+  /* 网格纹理 */
+  .grid-overlay {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px);
+    background-size: 48px 48px;
+    mask-image: radial-gradient(circle at 50% 50%, #000 20%, transparent 78%);
+    -webkit-mask-image: radial-gradient(circle at 50% 50%, #000 20%, transparent 78%);
+    pointer-events: none;
+  }
 
-        .header-title h1 {
-            font-size: 28px;
-            font-weight: bold;
-            margin: 0;
-            letter-spacing: 2px;
-        }
+  /* 漂浮的小圆点 */
+  .dot {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.6);
+    opacity: 0;
+    will-change: transform, opacity;
+    -webkit-animation: rise linear infinite;
+    animation: rise linear infinite;
+  }
 
-        /* 强调标语 */
-        .slogan {
-            text-align: center;
-            font-size: 20px;
-            font-weight: bold;
-            color: #333333;
-            margin-bottom: 40px;
-            line-height: 1.6;
-        }
+  @-webkit-keyframes rise {
+    0%   { -webkit-transform: translate3d(0, 0, 0) scale(0.5); opacity: 0; }
+    15%  { opacity: 0.8; }
+    85%  { opacity: 0.5; }
+    100% { -webkit-transform: translate3d(0, -110vh, 0) scale(1.2); opacity: 0; }
+  }
 
-        /* 通用段落 */
-        p {
-            margin-top: 0;
-            margin-bottom: 20px;
-            text-align: justify;
-            color: #4a4a4a;
-        }
+  @keyframes rise {
+    0%   { transform: translate3d(0, 0, 0) scale(0.5); opacity: 0; }
+    15%  { opacity: 0.8; }
+    85%  { opacity: 0.5; }
+    100% { transform: translate3d(0, -110vh, 0) scale(1.2); opacity: 0; }
+  }
 
-        /* 章节卡片样式 */
-        .section-card {
-            margin-bottom: 30px;
-        }
+  /* 主内容 */
+  .container {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    padding: 40px 28px;
+    max-width: 640px;
+    width: 100%;
+  }
 
-        .section-title {
-            display: flex;
-            align-items: center;
-            font-size: 17px;
-            font-weight: bold;
-            margin-bottom: 18px;
-            padding: 10px 15px;
-            background-color: #f8f9fa;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03);
-        }
+  /* 齿轮图标 */
+  .icon-wrap {
+    position: relative;
+    width: 130px;
+    height: 130px;
+    margin: 0 auto 38px;
+  }
 
-        .section-icon {
-            display: inline-flex;
-            justify-content: center;
-            align-items: center;
-            width: 18px;
-            height: 18px;
-            background-color: #ffffff;
-            border: 2px solid #FF9800;
-            border-radius: 50%;
-            color: #FF9800;
-            font-size: 13px;
-            font-weight: bold;
-            margin-right: 10px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-            flex-shrink: 0;
-        }
+  .ring {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 2px dashed rgba(129, 140, 248, 0.55);
+    will-change: transform;
+    -webkit-animation: spin 12s linear infinite;
+    animation: spin 12s linear infinite;
+  }
 
-        /* 列表样式 */
-        ol {
-            padding-left: 20px;
-            margin-top: 0;
-            margin-bottom: 20px;
-            color: #4a4a4a;
-        }
+  .ring.inner {
+    inset: 22px;
+    border-style: solid;
+    border-color: rgba(236, 72, 153, 0.35);
+    border-top-color: rgba(236, 72, 153, 0.9);
+    -webkit-animation: spin 2.4s linear infinite reverse;
+    animation: spin 2.4s linear infinite reverse;
+  }
 
-        ol li {
-            margin-bottom: 12px;
-            text-align: justify;
-        }
+  /* 关键修复：显式 from/to，函数列表保持一致 */
+  @-webkit-keyframes spin {
+    from { -webkit-transform: translate3d(0, 0, 0) rotate(0deg); }
+    to   { -webkit-transform: translate3d(0, 0, 0) rotate(360deg); }
+  }
 
-        /* 合作流程特殊样式 */
-        .workflow {
-            margin-bottom: 30px;
-            color: #4a4a4a;
-            text-align: justify;
-            padding-left: 2px;
-        }
+  @keyframes spin {
+    from { transform: translate3d(0, 0, 0) rotate(0deg); }
+    to   { transform: translate3d(0, 0, 0) rotate(360deg); }
+  }
 
-        /* 底部邮箱区域 */
-        .footer-email {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-top: 45px;
-            margin-bottom: 10px;
-        }
+  .gear {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 52px;
+    height: 52px;
+    margin: -26px 0 0 -26px;
+    color: #a5b4fc;
+    will-change: transform;
+    -webkit-animation: spin 6s linear infinite;
+    animation: spin 6s linear infinite;
+  }
 
-        /* 邮箱链接样式 */
-        .footer-email a {
-            display: inline-flex;
-            align-items: center;
-            color: #666666;
-            text-decoration: none;
-            font-size: 14px;
-            gap: 8px; /* 图标与文字的间距 */
-        }
+  .gear svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
 
-        /* 邮箱 SVG 图标样式 */
-        .footer-email svg {
-            width: 18px;
-            height: 18px;
-            flex-shrink: 0;
-        }
+  /* 标题（纯色） */
+  h1 {
+    font-size: clamp(32px, 7.5vw, 50px);
+    font-weight: 600;
+    letter-spacing: 2px;
+    line-height: 1.5;
+    color: #e2e8f0;
+  }
 
-        /* 适配极小屏幕的手机 */
-        @media (max-width: 480px) {
-            .container {
-                padding: 20px 15px;
-            }
-            .slogan {
-                font-size: 17px;
-            }
-            .header-title h1 {
-                font-size: 24px;
-            }
-            .section-title {
-                font-size: 16px;
-            }
-        }
-    </style>
+  /* 副标题 */
+  p.sub {
+    margin-top: 18px;
+    font-size: clamp(16px, 4.2vw, 20px);
+    color: #94a3b8;
+    letter-spacing: 1.5px;
+    line-height: 1.9;
+  }
+
+  /* 进度条（纯色 + transform 动画） */
+  .progress {
+    margin: 42px auto 0;
+    width: min(320px, 78%);
+    height: 4px;
+    border-radius: 999px;
+    background: rgba(148, 163, 184, 0.18);
+    overflow: hidden;
+    position: relative;
+  }
+
+  .progress span {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    border-radius: 999px;
+    background: #818cf8;
+    transform-origin: left center;
+    will-change: transform;
+    -webkit-animation: slideTransform 2.2s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+    animation: slideTransform 2.2s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+  }
+
+  @-webkit-keyframes slideTransform {
+    0%   { -webkit-transform: translate3d(-100%, 0, 0) scaleX(0.4); }
+    50%  { -webkit-transform: translate3d(30%, 0, 0) scaleX(0.55); }
+    100% { -webkit-transform: translate3d(100%, 0, 0) scaleX(0.4); }
+  }
+
+  @keyframes slideTransform {
+    0%   { transform: translate3d(-100%, 0, 0) scaleX(0.4); }
+    50%  { transform: translate3d(30%, 0, 0) scaleX(0.55); }
+    100% { transform: translate3d(100%, 0, 0) scaleX(0.4); }
+  }
+
+  /* 三个跳动点 */
+  .loading-dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 26px;
+  }
+
+  .loading-dots i {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #818cf8;
+    will-change: transform, opacity;
+    -webkit-animation: bounce 1.4s ease-in-out infinite;
+    animation: bounce 1.4s ease-in-out infinite;
+  }
+
+  .loading-dots i:nth-child(2) { -webkit-animation-delay: 0.18s; animation-delay: 0.18s; background: #c084fc; }
+  .loading-dots i:nth-child(3) { -webkit-animation-delay: 0.36s; animation-delay: 0.36s; background: #f472b6; }
+
+  @-webkit-keyframes bounce {
+    0%, 80%, 100% { -webkit-transform: translate3d(0, 0, 0); opacity: 0.45; }
+    40%           { -webkit-transform: translate3d(0, -9px, 0); opacity: 1; }
+  }
+
+  @keyframes bounce {
+    0%, 80%, 100% { transform: translate3d(0, 0, 0); opacity: 0.45; }
+    40%           { transform: translate3d(0, -9px, 0); opacity: 1; }
+  }
+
+  /* 底部提示 */
+  .footer-note {
+    margin-top: 50px;
+    font-size: 17px;
+    letter-spacing: 1px;
+    color: rgba(148, 163, 184, 0.55);
+  }
+
+  @media (max-width: 480px) {
+    .icon-wrap { width: 104px; height: 104px; margin-bottom: 30px; }
+    .gear { width: 42px; height: 42px; margin: -21px 0 0 -21px; }
+  }
+</style>
 </head>
 <body>
 
-<div class="container">
-    <!-- 头部 -->
-    <div class="header-title">
-        <h1>相关说明</h1>
+  <div class="grid-overlay"></div>
+
+  <main class="container">
+    <div class="icon-wrap">
+      <div class="ring"></div>
+      <div class="ring inner"></div>
+      <div class="gear">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M12 8.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7Zm0 5.5a2 2 0 1 1 0-4 2 2 0 0 1 0 4Z"/>
+          <path d="M21.7 13.35l-1.63-.94a7.9 7.9 0 0 0 0-1.82l1.63-.94a.75.75 0 0 0 .27-1.02l-1.5-2.6a.75.75 0 0 0-1.02-.27l-1.63.94a7.9 7.9 0 0 0-1.58-.91V3.75a.75.75 0 0 0-.75-.75h-3a.75.75 0 0 0-.75.75v1.88a7.9 7.9 0 0 0-1.58.91L8.53 5.6a.75.75 0 0 0-1.02.27l-1.5 2.6a.75.75 0 0 0 .27 1.02l1.63.94a7.9 7.9 0 0 0 0 1.82l-1.63.94a.75.75 0 0 0-.27 1.02l1.5 2.6a.75.75 0 0 0 1.02.27l1.63-.94c.48.38 1.01.68 1.58.91v1.88c0 .41.34.75.75.75h3c.41 0 .75-.34.75-.75v-1.88a7.9 7.9 0 0 0 1.58-.91l1.63.94a.75.75 0 0 0 1.02-.27l1.5-2.6a.75.75 0 0 0-.27-1.02Z" opacity=".55"/>
+        </svg>
+      </div>
     </div>
 
-    <!-- 标语 -->
-    <div class="slogan">
-        尊重设计价值，珍惜劳动成果<br>
-        用沟通换理解，勿随意中差评
-    </div>
+    <h1>页面更新中</h1>
 
-    <!-- 词语释义 -->
-    <div class="section-card">
-        <div class="section-title">
-            <span class="section-icon">!</span> 词语释义
-        </div>
-        <ol>
-            <li>产品：本文中的产品系指图纸或方案。</li>
-            <li>平台：第三方平台，淘宝、闲鱼等。</li>
-            <li>源文件：包括但不限于可编辑的dwg、ai、docx格式文件。</li>
-        </ol>
-    </div>
+    <div class="progress"><span></span></div>
+    <div class="loading-dots"><i></i><i></i><i></i></div>
 
-    <!-- 友情提示 -->
-    <div class="section-card">
-        <div class="section-title">
-            <span class="section-icon">!</span> 友情提示
-        </div>
-        <ol>
-            <li>产品为定制，不支持无理由退换货。</li>
-            <li>委托方须准确提供定制产品所需的相关资料，因信息提供错误或者不完整造成的错误将不在免费修改范围内。</li>
-            <li>设计要求、完成内容和完成时间请在下单前确定，下单后改变上述任意一项要求的，需要重新核算工作量，补增费用后继续进行，如客户改变原约定的要求、内容或时间且不愿意补增费用，导致设计过程终止，设计费概不支持退款。</li>
-        </ol>
-    </div>
+    <div class="footer-note"><a href="https://www.xjmep.com" target="_blank" rel="noopener" style="color: inherit; text-decoration: none;">www.xjmep.com</a></div>
+  </main>
 
-    <!-- 合作流程 -->
-    <div class="section-card">
-        <div class="section-title">
-            <span class="section-icon">!</span> 合作流程
-        </div>
-        <div class="workflow">
-            　　沟通要求——下单付款（付款前再次核对设计要求）——制图——出初版图（加水印）——确认定稿（未满意沟通修改）——发送源文件——售后服务
-        </div>
-    </div>
+  <script>
+    // 生成漂浮粒子
+    (function createDots() {
+      const count = window.innerWidth < 600 ? 14 : 26;
+      const frag = document.createDocumentFragment();
 
-    <!-- 关于定稿 -->
-    <div class="section-card">
-        <div class="section-title">
-            <span class="section-icon">!</span> 关于定稿
-        </div>
-        <p>
-            　　为保障您的利益，在定稿前我们所有设计文件均以加水印或密码的JPG、PDF格式发送，如需去水印，我们视为定稿。一旦您要求去水印我们默认您已定稿，去水印后我们不支持任何形式的退款，但我们仍会提供售后服务，具体以合同约定为准。
-        </p>
-    </div>
+      for (let i = 0; i < count; i++) {
+        const dot = document.createElement('span');
+        const size = Math.random() * 3.5 + 1.5;
 
-    <!-- 图纸格式 -->
-    <div class="section-card">
-        <div class="section-title">
-            <span class="section-icon">!</span> 图纸格式
-        </div>
-        <ol>
-            <li>本条目针对平台下定的网络单。</li>
-            <li>评价前我们交付的文件均为JPG图片或PDF文件。</li>
-            <li>评价后方可发送源文件。</li>
-            <li>产品价格由设计内容决定，需咨询后再下单。</li>
-        </ol>
-    </div>
+        dot.className = 'dot';
+        dot.style.width = size + 'px';
+        dot.style.height = size + 'px';
+        dot.style.left = Math.random() * 100 + '%';
+        dot.style.bottom = '-10px';
+        dot.style.animationDuration = (Math.random() * 9 + 9) + 's';
+        dot.style.webkitAnimationDuration = dot.style.animationDuration;
+        dot.style.animationDelay = (Math.random() * 12) + 's';
+        dot.style.webkitAnimationDelay = dot.style.animationDelay;
+        dot.style.opacity = Math.random() * 0.5 + 0.2;
 
-    <!-- 退款须知 -->
-    <div class="section-card">
-        <div class="section-title">
-            <span class="section-icon">!</span> 退款须知
-        </div>
-        <ol>
-            <li>初稿不满意退款可退订金的50%。</li>
-            <li>多次修改后仍不满意可退订单金额20%。</li>
-            <li>产品交付后不支持退款。</li>
-            <li>终稿交付后，务必仔细查看，7天内免费微调3次，超过7天无任何反馈，后续修改需要额外收取修改费。</li>
-            <li>若发生退款，退款后我们将收回所制作产品的知识产权，如发现商业用途，将保留法律诉讼的权利。</li>
-            <li>本产品仅支持买卖双方沟通的要求，若需参考第三方意见，请在下单前提供。</li>
-        </ol>
-    </div>
-
-    <!-- 特别提醒 -->
-    <div class="section-card">
-        <div class="section-title">
-            <span class="section-icon">!</span> 特别提醒
-        </div>
-        <ol>
-            <li>我们始终认真对待每一笔订单。但产品交付后，如果您再提出设计修改要求，我们会收取相应费用，修改程度不同，收费也不同，具体价格会根据您提出的要求、完成时间等因素作出相应调整。需要说明的是，修改并不等于重新制作，具体以合同约定为准。</li>
-            <li>由于本产品需要人工定制，若无要求，默认为30天内发货。如有特殊时间要求需双方约定清楚，且我们约定的时间均为初稿交付时间，如果客户收到初稿后需要修改，最终交付时间需要按照修改时间顺延。</li>
-        </ol>
-    </div>
-
-    <!-- 底部服务邮箱（带有邮箱图标，点击唤起邮箱应用） -->
-    <div class="footer-email">
-        <a href="mailto:dxj@xjmep.com">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-                <polyline points="22,6 12,13 2,6"></polyline>
-            </svg>
-            <span>dxj@xjmep.com</span>
-        </a>
-    </div>
-
-</div>
+        frag.appendChild(dot);
+      }
+      document.body.appendChild(frag);
+    })();
+  </script>
 
 </body>
 </html>
