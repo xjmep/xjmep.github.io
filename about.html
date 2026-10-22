@@ -16,12 +16,17 @@
     height: 100%;
   }
 
+  html {
+    overflow-x: hidden;
+  }
+
   body {
     font-family: "Source Han Sans SC", "思源黑体", "Noto Sans CJK SC", "Noto Sans SC", sans-serif;
     display: flex;
     align-items: center;
     justify-content: center;
     min-height: 100vh;
+    min-height: 100dvh;
     overflow: hidden;
     background: #060913;
     color: #e2e8f0;
@@ -29,7 +34,16 @@
     -webkit-tap-highlight-color: transparent;
   }
 
-  /* ===== 新背景：极光渐变光斑 ===== */
+  /* ===== 背景层：固定定位 + 裁剪，绝不撑开文档宽度 ===== */
+  .bg {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ===== 极光渐变光斑 ===== */
   .aurora {
     position: absolute;
     border-radius: 50%;
@@ -123,9 +137,10 @@
     padding: 40px 28px;
     max-width: 640px;
     width: 100%;
+    margin: auto;
   }
 
-  /* ===== 新图标动画：脉冲核心 + 双层轨道 ===== */
+  /* ===== 图标动画：脉冲核心 + 双层轨道 ===== */
   .icon-wrap {
     position: relative;
     width: 132px;
@@ -163,6 +178,8 @@
     inset: 16px;
     border-style: dashed;
     border-color: rgba(196, 181, 253, 0.35);
+    -webkit-animation: spinRev 5.4s linear infinite;
+    animation: spinRev 5.4s linear infinite;
   }
 
   .orbit.o2::before {
@@ -171,11 +188,7 @@
     margin-left: -3px;
     background: #c4b5fd;
     box-shadow: 0 0 10px 2px rgba(196, 181, 253, 0.8);
-    -webkit-animation: none;
-    animation: none;
   }
-
-  .orbit.o2 { -webkit-animation: spinRev 5.4s linear infinite; animation: spinRev 5.4s linear infinite; }
 
   /* 发光核心 */
   .core {
@@ -348,10 +361,12 @@
 </head>
 <body>
 
-  <div class="aurora a1"></div>
-  <div class="aurora a2"></div>
-  <div class="aurora a3"></div>
-  <div class="vignette"></div>
+  <div class="bg">
+    <div class="aurora a1"></div>
+    <div class="aurora a2"></div>
+    <div class="aurora a3"></div>
+    <div class="vignette"></div>
+  </div>
 
   <main class="container">
     <div class="icon-wrap">
@@ -371,7 +386,7 @@
   </main>
 
   <script>
-    // 生成闪烁星光
+    // 生成闪烁星光（挂到背景层，避免撑开页面）
     (function createStars() {
       const count = window.innerWidth < 600 ? 28 : 52;
       const frag = document.createDocumentFragment();
@@ -392,7 +407,7 @@
 
         frag.appendChild(star);
       }
-      document.body.appendChild(frag);
+      document.querySelector('.bg').appendChild(frag);
     })();
   </script>
 
