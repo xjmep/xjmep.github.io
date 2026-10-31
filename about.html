@@ -454,9 +454,9 @@
   .quote span{color:#d4dbe0;}
 
   .philosophy .phil-text{
-    max-width:660px;color:rgba(255,255,255,.86);font-size:.96rem;
+    color:rgba(255,255,255,.86);font-size:.96rem;
     font-family:var(--font-serif);font-weight:500;
-    text-wrap:pretty;line-break:strict;
+    white-space:nowrap;
   }
 
   .values{
@@ -561,6 +561,8 @@
     .section{
       padding:calc(var(--nav-h) + 24px) 0 calc(var(--footer-h) + 36px + env(safe-area-inset-bottom));
     }
+
+    .philosophy .phil-text{white-space:normal;}
 
     .page-footer-inner{
       flex-wrap:wrap;
@@ -841,8 +843,8 @@
         <p class="label">运营主体</p>
         <p class="entity-name">四川未来知见<br>工程设计有限公司</p>
         <p class="entity-desc">
-          品牌定位：工程领域机电顾问品牌<br>
-          服务模式：工程全周期机电顾问服务
+          品牌定位：工程领域的机电顾问品牌<br>
+          服务模式：机电工程全周期顾问服务
         </p>
       </aside>
     </div>
