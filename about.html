@@ -218,7 +218,8 @@
   .section--soft{background:var(--bg-soft);}
 
   .section-head{max-width:680px;margin-bottom:30px;}
-  .section-head p{
+  /* 排除 eyebrow 以免干扰小标题字体 */
+  .section-head p:not(.eyebrow){
     color:var(--text-soft);margin-top:10px;font-size:.95rem;
     font-family:var(--font-serif);font-weight:500;
     text-align: left;
@@ -227,8 +228,9 @@
   }
   .section-head h2{font-size:clamp(1.5rem,2.8vw,2.1rem);}
 
+  /* 小标题字号放大两号（从 .74rem 放大至 .95rem） */
   .eyebrow{
-    font-size:.74rem;letter-spacing:.2em;text-transform:uppercase;
+    font-size:.95rem;letter-spacing:.16em;text-transform:uppercase;
     font-weight:700;color:var(--accent-bright);margin:0 0 12px;
     font-family:var(--font-sans);
   }
@@ -245,7 +247,14 @@
       radial-gradient(circle at 80% 8%, rgba(150,158,166,.26), transparent 55%),
       linear-gradient(160deg,#0b0d0f 0%,#1b1f23 55%,#101315 100%);
   }
-  .hero-inner{position:relative;z-index:2;max-width:820px;}
+  .hero-inner{
+    position:relative;
+    z-index:2;
+    max-width:820px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+  }
 
   .hero-diagram{
     position:absolute;
@@ -297,45 +306,20 @@
     overflow-wrap: break-word;
   }
 
-  .hero-actions{display:flex;flex-wrap:wrap;gap:14px;margin-top:30px;}
-
-  .btn{
-    display:inline-flex;align-items:center;justify-content:center;gap:8px;
-    padding:11px 26px;border-radius:999px;
-    font-size:.9rem;font-weight:600;
-    font-family:var(--font-sans);
-    white-space:nowrap;
-    transition:transform .2s ease, background .2s ease, border-color .2s ease, color .2s ease;
-  }
-  .btn:hover{transform:translateY(-2px);}
-  .btn-primary{
-    background:#c3cacf;color:#0a0b0c;
-    box-shadow:0 10px 26px -14px rgba(120,128,136,.55);
-  }
-  .btn-primary:hover{background:#d7dce0;}
-  .btn-ghost{
-    background:#e2e6e9;
-    border:1px solid #e2e6e9;
-    color:#0a0b0c;
-  }
-  .btn-ghost:hover{
-    background:#f0f3f5;
-    border-color:#f0f3f5;
-  }
-
   /* ---------- 品牌简介 ---------- */
   .about-grid{
     display:grid;grid-template-columns:1.15fr .85fr;gap:48px;align-items:center;
   }
   .about-text h2{font-size:clamp(1.45rem,2.6vw,1.9rem);margin-bottom:14px;}
-  .about-text p + p{margin-top:12px;color:var(--text-soft);}
-  .about-text p{
+  .about-text p:not(.eyebrow) + p:not(.eyebrow){margin-top:12px;color:var(--text-soft);}
+  /* 排除 eyebrow 以免干扰小标题字体 */
+  .about-text p:not(.eyebrow){
     font-family:var(--font-serif);font-size:.95rem;font-weight:500;
     text-align: left;
     word-break: normal;
     overflow-wrap: break-word;
   }
-  .about-text p:first-of-type{color:var(--text);}
+  .about-text p:first-of-type:not(.eyebrow){color:var(--text);}
 
   .entity-card{
     background:linear-gradient(160deg,#191d21,#272c31);
@@ -593,8 +577,8 @@
     .philosophy .phil-text{white-space:normal;}
 
     /* 多行文字：正常左对齐，排满容器宽度后自然换行，不拉伸字间距 */
-    .about-text p,
-    .section-head p,
+    .about-text p:not(.eyebrow),
+    .section-head p:not(.eyebrow),
     .entity-card .entity-desc,
     .value p,
     .philosophy .phil-text,
@@ -642,9 +626,6 @@
     .hero h1 span{letter-spacing:.18em;}
     .tagline{letter-spacing:.04em;}
 
-    .hero-actions{gap:10px;}
-    .btn{width:100%;padding:12px 20px;}
-
     .grid-4{grid-template-columns:repeat(2,1fr);gap:10px;}
     .grid-disc{grid-template-columns:repeat(2,1fr);gap:10px;}
     .values{grid-template-columns:1fr;gap:10px;}
@@ -678,7 +659,7 @@
     .footer-mail{font-size:.7rem;gap:5px;color:#ffffff;}
     .footer-mail svg{width:12px;height:12px;color:#ffffff;}
 
-    .about-text p{font-size:.94rem;}
+    .about-text p:not(.eyebrow){font-size:.94rem;}
     .lead{font-size:.96rem;}
     .philosophy .phil-text{font-size:.94rem;}
   }
@@ -704,7 +685,7 @@
     </a>
     <nav class="nav-links">
       <a href="#about">品牌简介</a>
-      <a href="#services">顾问服务</a>
+      <a href="#services">服务内容</a>
       <a href="#sectors">覆盖业态</a>
       <a href="#disciplines">专业领域</a>
       <a href="#philosophy">品牌理念</a>
@@ -853,10 +834,6 @@
     <h1>小匠机电 <span>XJ MEP</span></h1>
     <p class="tagline">以匠造之心 · 做专业之事</p>
     <p class="lead"><span class="ln">工程领域的机电顾问品牌，</span><span class="ln">机电工程全周期顾问服务。</span></p>
-    <div class="hero-actions">
-      <a class="btn btn-ghost" href="#about">品牌简介</a>
-      <a class="btn btn-primary" href="#services">服务内容</a>
-    </div>
   </div>
 </section>
 
@@ -890,11 +867,11 @@
   </div>
 </section>
 
-<!-- ================= 顾问服务 ================= -->
+<!-- ================= 服务内容 ================= -->
 <section class="section section--soft" id="services">
   <div class="wrap">
     <div class="section-head reveal">
-      <p class="eyebrow">顾问服务 / Services</p>
+      <p class="eyebrow">服务内容 / Services</p>
       <h2>全周期机电顾问服务</h2>
       <p><span class="ln">从方案策划到运维支持，覆盖项目各阶段，</span><span class="ln">形成完整的机电闭环。</span></p>
     </div>
