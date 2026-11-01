@@ -218,7 +218,6 @@
   .section--soft{background:var(--bg-soft);}
 
   .section-head{max-width:680px;margin-bottom:30px;}
-  /* 排除 eyebrow 以免干扰小标题字体 */
   .section-head p:not(.eyebrow){
     color:var(--text-soft);margin-top:10px;font-size:.95rem;
     font-family:var(--font-serif);font-weight:500;
@@ -228,14 +227,20 @@
   }
   .section-head h2{font-size:clamp(1.5rem,2.8vw,2.1rem);}
 
-  /* 小标题字号放大两号（从 .74rem 放大至 .95rem） */
   .eyebrow{
     font-size:.95rem;letter-spacing:.16em;text-transform:uppercase;
     font-weight:700;color:var(--accent-bright);margin:0 0 12px;
     font-family:var(--font-sans);
   }
 
-  /* 需要按语义断行的文本行（窄屏下独占一行） */
+  .eyebrow-split{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:baseline;
+    gap:0 1.15em;
+  }
+  .eyebrow-split > span{white-space:nowrap;}
+
   .ln{display:inline;}
 
   /* ---------- Hero ---------- */
@@ -279,14 +284,16 @@
   .hero h1{
     font-size:clamp(1.9rem,4.8vw,3rem);
     color:#fff;font-weight:800;letter-spacing:.01em;
-    display:flex;flex-wrap:wrap;align-items:baseline;gap:14px;
+    display:flex;flex-wrap:wrap;align-items:baseline;
+    gap:1ch;  /* 一个字符间距 */
     font-family:var(--font-sans);
     white-space:nowrap;
   }
-  .hero h1 span{
-    font-size:clamp(.85rem,1.8vw,1.05rem);
-    font-weight:600;letter-spacing:.22em;
-    color:#d0d8de;text-transform:uppercase;
+  .hero h1 .hero-en{
+    font-family:"Rubik",var(--font-sans);
+    font-style:italic;
+    font-weight:500;
+    letter-spacing:.01em;
   }
 
   .tagline{
@@ -312,7 +319,6 @@
   }
   .about-text h2{font-size:clamp(1.45rem,2.6vw,1.9rem);margin-bottom:14px;}
   .about-text p:not(.eyebrow) + p:not(.eyebrow){margin-top:12px;color:var(--text-soft);}
-  /* 排除 eyebrow 以免干扰小标题字体 */
   .about-text p:not(.eyebrow){
     font-family:var(--font-serif);font-size:.95rem;font-weight:500;
     text-align: left;
@@ -320,6 +326,11 @@
     overflow-wrap: break-word;
   }
   .about-text p:first-of-type:not(.eyebrow){color:var(--text);}
+
+  .about-text p.about-lead:not(.eyebrow){
+    font-family:var(--font-sans);
+    font-weight:500;
+  }
 
   .entity-card{
     background:linear-gradient(160deg,#191d21,#272c31);
@@ -372,7 +383,7 @@
     font-family:var(--font-sans);
   }
 
-  /* ---------- 覆盖业态：电脑端 6×2，移动端 4×3 ---------- */
+  /* ---------- 覆盖业态 ---------- */
   .pills{
     display:grid;
     grid-template-columns:repeat(6, 1fr);
@@ -571,12 +582,10 @@
       padding:calc(var(--nav-h) + 24px) 0 calc(var(--footer-h) + 36px + env(safe-area-inset-bottom));
     }
 
-    /* 平板 / 手机：多业态 4 列 */
     .pills{grid-template-columns:repeat(4, 1fr);}
 
     .philosophy .phil-text{white-space:normal;}
 
-    /* 多行文字：正常左对齐，排满容器宽度后自然换行，不拉伸字间距 */
     .about-text p:not(.eyebrow),
     .section-head p:not(.eyebrow),
     .entity-card .entity-desc,
@@ -622,8 +631,14 @@
     }
     .nav-links a{padding:2px 0;}
 
-    .hero h1{gap:10px;}
-    .hero h1 span{letter-spacing:.18em;}
+    .eyebrow-split{
+      flex-direction:column;
+      align-items:flex-start;
+      gap:0;
+    }
+    .eyebrow-split > span{display:block;}
+
+    .hero h1{gap:1ch;}
     .tagline{letter-spacing:.04em;}
 
     .grid-4{grid-template-columns:repeat(2,1fr);gap:10px;}
@@ -642,7 +657,6 @@
     .value strong{font-size:.96rem;}
     .value p{font-size:.82rem;}
 
-    /* 覆盖业态：手机端 4 列 3 行 */
     .pills{gap:8px;grid-template-columns:repeat(4, 1fr);}
     .pill{
       min-height:46px;
@@ -662,6 +676,14 @@
     .about-text p:not(.eyebrow){font-size:.94rem;}
     .lead{font-size:.96rem;}
     .philosophy .phil-text{font-size:.94rem;}
+  }
+
+  @media (max-width:400px){
+    .eyebrow-split{
+      flex-direction:column;
+      align-items:flex-start;
+      gap:0;
+    }
   }
 
   @media (prefers-reduced-motion: reduce){
@@ -830,8 +852,8 @@
   </svg>
 
   <div class="wrap hero-inner">
-    <p class="eyebrow">Mechanical · Electrical · Plumbing</p>
-    <h1>小匠机电 <span>XJ MEP</span></h1>
+    <p class="eyebrow eyebrow-split"><span>Mechanical</span><span>Electrical</span><span>Plumbing</span></p>
+    <h1><span class="hero-en">XJ MEP</span>小匠机电</h1>
     <p class="tagline">以匠造之心 · 做专业之事</p>
     <p class="lead"><span class="ln">工程领域的机电顾问品牌，</span><span class="ln">机电工程全周期顾问服务。</span></p>
   </div>
@@ -844,7 +866,7 @@
       <div class="about-text reveal">
         <p class="eyebrow">品牌简介 / About</p>
         <h2>XJ MEP 小匠机电</h2>
-        <p>
+        <p class="about-lead">
           <span class="latin">XJ MEP（Xiao Jiang Mechanical Electrical Plumbing）</span>，名称小匠机电，是四川未来知见工程设计有限公司运营的机电顾问品牌。
         </p>
         <p>
@@ -972,8 +994,8 @@
 <!-- ================= 固定页脚 ================= -->
 <footer class="page-footer">
   <div class="wrap page-footer-inner">
-    <span class="footer-item footer-left"><span class="latin">© <span id="year"></span>&nbsp;XJ MEP</span>&nbsp;小匠机电</span>
-    <span class="footer-item footer-center">以匠造之心 · 做专业之事</span>
+    <span class="footer-item footer-left"><span class="latin">© <span id="year"></span>&nbsp;&nbsp;XJ MEP</span>&nbsp;小匠机电</span>
+    <span class="footer-item footer-center">以匠造之心·做专业之事</span>
     <span class="footer-item footer-org">运营主体：四川未来知见工程设计有限公司</span>
     <a class="footer-item footer-mail" href="mailto:dxj@xjmep.com">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
