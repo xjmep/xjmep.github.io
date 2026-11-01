@@ -89,7 +89,11 @@
     .lead-form label,
     .form-status,
     .section-head h2,
-    .cta-inner h2 {
+    .cta-inner h2,
+    .wechat-btn,
+    .about-btn,
+    .nav-toggle,
+    .modal-tip {
       font-family: var(--font-sans);
     }
 
@@ -239,17 +243,31 @@
       flex-shrink: 0;
     }
 
+    /* ---------- 移动端菜单按钮（优化后） ---------- */
     .nav-toggle {
       display: none;
-      width: 44px;
-      height: 44px;
-      border: 1px solid var(--line);
+      width: 46px;
+      height: 46px;
+      border: none;
       border-radius: 12px;
-      background: #fff;
-      color: var(--dark);
-      font-size: 20px;
+      /* 采用品牌渐变色背景，使其在白色页头上非常醒目 */
+      background: linear-gradient(135deg, var(--primary), var(--primary-2));
+      color: #fff;
+      font-size: 24px;
+      font-weight: 700;
+      line-height: 1;
       cursor: pointer;
       touch-action: manipulation;
+      /* 添加微投影增加立体感 */
+      box-shadow: 0 4px 12px rgba(11, 95, 138, 0.25);
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.2s ease;
+    }
+
+    /* 点击时的反馈动效 */
+    .nav-toggle:active {
+      transform: scale(0.92);
     }
 
     /* ---------- 按钮 ---------- */
@@ -718,10 +736,10 @@
       font-size: 14px;
     }
 
-    /* ---------- 实施流程 ---------- */
+    /* ---------- 实施流程（6 步） ---------- */
     .flow-grid {
       display: grid;
-      grid-template-columns: repeat(5, 1fr);
+      grid-template-columns: repeat(3, 1fr);
       gap: 16px;
     }
 
@@ -760,8 +778,8 @@
       font-size: 14px;
     }
 
-    /* ---------- 案例场景 ---------- */
-    .case-grid { grid-template-columns: repeat(3, 1fr); }
+    /* ---------- 案例场景（4 个场景 → 2×2） ---------- */
+    .case-grid { grid-template-columns: repeat(2, 1fr); }
 
     .case-card { overflow: hidden; }
 
@@ -860,7 +878,7 @@
       font-size: 15px;
     }
 
-    /* ---------- 更新评估表单 ---------- */
+    /* ---------- 评估需求表单 ---------- */
     .contact-grid {
       max-width: 820px;
       margin: 0 auto;
@@ -948,10 +966,13 @@
         linear-gradient(160deg, #0c2233, #071a28);
     }
 
+    /* 联系信息在左，按钮组在右，同行垂直居中对齐 */
     .footer-main {
       display: flex;
-      flex-direction: column;
-      align-items: flex-start;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px 32px;
       text-align: left;
       padding-bottom: 24px;
       border-bottom: 1px solid rgba(255, 255, 255, 0.12);
@@ -984,6 +1005,41 @@
       transition: color 0.2s ease;
     }
 
+    /* 页脚按钮组：微信联系 + 关于我们，上下排列，整体与左侧内容垂直居中 */
+    .footer-actions {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
+    /* 微信联系 / 关于我们 按钮共用样式（无图标） */
+    .wechat-btn,
+    .about-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 46px;
+      padding: 0 26px;
+      border-radius: 999px;
+      border: 1px solid rgba(126, 232, 211, 0.45);
+      background: rgba(126, 232, 211, 0.12);
+      color: #fff;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      cursor: pointer;
+      flex-shrink: 0;
+      text-decoration: none;
+      touch-action: manipulation;
+      -webkit-user-select: none;
+      user-select: none;
+      -webkit-appearance: none;
+      appearance: none;
+      transition: background 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
+    }
+
     .footer-bottom {
       display: flex;
       flex-wrap: wrap;
@@ -1009,6 +1065,78 @@
 
     .footer-bottom .operator { color: #fff; }
 
+    /* ---------- 微信二维码弹窗 ---------- */
+    .modal {
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 300;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      background: rgba(7, 26, 40, 0.74);
+      -webkit-backdrop-filter: blur(4px);
+      backdrop-filter: blur(4px);
+    }
+
+    .modal.open { display: flex; }
+
+    .modal-box {
+      position: relative;
+      width: 100%;
+      max-width: 330px;
+      max-height: calc(100vh - 48px);
+      max-height: calc(100dvh - 48px);
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      padding: 26px 22px 24px;
+      border-radius: 20px;
+      background: #fff;
+      text-align: center;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.32);
+    }
+
+    .modal-box img {
+      width: 100%;
+      max-width: 240px;
+      max-height: 60vh;
+      object-fit: contain;
+      margin: 0 auto 14px;
+      border-radius: 12px;
+      background: #f4f8fb;
+    }
+
+    /* 弹窗提示文字：思源黑体、黑色、字号调大 */
+    .modal-tip {
+      margin: 0;
+      font-family: var(--font-sans);
+      font-size: 17px;
+      font-weight: 600;
+      color: #000;
+      line-height: 1.6;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      width: 34px;
+      height: 34px;
+      border: none;
+      border-radius: 50%;
+      background: #eef4f8;
+      color: #45606f;
+      font-size: 15px;
+      line-height: 1;
+      cursor: pointer;
+      touch-action: manipulation;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+
     /* ---------- 动效 ---------- */
     .js .reveal {
       opacity: 0;
@@ -1032,6 +1160,13 @@
         border-color: rgba(14, 143, 126, 0.36);
         box-shadow: var(--shadow);
       }
+      .wechat-btn:hover,
+      .about-btn:hover {
+        background: rgba(126, 232, 211, 0.22);
+        border-color: rgba(126, 232, 211, 0.7);
+        transform: translateY(-2px);
+      }
+      .modal-close:hover { background: #e2ecf3; }
       .footer-bottom a:hover { color: var(--primary-3); }
       .footer-contact a:hover { color: var(--primary-3); }
     }
@@ -1044,11 +1179,15 @@
       .goal-grid,
       .case-grid { grid-template-columns: repeat(2, 1fr); }
       .advantage-grid { grid-template-columns: repeat(2, 1fr); }
-      .flow-grid { grid-template-columns: repeat(3, 1fr); }
+      .flow-grid { grid-template-columns: repeat(2, 1fr); }
     }
 
     @media (max-width: 760px) {
-      .nav-toggle { display: block; }
+      /* 显示醒目菜单按钮 */
+      .nav-toggle { 
+        display: flex; 
+      }
+
       .nav-links {
         position: absolute;
         top: calc(100% + 6px);
@@ -1121,6 +1260,17 @@
       .logo-mark .mark-top { font-size: 10px; }
       .logo-mark .mark-sub { font-size: 8px; }
 
+      /* 页脚：上下排列，按钮组靠左 */
+      .footer-main {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+      }
+
+      .footer-actions {
+        align-items: flex-start;
+      }
+
       .footer-contact { font-size: 13.5px; }
       .footer-contact-title { font-size: 17px; }
       .footer-bottom {
@@ -1146,7 +1296,7 @@
 
     @media (prefers-reduced-motion: reduce) {
       .js .reveal { opacity: 1; transform: none; transition: none; }
-      .btn, .service-card, .pain-item { transition: none; }
+      .btn, .service-card, .pain-item, .wechat-btn, .about-btn { transition: none; }
     }
   </style>
 </head>
@@ -1154,13 +1304,12 @@
 
 <div id="app">
 
-  <!-- ============ 页面 1：首页 ============ -->
+  <!-- ============ 页面 1：更新概览 ============ -->
   <div class="page" id="page-home">
     <div class="page-body" style="padding:0;background:#fff;">
       <section class="hero">
         <div class="container hero-grid">
           <div class="reveal">
-            <div class="badge">既有建筑机电系统  |  局部更新 · 整体更新</div>
             <h1>让老建筑<br /><span>安全、节能、智慧</span>地运行</h1>
             <p class="hero-desc">
               公司致力于建筑机电更新，围绕给排水、暖通空调、供配电与照明、消防、电梯及智能化弱电系统，提供从现状评估、方案设计、图纸设计等更新服务。
@@ -1254,6 +1403,12 @@
             <div>
               <h3>弱电分散，运维管理粗放</h3>
               <p>各子系统独立建设、数据不通，设备台账与运行记录缺失，难以支撑精细化运维决策。</p>
+            </div>
+          </div>
+          <div class="pain-item reveal">
+            <div>
+              <h3>给排水设施老化，水压水质难保障</h3>
+              <p>水泵、水箱与管道锈蚀结垢，出现水压不足、跑冒滴漏和二次污染，漏损控制与用水计量手段缺失。</p>
             </div>
           </div>
         </div>
@@ -1420,14 +1575,14 @@
     </div>
   </div>
 
-  <!-- ============ 页面 6：实施流程 ============ -->
+  <!-- ============ 页面 6：实施流程（6 步） ============ -->
   <div class="page" id="page-process" hidden>
     <div class="page-body">
       <section class="container">
         <div class="section-head center reveal">
           <span class="eyebrow">实施流程</span>
-          <h2>五步推进，更新过程清晰可控</h2>
-          <p>从现状诊断到运维交接，建立闭环实施路径，兼顾施工安全、使用体验和交付质量。</p>
+          <h2>六步推进，更新过程清晰可控</h2>
+          <p>从现状诊断到运维交接，建立闭环实施路径，兼顾设计质量、施工安全、使用体验和交付成果。</p>
         </div>
 
         <div class="flow-grid">
@@ -1443,16 +1598,21 @@
           </article>
           <article class="step reveal">
             <div class="step-num">03</div>
-            <h3>施工组织</h3>
-            <p>分区分时组织施工，落实安全文明措施，减少对建筑正常使用的影响。</p>
+            <h3>图纸设计</h3>
+            <p>完成各专业更新图纸设计，明确设备参数、管线走向与预留条件，减少现场变更和返工。</p>
           </article>
           <article class="step reveal">
             <div class="step-num">04</div>
+            <h3>施工组织</h3>
+            <p>依据设计图纸分区分时组织施工，落实安全文明措施，减少对建筑正常使用的影响。</p>
+          </article>
+          <article class="step reveal">
+            <div class="step-num">05</div>
             <h3>调试验收</h3>
             <p>开展单机调试、系统联动和性能验证，确保设备与系统稳定可靠运行。</p>
           </article>
           <article class="step reveal">
-            <div class="step-num">05</div>
+            <div class="step-num">06</div>
             <h3>运维交接</h3>
             <p>移交设备台账、竣工资料和运维建议，必要时接入智慧运维系统。</p>
           </article>
@@ -1461,7 +1621,7 @@
     </div>
   </div>
 
-  <!-- ============ 页面 7：案例场景 ============ -->
+  <!-- ============ 页面 7：案例场景（4 个场景） ============ -->
   <div class="page" id="page-cases" hidden>
     <div class="page-body">
       <section class="container">
@@ -1499,6 +1659,20 @@
           </article>
 
           <article class="case-card reveal">
+            <div class="case-visual"><span>住宅建筑更新场景</span></div>
+            <div class="case-body">
+              <h3>某住宅小区机电设施更新</h3>
+              <p>针对供水压力不足、公区照明能耗高、门禁监控老化等问题分区分批实施更新。</p>
+              <ul>
+                <li>二次供水泵房与管网改造</li>
+                <li>公区照明节能与感应控制</li>
+                <li>门禁对讲与视频监控更新</li>
+                <li>电梯运行状态监测接入</li>
+              </ul>
+            </div>
+          </article>
+
+          <article class="case-card reveal">
             <div class="case-visual"><span>园区更新场景</span></div>
             <div class="case-body">
               <h3>某园区机电系统综合提升</h3>
@@ -1515,12 +1689,12 @@
     </div>
   </div>
 
-  <!-- ============ 页面 8：更新评估 ============ -->
+  <!-- ============ 页面 8：评估需求表单 ============ -->
   <div class="page" id="page-contact" hidden>
     <div class="page-body">
       <section class="container">
         <div class="section-head center reveal">
-          <span class="eyebrow">更新评估</span>
+          <span class="eyebrow">评估需求表单</span>
           <h2>获取建筑机电更新建议</h2>
           <p>请留下您的需求，我们将尽快与您联系。</p>
         </div>
@@ -1558,7 +1732,16 @@
                 required
               />
             </label>
-            <label class="full">
+            <label>
+              联系微信
+              <input
+                type="text"
+                name="wechat"
+                placeholder="请输入微信号（选填）"
+                autocomplete="off"
+              />
+            </label>
+            <label>
               联系邮箱
               <input
                 type="email"
@@ -1573,13 +1756,17 @@
               建筑类型
               <select name="building" autocomplete="off">
                 <option value="">请选择</option>
-                <option>办公楼</option>
-                <option>商业综合体</option>
+                <option>办公</option>
+                <option>商业</option>
                 <option>住宅</option>
                 <option>酒店</option>
-                <option>医院/医疗建筑</option>
-                <option>学校/公共建筑</option>
+                <option>医疗建筑</option>
+                <option>教育建筑</option>
+                <option>体育建筑</option>
                 <option>产业园区</option>
+                <option>厂房</option>
+                <option>市政</option>
+                <option>景观</option>
                 <option>其他</option>
               </select>
             </label>
@@ -1613,6 +1800,15 @@
 
 </div>
 
+<!-- ============ 微信二维码弹窗（全局唯一） ============ -->
+<div class="modal" id="wechatModal" aria-hidden="true">
+  <div class="modal-box" role="dialog" aria-modal="true" aria-label="微信二维码">
+    <button class="modal-close" type="button" id="wechatClose" aria-label="关闭二维码">✕</button>
+    <img src="wechat.jpg" alt="小匠机电更新微信二维码" />
+    <p class="modal-tip">扫码添加微信，一对一咨询</p>
+  </div>
+</div>
+
 <script>
   const HEADER_HTML = `
     <header class="site-header">
@@ -1633,7 +1829,7 @@
         <button class="nav-toggle" type="button" aria-label="打开导航菜单" aria-expanded="false">☰</button>
 
         <nav class="nav-links" aria-label="主导航">
-          <a href="#home" data-nav="home">首页</a>
+          <a href="#home" data-nav="home">更新概览</a>
           <a href="#pain" data-nav="pain">现存问题</a>
           <a href="#services" data-nav="services">服务范围</a>
           <a href="#goals" data-nav="goals">更新目标</a>
@@ -1652,9 +1848,13 @@
         <div class="footer-main">
           <div class="footer-contact">
             <p class="footer-contact-title">联系我们</p>
-            <a href="tel:18113177087">电话：18113177087</a>
+            <a href="tel:18108010958">电话：18108010958</a>
             <a href="mailto:dxj@xjmep.com">邮箱：dxj@xjmep.com</a>
-            <span>四川 · 成都</span>
+            <span>地址：四川成都温江</span>
+          </div>
+          <div class="footer-actions">
+            <button class="wechat-btn" type="button" aria-haspopup="dialog" aria-controls="wechatModal">微信联系</button>
+            <a class="about-btn" href="about.html" target="_blank" rel="noopener">关于我们</a>
           </div>
         </div>
 
@@ -1791,6 +1991,49 @@
     counters.forEach((counter) => counterObserver.observe(counter));
   }
 
+  /* ---------- 微信二维码弹窗 ---------- */
+  const wechatModal = document.getElementById('wechatModal');
+  const wechatClose = document.getElementById('wechatClose');
+
+  if (wechatModal && wechatClose) {
+    let wechatTrigger = null;
+
+    function openWechat(btn) {
+      wechatTrigger = btn || null;
+      wechatModal.classList.add('open');
+      wechatModal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+      wechatClose.focus();
+    }
+
+    function closeWechat() {
+      wechatModal.classList.remove('open');
+      wechatModal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      if (wechatTrigger) wechatTrigger.focus();
+    }
+
+    document.querySelectorAll('.wechat-btn').forEach((btn) => {
+      btn.addEventListener('click', (event) => {
+        event.preventDefault();
+        openWechat(btn);
+      });
+    });
+
+    wechatClose.addEventListener('click', closeWechat);
+
+    wechatModal.addEventListener('click', (event) => {
+      if (event.target === wechatModal) closeWechat();
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && wechatModal.classList.contains('open')) {
+        closeWechat();
+      }
+    });
+  }
+
+  /* ---------- 评估需求表单 ---------- */
   const leadForm = document.getElementById('leadForm');
   const formStatus = document.getElementById('formStatus');
 
@@ -1819,7 +2062,7 @@
 
         if (result.success) {
           formStatus.style.color = 'var(--primary-2)';
-          formStatus.textContent = '已收到您的需求，我们将尽快与您联系。';
+          formStatus.textContent = '我们已关注到您的需求，我们将尽快与您取得联系，感谢您的等待。';
           leadForm.reset();
         } else {
           formStatus.style.color = '#c0392b';
