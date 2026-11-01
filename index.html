@@ -153,16 +153,24 @@
     background:none;border:none;line-height:1;
   }
 
-  /* 电话弹窗文字：思源宋体，加粗，字号再增大一号 */
+  /* 电话弹窗文字：思源宋体，加粗，字号已增大 */
+  /* 联系电话改为可点击的 tel: 链接，点击调起系统拨号界面 */
   #phone-modal .tel{
+    display:block;
     font-family:"Source Han Serif SC","思源宋体","Source Han Serif CN",serif;
-    font-size:clamp(1.18rem,4.5vw,1.38rem);   /* 再增大一号 */
+    font-size:clamp(1.18rem,4.5vw,1.38rem);
     font-weight:800;
     letter-spacing:.04em;color:#000000;margin-top:16px;
+    text-decoration:none;            /* 去掉下划线 */
+    cursor:pointer;
+    -webkit-tap-highlight-color:transparent;
   }
+  #phone-modal .tel:visited,
+  #phone-modal .tel:hover,
+  #phone-modal .tel:active{color:#000000;text-decoration:none;}
   #phone-modal .tel-sub{
     font-family:"Source Han Serif SC","思源宋体","Source Han Serif CN",serif;
-    font-size:clamp(1.08rem,4.2vw,1.25rem);   /* 再增大一号 */
+    font-size:clamp(1.08rem,4.2vw,1.25rem);
     font-weight:800;
     letter-spacing:.06em;color:#000000;margin-top:6px;
   }
@@ -399,7 +407,8 @@ function tryOpenScheme(scheme, webUrl){
   <div class="box">
     <button class="close" onclick="document.getElementById('phone-modal').style.display='none'">×</button>
     <img src="phone.png" alt="电话二维码">
-    <p class="tel">联系电话：18108010958</p>
+    <!-- 电话号码改为 tel: 链接，点击调起系统拨号界面 -->
+    <a class="tel" href="tel:18108010958">联系电话：18108010958</a>
     <p class="tel-sub">手机扫码直接拨打</p>
   </div>
 </div>
