@@ -290,10 +290,23 @@
     white-space:nowrap;
   }
   .hero h1 .hero-en{
+    position:relative;
     font-family:"Rubik",var(--font-sans);
     font-style:italic;
     font-weight:500;
     letter-spacing:.01em;
+  }
+  /* XJ MEP 右上角注册商标 R 标 */
+  .hero h1 .hero-en .reg-mark{
+    font-family:var(--font-sans);
+    font-style:normal;
+    font-weight:600;
+    font-size:.68em;          /* 再放大一号 */
+    vertical-align:super;
+    line-height:1;
+    margin-left:.08em;
+    letter-spacing:0;
+    color:inherit;
   }
 
   .tagline{
@@ -853,7 +866,7 @@
 
   <div class="wrap hero-inner">
     <p class="eyebrow eyebrow-split"><span>Mechanical</span><span>Electrical</span><span>Plumbing</span></p>
-    <h1><span class="hero-en">XJ MEP</span>小匠机电</h1>
+    <h1><span class="hero-en">XJ MEP<sup class="reg-mark">®</sup></span>小匠机电</h1>
     <p class="tagline">以匠造之心 · 做专业之事</p>
     <p class="lead"><span class="ln">工程领域的机电顾问品牌，</span><span class="ln">机电工程全周期顾问服务。</span></p>
   </div>
