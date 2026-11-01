@@ -10,9 +10,6 @@
   <title>小匠机电更新</title>
   <meta name="description" content="小匠机电更新专注既有建筑机电系统更新，覆盖给排水、暖通空调、供配电与照明、消防、电梯、智能化与智慧运维，提供评估、设计服务。" />
 
-  <!-- 免费商用字体（SIL Open Font License 1.1）：
-       思源黑体 Noto Sans SC / 思源宋体 Noto Serif SC
-       使用国内可访问的镜像源，兼顾微信内置浏览器与手机浏览器 -->
   <link rel="preconnect" href="https://fonts.loli.net" crossorigin />
   <link href="https://fonts.loli.net/css2?family=Noto+Sans+SC:wght@400;500;700;900&family=Noto+Serif+SC:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
@@ -35,12 +32,10 @@
       --radius: 20px;
       --max: 1180px;
 
-      /* 思源黑体（标题、页眉页脚、UI 元素） */
       --font-sans: "Noto Sans SC", "Source Han Sans SC", "Source Han Sans CN",
         "PingFang SC", "HarmonyOS Sans SC", "MiSans", "Microsoft YaHei",
         "Alibaba PuHuiTi 3.0", "Alibaba PuHuiTi", "OPPO Sans", sans-serif;
 
-      /* 思源宋体（正文内容文本） */
       --font-serif: "Noto Serif SC", "Source Han Serif SC", "Source Han Serif CN",
         "Songti SC", "STSong", "SimSun", "Noto Serif CJK SC", serif;
     }
@@ -50,30 +45,28 @@
     html {
       -webkit-text-size-adjust: 100%;
       text-size-adjust: 100%;
+      height: 100%;
       overflow-x: hidden;
+      overflow-y: auto;
       background: var(--bg);
-    }
-
-    /* 使用 overflow-x: clip 避免创建滚动容器，保证 position: sticky 吸顶导航生效 */
-    @supports (overflow: clip) {
-      html,
-      body {
-        overflow-x: clip;
-      }
+      overscroll-behavior: none;
     }
 
     body {
       margin: 0;
+      height: auto;
+      min-height: 100%;
+      width: 100%;
+      overflow: visible;
       font-family: var(--font-serif);
-      color: var(--text);
+      color: #000000;
       background: var(--bg);
       line-height: 1.7;
       -webkit-font-smoothing: antialiased;
       -webkit-tap-highlight-color: transparent;
-      overflow-x: hidden;
+      overscroll-behavior: none;
     }
 
-    /* 标题、按钮、标签等界面元素统一使用思源黑体 */
     h1, h2, h3, h4, h5, h6,
     .eyebrow,
     .btn,
@@ -91,7 +84,9 @@
     .section-head h2,
     .cta-inner h2,
     .wechat-btn,
+    .phone-btn,
     .about-btn,
+    .email-btn,
     .nav-toggle,
     .modal-tip {
       font-family: var(--font-sans);
@@ -108,16 +103,19 @@
       padding: 0 22px;
     }
 
-    /* ---------- 页眉（思源黑体） ---------- */
     .site-header {
       position: sticky;
       top: 0;
       z-index: 100;
+      flex: 0 0 auto;
       font-family: var(--font-sans);
       background: rgba(255, 255, 255, 0.94);
       -webkit-backdrop-filter: blur(14px);
       backdrop-filter: blur(14px);
       border-bottom: 1px solid rgba(220, 231, 238, 0.85);
+      padding-top: env(safe-area-inset-top, 0px);
+      padding-left: env(safe-area-inset-left, 0px);
+      padding-right: env(safe-area-inset-right, 0px);
     }
 
     .nav {
@@ -138,7 +136,6 @@
       touch-action: manipulation;
     }
 
-    /* 图标：两行文字整体居中，内部两行右对齐 */
     .logo-mark {
       width: 46px;
       height: 46px;
@@ -175,7 +172,6 @@
       opacity: 0.92;
     }
 
-    /* 品牌文字块：两行左右两端对齐 */
     .logo-text {
       display: inline-flex;
       flex-direction: column;
@@ -193,7 +189,6 @@
       white-space: nowrap;
     }
 
-    /* 副标题：逐字分布，强制与主标题等宽，实现左右两端对齐 */
     .logo small.sub-justify {
       display: flex;
       justify-content: space-between;
@@ -230,7 +225,6 @@
 
     .nav-links .btn { color: #fff; }
 
-    /* 圆形“评估”按钮 */
     .nav-links .btn-circle {
       width: 46px;
       height: 46px;
@@ -243,34 +237,61 @@
       flex-shrink: 0;
     }
 
-    /* ---------- 移动端菜单按钮（优化后） ---------- */
     .nav-toggle {
       display: none;
       width: 46px;
       height: 46px;
+      padding: 0;
       border: none;
       border-radius: 12px;
-      /* 采用品牌渐变色背景，使其在白色页头上非常醒目 */
       background: linear-gradient(135deg, var(--primary), var(--primary-2));
       color: #fff;
-      font-size: 24px;
-      font-weight: 700;
-      line-height: 1;
       cursor: pointer;
       touch-action: manipulation;
-      /* 添加微投影增加立体感 */
       box-shadow: 0 4px 12px rgba(11, 95, 138, 0.25);
       align-items: center;
       justify-content: center;
       transition: transform 0.2s ease;
+      flex-shrink: 0;
     }
 
-    /* 点击时的反馈动效 */
-    .nav-toggle:active {
-      transform: scale(0.92);
+    .nav-toggle:active { transform: scale(0.92); }
+
+    .nav-toggle-bars {
+      position: relative;
+      display: block;
+      width: 20px;
+      height: 2px;
+      border-radius: 2px;
+      background: #ffffff;
+      transition: background 0.25s ease;
     }
 
-    /* ---------- 按钮 ---------- */
+    .nav-toggle-bars::before,
+    .nav-toggle-bars::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      width: 20px;
+      height: 2px;
+      border-radius: 2px;
+      background: #ffffff;
+      transition: transform 0.25s ease;
+    }
+
+    .nav-toggle-bars::before { top: -6px; }
+    .nav-toggle-bars::after { top: 6px; }
+
+    .nav-toggle[aria-expanded="true"] .nav-toggle-bars { background: transparent; }
+
+    .nav-toggle[aria-expanded="true"] .nav-toggle-bars::before {
+      transform: translateY(6px) rotate(45deg);
+    }
+
+    .nav-toggle[aria-expanded="true"] .nav-toggle-bars::after {
+      transform: translateY(-6px) rotate(-45deg);
+    }
+
     .btn {
       display: inline-flex;
       align-items: center;
@@ -314,16 +335,24 @@
       font-size: 14px;
     }
 
-    /* ---------- 页面容器 ---------- */
+    .page {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      min-height: 100dvh;
+    }
+
     .page[hidden] { display: none; }
 
     .page-body {
-      padding: 62px 0 92px;
+      flex: 1 0 auto;
+      width: 100%;
+      padding: 62px 0 56px;
       background: var(--bg);
-      min-height: 62vh;
+      padding-left: env(safe-area-inset-left, 0px);
+      padding-right: env(safe-area-inset-right, 0px);
     }
 
-    /* ---------- 首屏 ---------- */
     .hero {
       position: relative;
       overflow: hidden;
@@ -401,6 +430,8 @@
       background-clip: text;
       color: transparent;
     }
+
+    .hero h1 .run-text { display: inline; }
 
     .hero-desc {
       max-width: 640px;
@@ -510,7 +541,6 @@
       font-weight: 800;
     }
 
-    /* ---------- 通用区块头 ---------- */
     .section-head {
       max-width: 800px;
       margin-bottom: 40px;
@@ -558,13 +588,24 @@
       letter-spacing: -0.02em;
     }
 
+    .section-head h2 .keep-together {
+      display: inline-block;
+      white-space: nowrap;
+      max-width: 100%;
+    }
+
+    .cta-inner h2 .keep-together {
+      display: inline-block;
+      white-space: nowrap;
+      max-width: 100%;
+    }
+
     .section-head p {
       margin: 0;
-      color: var(--muted);
+      color: #000000;
       font-size: 16px;
     }
 
-    /* ---------- 现存问题 ---------- */
     .pain-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -583,7 +624,6 @@
       transition: transform 0.22s ease, box-shadow 0.22s ease;
     }
 
-    /* 感叹号：红色 */
     .pain-item::before {
       content: "!";
       flex: 0 0 26px;
@@ -602,17 +642,16 @@
     .pain-item h3 {
       margin: 0 0 6px;
       font-size: 16px;
-      color: var(--dark);
+      color: #000000;
       line-height: 1.4;
     }
 
     .pain-item p {
       margin: 0;
-      color: var(--muted);
+      color: #000000;
       font-size: 14.5px;
     }
 
-    /* ---------- 卡片网格 ---------- */
     .service-grid,
     .goal-grid,
     .case-grid,
@@ -639,14 +678,19 @@
     }
 
     .icon {
-      width: 54px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
       height: 54px;
+      min-width: 54px;
+      padding: 0 16px;
       border-radius: 16px;
-      display: grid;
-      place-items: center;
       margin-bottom: 18px;
-      font-size: 20px;
+      font-size: 18px;
       font-weight: 800;
+      line-height: 1;
+      letter-spacing: 0.08em;
+      white-space: nowrap;
       color: var(--primary-2);
       background: #e9f6f3;
     }
@@ -655,7 +699,7 @@
     .goal-card h3,
     .case-card h3 {
       margin: 0 0 10px;
-      color: var(--dark);
+      color: #000000;
       font-size: 18px;
       line-height: 1.4;
     }
@@ -664,7 +708,7 @@
     .goal-card p,
     .case-card p {
       margin: 0;
-      color: var(--muted);
+      color: #000000;
       font-size: 14px;
     }
 
@@ -679,7 +723,6 @@
       font-weight: 700;
     }
 
-    /* ---------- 更新目标 ---------- */
     .goal-grid { grid-template-columns: repeat(3, 1fr); }
 
     .goal-card {
@@ -704,7 +747,6 @@
 
     .goal-card h3 { margin-bottom: 7px; }
 
-    /* ---------- 推荐理由 ---------- */
     .advantage-grid { grid-template-columns: repeat(4, 1fr); }
 
     .advantage-card {
@@ -726,17 +768,16 @@
 
     .advantage-card h3 {
       margin: 0 0 8px;
-      color: var(--dark);
+      color: #000000;
       font-size: 17px;
     }
 
     .advantage-card p {
       margin: 0;
-      color: var(--muted);
+      color: #000000;
       font-size: 14px;
     }
 
-    /* ---------- 实施流程（6 步） ---------- */
     .flow-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -768,17 +809,16 @@
 
     .step h3 {
       margin: 0 0 8px;
-      color: var(--dark);
+      color: #000000;
       font-size: 16px;
     }
 
     .step p {
       margin: 0;
-      color: var(--muted);
+      color: #000000;
       font-size: 14px;
     }
 
-    /* ---------- 案例场景（4 个场景 → 2×2） ---------- */
     .case-grid { grid-template-columns: repeat(2, 1fr); }
 
     .case-card { overflow: hidden; }
@@ -787,6 +827,7 @@
       position: relative;
       height: 158px;
       padding: 20px;
+      overflow: hidden;
       display: flex;
       align-items: flex-end;
       background:
@@ -801,6 +842,7 @@
       right: 0;
       bottom: 0;
       left: 0;
+      pointer-events: none;
       opacity: 0.18;
       background-image:
         linear-gradient(rgba(255, 255, 255, 0.35) 1px, transparent 1px),
@@ -820,6 +862,66 @@
       line-height: 1.3;
       background: rgba(255, 255, 255, 0.16);
       border: 1px solid rgba(255, 255, 255, 0.24);
+      -webkit-backdrop-filter: blur(4px);
+      backdrop-filter: blur(4px);
+    }
+
+    .case-card:nth-child(1) .case-visual {
+      background:
+        linear-gradient(135deg, rgba(6, 24, 38, 0.92), rgba(11, 95, 138, 0.55)),
+        linear-gradient(45deg, #0b5f8a, #0e8f7e);
+    }
+
+    .case-card:nth-child(1) .case-visual::after {
+      opacity: 0.26;
+      background-image:
+        linear-gradient(rgba(255, 255, 255, 0.45) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.45) 1px, transparent 1px);
+      background-size: 36px 26px;
+    }
+
+    .case-card:nth-child(2) .case-visual {
+      background:
+        linear-gradient(135deg, rgba(5, 30, 34, 0.92), rgba(14, 143, 126, 0.58)),
+        linear-gradient(45deg, #0b5f8a, #0e8f7e);
+    }
+
+    .case-card:nth-child(2) .case-visual::after {
+      opacity: 0.5;
+      background-image:
+        radial-gradient(circle, rgba(255, 255, 255, 0.55) 1.6px, transparent 1.9px),
+        radial-gradient(circle, rgba(126, 232, 211, 0.6) 1.2px, transparent 1.5px);
+      background-size: 24px 24px, 24px 24px;
+      background-position: 0 0, 12px 12px;
+    }
+
+    .case-card:nth-child(3) .case-visual {
+      background:
+        linear-gradient(135deg, rgba(8, 30, 40, 0.92), rgba(18, 126, 132, 0.56)),
+        linear-gradient(45deg, #0b5f8a, #0e8f7e);
+    }
+
+    .case-card:nth-child(3) .case-visual::after {
+      opacity: 0.3;
+      background-image:
+        linear-gradient(45deg, rgba(255, 255, 255, 0.42) 25%, transparent 25%, transparent 75%, rgba(255, 255, 255, 0.42) 75%),
+        linear-gradient(45deg, rgba(255, 255, 255, 0.42) 25%, transparent 25%, transparent 75%, rgba(255, 255, 255, 0.42) 75%);
+      background-size: 32px 32px;
+      background-position: 0 0, 16px 16px;
+    }
+
+    .case-card:nth-child(4) .case-visual {
+      background:
+        linear-gradient(135deg, rgba(6, 22, 42, 0.92), rgba(40, 88, 150, 0.55)),
+        linear-gradient(45deg, #0b3a5a, #16708a);
+    }
+
+    .case-card:nth-child(4) .case-visual::after {
+      opacity: 0.3;
+      background-image:
+        linear-gradient(45deg, rgba(255, 255, 255, 0.4) 1px, transparent 1px),
+        linear-gradient(-45deg, rgba(255, 255, 255, 0.4) 1px, transparent 1px);
+      background-size: 30px 30px;
     }
 
     .case-body { padding: 22px; }
@@ -835,7 +937,7 @@
     .case-body li {
       position: relative;
       padding-left: 18px;
-      color: var(--muted);
+      color: #000000;
       font-size: 14px;
     }
 
@@ -850,7 +952,6 @@
       background: var(--primary-2);
     }
 
-    /* ---------- CTA 条 ---------- */
     .cta-band {
       padding: 46px 0;
       color: #fff;
@@ -859,15 +960,22 @@
         linear-gradient(135deg, #0b3a4a, #0b5f8a 55%, #0e8f7e);
     }
 
+    /* 需求 3：CTA 整体居中，按钮放在文字之后，宽度适中 */
     .cta-inner {
       display: flex;
+      flex-direction: column;
       align-items: center;
-      justify-content: space-between;
-      gap: 28px;
+      justify-content: center;
+      gap: 22px;
+      text-align: center;
+    }
+
+    .cta-inner > div {
+      max-width: 760px;
     }
 
     .cta-inner h2 {
-      margin: 0 0 6px;
+      margin: 0 0 10px;
       font-size: clamp(24px, 3vw, 34px);
       line-height: 1.25;
     }
@@ -878,7 +986,14 @@
       font-size: 15px;
     }
 
-    /* ---------- 评估需求表单 ---------- */
+    .cta-inner .btn {
+      min-width: 160px;
+      max-width: 220px;
+      min-height: 46px;
+      padding: 0 32px;
+      flex-shrink: 0;
+    }
+
     .contact-grid {
       max-width: 820px;
       margin: 0 auto;
@@ -914,7 +1029,7 @@
       padding: 12px 14px;
       font-family: var(--font-serif);
       font-size: 15px;
-      color: var(--text);
+      color: #000000;
       background: #fbfdfe;
       outline: none;
       -webkit-appearance: none;
@@ -955,10 +1070,12 @@
       font-weight: 700;
     }
 
-    /* ---------- 页脚 ---------- */
     .site-footer {
-      padding: 40px 0 22px;
-      padding-bottom: calc(22px + env(safe-area-inset-bottom, 0px));
+      flex: 0 0 auto;
+      padding: 34px 0 20px;
+      padding-bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+      padding-left: env(safe-area-inset-left, 0px);
+      padding-right: env(safe-area-inset-right, 0px);
       font-family: var(--font-sans);
       color: rgba(255, 255, 255, 0.72);
       background:
@@ -966,62 +1083,31 @@
         linear-gradient(160deg, #0c2233, #071a28);
     }
 
-    /* 联系信息在左，按钮组在右，同行垂直居中对齐 */
     .footer-main {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      gap: 20px 32px;
-      text-align: left;
-      padding-bottom: 24px;
+      padding-bottom: 22px;
       border-bottom: 1px solid rgba(255, 255, 255, 0.12);
     }
 
-    .footer-contact {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 6px;
-      font-size: 14px;
-      color: rgba(255, 255, 255, 0.78);
-      text-align: left;
-      line-height: 1.6;
-    }
-
-    .footer-contact-title {
-      margin: 0 0 4px;
-      font-size: 18px;
-      font-weight: 800;
-      color: #fff;
-      letter-spacing: 0.04em;
-      line-height: 1.3;
-    }
-
-    .footer-contact a {
-      color: rgba(255, 255, 255, 0.85);
-      text-decoration: none;
-      touch-action: manipulation;
-      transition: color 0.2s ease;
-    }
-
-    /* 页脚按钮组：微信联系 + 关于我们，上下排列，整体与左侧内容垂直居中 */
     .footer-actions {
-      display: flex;
-      flex-direction: column;
-      align-items: stretch;
-      gap: 10px;
-      flex-shrink: 0;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      width: 100%;
+      max-width: 760px;
+      margin: 0 auto;
     }
 
-    /* 微信联系 / 关于我们 按钮共用样式（无图标） */
     .wechat-btn,
-    .about-btn {
+    .phone-btn,
+    .about-btn,
+    .email-btn {
       display: inline-flex;
       align-items: center;
       justify-content: center;
+      width: 100%;
+      min-width: 0;
       min-height: 46px;
-      padding: 0 26px;
+      padding: 0 18px;
       border-radius: 999px;
       border: 1px solid rgba(126, 232, 211, 0.45);
       background: rgba(126, 232, 211, 0.12);
@@ -1030,7 +1116,6 @@
       font-weight: 700;
       letter-spacing: 0.04em;
       cursor: pointer;
-      flex-shrink: 0;
       text-decoration: none;
       touch-action: manipulation;
       -webkit-user-select: none;
@@ -1040,20 +1125,24 @@
       transition: background 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
     }
 
+    /* 需求 1：页脚底部信息与页面左右两端对齐 */
     .footer-bottom {
       display: flex;
       flex-wrap: wrap;
-      align-items: center;
       justify-content: space-between;
-      gap: 8px 24px;
-      padding-top: 20px;
+      align-items: center;
+      gap: 8px 20px;
+      padding-top: 18px;
       font-size: 13px;
       color: rgba(255, 255, 255, 0.6);
-      text-align: center;
       line-height: 1.7;
     }
 
-    /* 底栏链接与运营主体：白色 */
+    .footer-bottom > span,
+    .footer-bottom > a {
+      flex: 0 0 auto;
+    }
+
     .footer-bottom a {
       color: #fff;
       text-decoration: none;
@@ -1065,7 +1154,6 @@
 
     .footer-bottom .operator { color: #fff; }
 
-    /* ---------- 微信二维码弹窗 ---------- */
     .modal {
       position: fixed;
       top: 0;
@@ -1109,7 +1197,6 @@
       background: #f4f8fb;
     }
 
-    /* 弹窗提示文字：思源黑体、黑色、字号调大 */
     .modal-tip {
       margin: 0;
       font-family: var(--font-sans);
@@ -1137,7 +1224,42 @@
       appearance: none;
     }
 
-    /* ---------- 动效 ---------- */
+    .phone-qr-link {
+      display: block;
+      width: 100%;
+      max-width: 240px;
+      margin: 0 auto 14px;
+      border-radius: 12px;
+      background: #fff;
+      overflow: hidden;
+      touch-action: manipulation;
+    }
+
+    .phone-qr-holder {
+      display: block;
+      width: 100%;
+      line-height: 0;
+    }
+
+    .phone-qr-holder svg,
+    .phone-qr-holder img {
+      display: block;
+      width: 100%;
+      height: auto;
+      max-width: none;
+      max-height: none;
+      margin: 0;
+      border-radius: 0;
+      background: #fff;
+    }
+
+    .phone-dial {
+      color: var(--primary);
+      text-decoration: none;
+      touch-action: manipulation;
+      transition: color 0.2s ease;
+    }
+
     .js .reveal {
       opacity: 0;
       transform: translateY(18px);
@@ -1161,17 +1283,18 @@
         box-shadow: var(--shadow);
       }
       .wechat-btn:hover,
-      .about-btn:hover {
+      .phone-btn:hover,
+      .about-btn:hover,
+      .email-btn:hover {
         background: rgba(126, 232, 211, 0.22);
         border-color: rgba(126, 232, 211, 0.7);
         transform: translateY(-2px);
       }
       .modal-close:hover { background: #e2ecf3; }
+      .phone-dial:hover { text-decoration: underline; }
       .footer-bottom a:hover { color: var(--primary-3); }
-      .footer-contact a:hover { color: var(--primary-3); }
     }
 
-    /* ---------- 响应式 ---------- */
     @media (max-width: 1020px) {
       .hero-grid { grid-template-columns: 1fr; gap: 34px; }
       .hero-card { max-width: 620px; }
@@ -1183,10 +1306,7 @@
     }
 
     @media (max-width: 760px) {
-      /* 显示醒目菜单按钮 */
-      .nav-toggle { 
-        display: flex; 
-      }
+      .nav-toggle { display: flex; }
 
       .nav-links {
         position: absolute;
@@ -1195,16 +1315,25 @@
         right: 0;
         display: none;
         flex-direction: column;
-        align-items: stretch;
+        align-items: center;
+        justify-content: center;
         gap: 4px;
         padding: 16px;
         border-radius: 16px;
         background: #fff;
         border: 1px solid var(--line);
         box-shadow: 0 24px 60px rgba(12, 34, 51, 0.16);
+        text-align: center;
+        max-height: calc(100vh - 110px);
+        max-height: calc(100dvh - 110px);
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
       }
       .nav-links.open { display: flex; }
+
       .nav-links a {
+        width: 100%;
+        text-align: center;
         padding: 12px 14px;
         border-radius: 10px;
         border-bottom: none;
@@ -1228,9 +1357,36 @@
       .hero { padding: 56px 0 56px; }
       .hero h1 { font-size: 30px; line-height: 1.22; }
       .hero-desc { font-size: 15px; margin: 18px 0 0; }
-      .page-body { padding: 42px 0 62px; }
+
+      .hero h1 .run-text { display: block; }
+
+      .hero-tags {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+      }
+      .hero-tags span { text-align: center; }
+
+      .page-body { padding: 42px 0 44px; }
 
       .eyebrow { font-size: 16px; letter-spacing: 0.08em; }
+
+      .section-head { margin-bottom: 30px; }
+
+      .section-head.services-head p { text-align: left; }
+
+      #page-process .section-head.center p,
+      #page-cases .section-head.center p,
+      #page-why .section-head.center p { text-align: left; }
+
+      .section-head h2.two-line-title {
+        font-size: clamp(19px, 6vw, 28px);
+      }
+
+      #page-process .section-head h2,
+      #page-cases .section-head h2 {
+        font-size: clamp(24px, 7vw, 28px);
+      }
 
       .case-visual { height: 146px; }
       .case-visual span { font-size: 15px; padding: 7px 14px; }
@@ -1241,42 +1397,50 @@
       .advantage-grid,
       .flow-grid { grid-template-columns: 1fr; }
 
-      .cta-inner { flex-direction: column; align-items: flex-start; }
+      /* 手机端保持 CTA 居中 */
+      .cta-inner {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 18px;
+      }
 
       .lead-form { grid-template-columns: 1fr; padding: 22px; }
 
-      /* 防止 iOS 自动放大：输入类控件字号不小于 16px */
       .lead-form input,
       .lead-form select,
       .lead-form textarea { font-size: 16px; }
 
-      /* 手机端品牌文字：主标题 16px，副标题 11.5px，逐字分布仍保持两端对齐 */
       .logo-text { gap: 2px; }
       .logo strong { font-size: 16px; }
       .logo small.sub-justify { font-size: 11.5px; }
 
-      /* 图标保持两行居中，字号略调 */
       .logo-mark { width: 44px; height: 44px; padding: 0 5px; }
       .logo-mark .mark-top { font-size: 10px; }
       .logo-mark .mark-sub { font-size: 8px; }
 
-      /* 页脚：上下排列，按钮组靠左 */
-      .footer-main {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 16px;
-      }
+      .footer-main { padding-bottom: 18px; }
 
       .footer-actions {
-        align-items: flex-start;
+        grid-template-columns: 1fr;
+        gap: 10px;
+        max-width: 320px;
       }
 
-      .footer-contact { font-size: 13.5px; }
-      .footer-contact-title { font-size: 17px; }
+      .wechat-btn,
+      .phone-btn,
+      .about-btn,
+      .email-btn { padding: 0 14px; }
+
+      /* 手机端底部信息改为纵向居中 */
       .footer-bottom {
+        flex-direction: column;
+        align-items: center;
         justify-content: center;
+        gap: 6px;
+        padding-top: 16px;
         font-size: 12.5px;
-        gap: 6px 16px;
+        text-align: center;
       }
     }
 
@@ -1292,11 +1456,13 @@
       .logo-mark .mark-sub { font-size: 7.5px; }
 
       .step-num { width: 44px; height: 44px; font-size: 16px; }
+
+      .icon { font-size: 16px; padding: 0 13px; }
     }
 
     @media (prefers-reduced-motion: reduce) {
       .js .reveal { opacity: 1; transform: none; transition: none; }
-      .btn, .service-card, .pain-item, .wechat-btn, .about-btn { transition: none; }
+      .btn, .service-card, .pain-item, .wechat-btn, .phone-btn, .about-btn, .email-btn { transition: none; }
     }
   </style>
 </head>
@@ -1304,15 +1470,14 @@
 
 <div id="app">
 
-  <!-- ============ 页面 1：更新概览 ============ -->
   <div class="page" id="page-home">
     <div class="page-body" style="padding:0;background:#fff;">
       <section class="hero">
         <div class="container hero-grid">
           <div class="reveal">
-            <h1>让老建筑<br /><span>安全、节能、智慧</span>地运行</h1>
+            <h1>让老建筑<br /><span>安全、节能、智慧</span><span class="run-text">地运行</span></h1>
             <p class="hero-desc">
-              公司致力于建筑机电更新，围绕给排水、暖通空调、供配电与照明、消防、电梯及智能化弱电系统，提供从现状评估、方案设计、图纸设计等更新服务。
+             <p style="text-indent: 2em;">我们专注于建筑机电更新，围绕给排水、暖通空调、供配电与照明、消防、电梯及智能化弱电系统，提供从现状评估、方案编制、图纸设计、技术支持等更新服务。
             </p>
             <div class="hero-tags" aria-label="服务标签">
               <span>安全合规</span>
@@ -1344,33 +1509,33 @@
             </div>
             <ul class="check-list">
               <li>消除老旧线路、设备超期服役等安全隐患</li>
-              <li>高效设备替换、系统运行策略优化</li>
-              <li>设备状态监测、故障报警与能耗计量</li>
+              <li>高效设备替换、系统运行策略优化与提升</li>
+              <li>设备状态监测、故障报警与能耗计量管理</li>
               <li>形成设备台账、竣工资料和运维交接成果</li>
             </ul>
           </aside>
         </div>
       </section>
 
+      <!-- 需求 3：按钮移至文字之后，整体居中，宽度适中 -->
       <section class="cta-band">
         <div class="container cta-inner">
           <div>
-            <h2>建筑机电更新，可先做一次系统评估</h2>
-            <p>提交建筑基本信息与主要问题，我们将协助梳理更新重点和实施路径。</p>
+            <h2><span class="keep-together">机电更新，</span><span class="keep-together">可先做一次系统评估</span></h2>
+            <p>填写基本信息与主要问题，我们将协助梳理更新重点和实施路径。</p>
           </div>
-          <a class="btn btn-outline" href="#contact">评估</a>
+          <a class="btn btn-outline" href="#contact" target="_blank" rel="noopener">填写表单</a>
         </div>
       </section>
     </div>
   </div>
 
-  <!-- ============ 页面 2：现存问题 ============ -->
   <div class="page" id="page-pain" hidden>
     <div class="page-body">
       <section class="container">
         <div class="section-head center reveal">
           <span class="eyebrow">现存问题</span>
-          <h2>这些问题，是否正在影响建筑运行？</h2>
+          <h2><span class="keep-together">这些问题，</span><span class="keep-together">正在影响建筑运行</span></h2>
           <p>既有建筑机电系统长期运行后，往往不是单一设备问题，而是安全性、能效、功能与运维的系统性叠加。</p>
         </div>
 
@@ -1378,13 +1543,13 @@
           <div class="pain-item reveal">
             <div>
               <h3>设备超期服役，故障频发</h3>
-              <p>水泵、风机、空调机组等关键设备超过设计寿命，故障率上升，维修成本与停机风险同步增加。</p>
+              <p>水泵、风机、空调等关键设备超过设计寿命，故障率上升，维修成本与停机风险高。</p>
             </div>
           </div>
           <div class="pain-item reveal">
             <div>
               <h3>空调冷热不均，能耗偏高</h3>
-              <p>冷热源效率下降、水力失衡、控制策略粗放，导致部分区域过冷过热，系统能耗居高不下。</p>
+              <p>冷热源效率下降、水力失衡、控制策略粗放，部分区域过冷或过热，能耗居高不下。</p>
             </div>
           </div>
           <div class="pain-item reveal">
@@ -1396,19 +1561,19 @@
           <div class="pain-item reveal">
             <div>
               <h3>消防联动不足，合规压力大</h3>
-              <p>火灾报警与防排烟、消火栓、喷淋等系统联动关系不清，部分设施不满足现行规范要求。</p>
+              <p>火灾报警、防排烟、消火栓、喷淋等系统联动关系不清，部分设施不满足现行规范。</p>
             </div>
           </div>
           <div class="pain-item reveal">
             <div>
               <h3>弱电分散，运维管理粗放</h3>
-              <p>各子系统独立建设、数据不通，设备台账与运行记录缺失，难以支撑精细化运维决策。</p>
+              <p>各子系统独立建设、数据不通，设备台账与运行记录缺失，难以支撑智能化运维决策。</p>
             </div>
           </div>
           <div class="pain-item reveal">
             <div>
               <h3>给排水设施老化，水压水质难保障</h3>
-              <p>水泵、水箱与管道锈蚀结垢，出现水压不足、跑冒滴漏和二次污染，漏损控制与用水计量手段缺失。</p>
+              <p>水泵、水箱与管道锈蚀结垢，水压不足和二次污染，漏损控制与用水计量手段缺失。</p>
             </div>
           </div>
         </div>
@@ -1416,54 +1581,53 @@
     </div>
   </div>
 
-  <!-- ============ 页面 3：服务范围 ============ -->
   <div class="page" id="page-services" hidden>
     <div class="page-body">
       <section class="container">
-        <div class="section-head center reveal">
+        <div class="section-head center reveal services-head">
           <span class="eyebrow">服务范围</span>
-          <h2>覆盖建筑机电更新全专业</h2>
+          <h2><span class="keep-together">覆盖建筑机电更新</span><span class="keep-together">全专业</span></h2>
           <p>以系统评估为基础，统筹设备更换、管线优化、系统联动和运行管理，避免“头痛医头、脚痛医脚”。</p>
         </div>
 
         <div class="service-grid">
           <article class="service-card reveal">
-            <div class="icon">水</div>
+            <div class="icon">给排水</div>
             <h3>给排水系统更新</h3>
-            <p>水泵、水箱、管道、阀门及末端设施更新，解决水压不足、跑冒滴漏、水质二次污染和计量粗放等问题。</p>
+            <p>水泵、水箱、管道、阀门及末端设施更新，解决水压不足、水质二次污染和计量粗放等问题。</p>
             <span class="tag">安全供水 · 节水降耗</span>
           </article>
 
           <article class="service-card reveal">
-            <div class="icon">暖</div>
+            <div class="icon">暖通</div>
             <h3>暖通空调系统更新</h3>
-            <p>冷热源、空调机组、风机、水泵及自控系统优化，改善冷热不均，提升系统能效和室内舒适性。</p>
+            <p>冷热源、空调机组、风机、水泵及自控系统的优化，改善冷热不均，提升系统能效和室内舒适性。</p>
             <span class="tag">舒适调节 · 能效提升</span>
           </article>
 
           <article class="service-card reveal">
-            <div class="icon">电</div>
+            <div class="icon">电气</div>
             <h3>供配电与照明更新</h3>
-            <p>配电柜、线路、桥架及照明系统改造，消除老化线路和容量不足风险，推广高效照明与分区控制。</p>
+            <p>配电柜、线路、桥架及照明系统改造，消除老化线路和容量不足风险，采用高效照明与分区控制。</p>
             <span class="tag">安全用电 · 绿色照明</span>
           </article>
 
           <article class="service-card reveal">
-            <div class="icon">消</div>
+            <div class="icon">消防</div>
             <h3>消防系统更新</h3>
-            <p>火灾报警、消防联动、消火栓、喷淋及防排烟系统检修更新，提升系统可靠性和规范符合性。</p>
+            <p>火灾报警、消火栓、喷淋及防排烟系统检修与消防联动更新、提升系统可靠性和规范性。</p>
             <span class="tag">合规可靠 · 联动有效</span>
           </article>
 
           <article class="service-card reveal">
-            <div class="icon">梯</div>
+            <div class="icon">电梯</div>
             <h3>电梯与垂直交通</h3>
             <p>围绕电梯运行安全、舒适性和能耗问题，配合开展设备评估、更新建议及附属机电条件完善。</p>
             <span class="tag">运行安全 · 体验改善</span>
           </article>
 
           <article class="service-card reveal">
-            <div class="icon">智</div>
+            <div class="icon">智能化</div>
             <h3>智能化与智慧运维</h3>
             <p>建设或完善设备监控、能耗计量、故障报警和数据分析能力，让机电系统可看、可管、可优化。</p>
             <span class="tag">状态监测 · 数据运维</span>
@@ -1473,13 +1637,12 @@
     </div>
   </div>
 
-  <!-- ============ 页面 4：更新目标 ============ -->
   <div class="page" id="page-goals" hidden>
     <div class="page-body">
       <section class="container">
         <div class="section-head center reveal">
           <span class="eyebrow">更新目标</span>
-          <h2>一次更新，兼顾安全、能效与长期运维</h2>
+          <h2 class="two-line-title"><span class="keep-together">一次更新，</span><span class="keep-together">兼顾安全、能效与长期运维</span></h2>
           <p>围绕建筑实际使用需求与现状评估结果，形成可量化、可实施、可交接的更新目标。</p>
         </div>
 
@@ -1488,7 +1651,7 @@
             <span class="goal-num">01</span>
             <div>
               <h3>安全合规</h3>
-              <p>供配电、消防、给排水、暖通、电梯等系统满足现行规范及使用要求，消除老旧线路、设备超期服役和消防联动不足等风险。</p>
+              <p>供配电、给排水、暖通、电梯、消防等系统满足现行规范及使用要求，消除老旧线路、设备超期和消防联动不足等风险。</p>
             </div>
           </article>
 
@@ -1496,7 +1659,7 @@
             <span class="goal-num">02</span>
             <div>
               <h3>能效提升</h3>
-              <p>通过高效设备替换、系统优化和运行策略调整，力争实现空调、照明、给排水等主要系统能耗下降10%—15%。</p>
+              <p>通过高效设备替换、系统优化和运行策略调整，力争实现空调、照明、用水等主要系统能耗下降10%—15%。</p>
             </div>
           </article>
 
@@ -1528,7 +1691,7 @@
             <span class="goal-num">06</span>
             <div>
               <h3>实施保障</h3>
-              <p>合理组织施工，减少对建筑正常使用的影响，确保更新期间安全、文明、有序推进，并形成完整交付资料。</p>
+              <p>合理组织施工，减少对建筑正常使用的影响，确保更新能安全、文明、有序推进，并形成完整交付资料。</p>
             </div>
           </article>
         </div>
@@ -1536,52 +1699,50 @@
     </div>
   </div>
 
-  <!-- ============ 页面 5：推荐理由 ============ -->
   <div class="page" id="page-why" hidden>
     <div class="page-body">
       <section class="container">
         <div class="section-head center reveal">
           <span class="eyebrow">推荐理由</span>
-          <h2>为什么选择小匠机电更新</h2>
+          <h2>选择小匠机电更新</h2>
           <p>既懂设备更新，也懂建筑运行；既关注一次性改造，也关注后续长期运维。</p>
         </div>
 
         <div class="advantage-grid">
           <article class="advantage-card reveal">
-            <div class="adv-icon">评</div>
-            <h3>先评估，再方案</h3>
-            <p>基于现状诊断、负荷分析和规范比对，明确更新优先级，避免盲目更换和重复投资。</p>
+            <div class="adv-icon">评估</div>
+            <h3>评估定方案</h3>
+            <p>以现状诊断与分析为基础，严格比对现行规范。科学制定更新优先级，让每一次改造都有据可依，避免盲目更换设备与重复投资。</p>
           </article>
 
           <article class="advantage-card reveal">
-            <div class="adv-icon">协</div>
+            <div class="adv-icon">协同</div>
             <h3>全专业协同</h3>
-            <p>统筹水、暖、电、消防、电梯和弱电专业，减少管线冲突和界面遗漏，提升整体实施效率。</p>
+            <p>打破专业壁垒，统筹水、暖、电、消防、弱电、电梯等全系统。通过多维度深度协同，提前化解管线冲突与界面遗漏，全面提升机电更新工程的实施效率。</p>
           </article>
 
           <article class="advantage-card reveal">
-            <div class="adv-icon">设</div>
-            <h3>图纸设计</h3>
-            <p>结合建筑使用特点，完成图纸设计，交付施工。</p>
+            <div class="adv-icon">设计</div>
+            <h3>定制化设计</h3>
+            <p>不套用模板，紧密结合建筑的实际使用特点与未来需求，完成精准的机电图纸设计。以高标准的设计图纸，为后续的高质量施工提供可靠依据。</p>
           </article>
 
           <article class="advantage-card reveal">
-            <div class="adv-icon">交</div>
-            <h3>完整交付</h3>
-            <p>制作成竣工图纸，让更新成果可追溯、可管理、可持续。</p>
+            <div class="adv-icon">落地</div>
+            <h3>全周期服务</h3>
+            <p>提供全周期的保驾护航，前期提供扎实的施工技术支持，中期协助完成竣工验收与资料归档，后期提供专业运维服务。让更新成果真正实现可追溯、易管理、可持续运行。</p>
           </article>
         </div>
       </section>
     </div>
   </div>
 
-  <!-- ============ 页面 6：实施流程（6 步） ============ -->
   <div class="page" id="page-process" hidden>
     <div class="page-body">
       <section class="container">
         <div class="section-head center reveal">
           <span class="eyebrow">实施流程</span>
-          <h2>六步推进，更新过程清晰可控</h2>
+          <h2><span class="keep-together">六步推进，</span><span class="keep-together">更新过程清晰可控</span></h2>
           <p>从现状诊断到运维交接，建立闭环实施路径，兼顾设计质量、施工安全、使用体验和交付成果。</p>
         </div>
 
@@ -1593,7 +1754,7 @@
           </article>
           <article class="step reveal">
             <div class="step-num">02</div>
-            <h3>方案与预算</h3>
+            <h3>方案评估</h3>
             <p>明确更新范围、技术路线、实施优先级和投资估算，形成可实施方案。</p>
           </article>
           <article class="step reveal">
@@ -1621,13 +1782,12 @@
     </div>
   </div>
 
-  <!-- ============ 页面 7：案例场景（4 个场景） ============ -->
   <div class="page" id="page-cases" hidden>
     <div class="page-body">
       <section class="container">
         <div class="section-head center reveal">
           <span class="eyebrow">案例场景</span>
-          <h2>适配不同建筑类型的更新需求</h2>
+          <h2><span class="keep-together">适配不同建筑类型的</span><span class="keep-together">更新需求</span></h2>
           <p>以下为典型场景示例，具体方案需结合建筑现状、使用需求和投资条件确定。</p>
         </div>
 
@@ -1639,7 +1799,7 @@
               <p>围绕空调能耗高、照明老化、弱电分散等问题开展系统更新。</p>
               <ul>
                 <li>空调机组与自控策略优化</li>
-                <li>高效照明与分区控制</li>
+                <li>更新节能照明与分区控制</li>
                 <li>设备监控与能耗计量完善</li>
               </ul>
             </div>
@@ -1649,10 +1809,10 @@
             <div class="case-visual"><span>公共建筑更新场景</span></div>
             <div class="case-body">
               <h3>某公共建筑安全合规更新</h3>
-              <p>重点解决消防联动不足、配电线路老化和给排水设施故障等问题。</p>
+              <p>解决消防联动不足、配电线路老化和给排水设施故障等问题。</p>
               <ul>
                 <li>消防报警与联动系统完善</li>
-                <li>老旧配电线路更新</li>
+                <li>老旧配电设备及线路更新</li>
                 <li>水泵水箱及管道设施改造</li>
               </ul>
             </div>
@@ -1662,12 +1822,12 @@
             <div class="case-visual"><span>住宅建筑更新场景</span></div>
             <div class="case-body">
               <h3>某住宅小区机电设施更新</h3>
-              <p>针对供水压力不足、公区照明能耗高、门禁监控老化等问题分区分批实施更新。</p>
+              <p>针对供水压力不足、公区照明能耗高、门禁与监控老化等问题分区分批实施更新。</p>
               <ul>
                 <li>二次供水泵房与管网改造</li>
                 <li>公区照明节能与感应控制</li>
                 <li>门禁对讲与视频监控更新</li>
-                <li>电梯运行状态监测接入</li>
+                <li>电梯运行状态智能化监测</li>
               </ul>
             </div>
           </article>
@@ -1678,9 +1838,9 @@
               <h3>某园区机电系统综合提升</h3>
               <p>统筹多栋建筑机电设施，提升运行可靠性和运维管理效率。</p>
               <ul>
-                <li>关键设备状态监测</li>
-                <li>分区能耗计量与分析</li>
-                <li>运维台账与交接资料完善</li>
+                <li>关键设备运行状态监测</li>
+                <li>分区能耗的计量与分析</li>
+                <li>运维技术措施制度建立</li>
               </ul>
             </div>
           </article>
@@ -1689,7 +1849,6 @@
     </div>
   </div>
 
-  <!-- ============ 页面 8：评估需求表单 ============ -->
   <div class="page" id="page-contact" hidden>
     <div class="page-body">
       <section class="container">
@@ -1700,7 +1859,6 @@
         </div>
 
         <div class="contact-grid">
-          <!-- 使用 Web3Forms 异步提交，无需后端 -->
           <form
             class="lead-form reveal"
             id="leadForm"
@@ -1713,44 +1871,19 @@
 
             <label>
               您的称呼
-              <input
-                type="text"
-                name="name"
-                placeholder="请输入姓名或称呼"
-                autocomplete="name"
-                required
-              />
+              <input type="text" name="name" placeholder="请输入姓名或称呼" autocomplete="name" required />
             </label>
             <label>
               联系电话
-              <input
-                type="tel"
-                name="phone"
-                placeholder="请输入联系电话"
-                inputmode="tel"
-                autocomplete="tel"
-                required
-              />
+              <input type="tel" name="phone" placeholder="请输入联系电话" inputmode="tel" autocomplete="tel" required />
             </label>
             <label>
               联系微信
-              <input
-                type="text"
-                name="wechat"
-                placeholder="请输入微信号（选填）"
-                autocomplete="off"
-              />
+              <input type="text" name="wechat" placeholder="请输入微信号（选填）" autocomplete="off" />
             </label>
             <label>
               联系邮箱
-              <input
-                type="email"
-                name="email"
-                placeholder="请输入联系邮箱"
-                inputmode="email"
-                autocomplete="email"
-                required
-              />
+              <input type="email" name="email" placeholder="请输入联系邮箱" inputmode="email" autocomplete="email" required />
             </label>
             <label>
               建筑类型
@@ -1785,10 +1918,7 @@
             </label>
             <label class="full">
               需求说明
-              <textarea
-                name="message"
-                placeholder="如：空调能耗高、消防联动不足、配电线路老化、水压不足等"
-              ></textarea>
+              <textarea name="message" placeholder="如：空调能耗高、消防联动不足、配电线路老化、水压不足等"></textarea>
             </label>
             <button class="btn btn-primary" type="submit">提交评估需求</button>
             <p class="form-status" id="formStatus" role="status"></p>
@@ -1800,7 +1930,6 @@
 
 </div>
 
-<!-- ============ 微信二维码弹窗（全局唯一） ============ -->
 <div class="modal" id="wechatModal" aria-hidden="true">
   <div class="modal-box" role="dialog" aria-modal="true" aria-label="微信二维码">
     <button class="modal-close" type="button" id="wechatClose" aria-label="关闭二维码">✕</button>
@@ -1808,6 +1937,21 @@
     <p class="modal-tip">扫码添加微信，一对一咨询</p>
   </div>
 </div>
+
+<div class="modal" id="phoneModal" aria-hidden="true">
+  <div class="modal-box" role="dialog" aria-modal="true" aria-label="电话联系二维码">
+    <button class="modal-close" type="button" id="phoneClose" aria-label="关闭二维码">✕</button>
+    <a class="phone-qr-link" href="tel:18108010958" aria-label="拨打电话 18108010958">
+      <span class="phone-qr-holder" id="phoneQrHolder"></span>
+    </a>
+    <p class="modal-tip"><a class="phone-dial" href="tel:18108010958">电话：18108010958</a></p>
+  </div>
+</div>
+
+<!-- 如果你希望彻底离线、零外部依赖，把 qrcode-generator 1.4.4 的源码粘贴到这里 -->
+<script id="qrcode-lib">
+/* qrcode-generator 1.4.4 源码粘贴处 */
+</script>
 
 <script>
   const HEADER_HTML = `
@@ -1826,7 +1970,9 @@
           </span>
         </a>
 
-        <button class="nav-toggle" type="button" aria-label="打开导航菜单" aria-expanded="false">☰</button>
+        <button class="nav-toggle" type="button" aria-label="打开导航菜单" aria-expanded="false">
+          <span class="nav-toggle-bars" aria-hidden="true"></span>
+        </button>
 
         <nav class="nav-links" aria-label="主导航">
           <a href="#home" data-nav="home">更新概览</a>
@@ -1846,22 +1992,19 @@
     <footer class="site-footer">
       <div class="container">
         <div class="footer-main">
-          <div class="footer-contact">
-            <p class="footer-contact-title">联系我们</p>
-            <a href="tel:18108010958">电话：18108010958</a>
-            <a href="mailto:dxj@xjmep.com">邮箱：dxj@xjmep.com</a>
-            <span>地址：四川成都温江</span>
-          </div>
           <div class="footer-actions">
             <button class="wechat-btn" type="button" aria-haspopup="dialog" aria-controls="wechatModal">微信联系</button>
+            <button class="phone-btn" type="button" aria-haspopup="dialog" aria-controls="phoneModal">电话联系</button>
+            <a class="email-btn" href="mailto:dxj@xjmep.com">邮件联系</a>
             <a class="about-btn" href="about.html" target="_blank" rel="noopener">关于我们</a>
           </div>
         </div>
 
         <div class="footer-bottom">
-          <span class="copyright">© 2025 小匠机电</span>
+          <span class="copyright">© 2025&nbsp;&nbsp;XJ MEP&nbsp;小匠机电</span>
           <a href="https://www.xjmep.com" target="_blank" rel="noopener">www.xjmep.com</a>
           <span class="operator">运营主体：四川未来知见工程设计有限公司</span>
+          <span class="operator">地址：四川成都</span>
         </div>
       </div>
     </footer>
@@ -1879,14 +2022,12 @@
     toggle.addEventListener('click', () => {
       const isOpen = links.classList.toggle('open');
       toggle.setAttribute('aria-expanded', String(isOpen));
-      toggle.textContent = isOpen ? '✕' : '☰';
     });
 
     links.querySelectorAll('a').forEach((link) => {
       link.addEventListener('click', () => {
         links.classList.remove('open');
         toggle.setAttribute('aria-expanded', 'false');
-        toggle.textContent = '☰';
       });
     });
   });
@@ -1991,49 +2132,125 @@
     counters.forEach((counter) => counterObserver.observe(counter));
   }
 
-  /* ---------- 微信二维码弹窗 ---------- */
-  const wechatModal = document.getElementById('wechatModal');
-  const wechatClose = document.getElementById('wechatClose');
+  function lockScroll(lock) {
+    document.documentElement.style.overflow = lock ? 'hidden' : '';
+    document.body.style.overflow = lock ? 'hidden' : '';
+  }
 
-  if (wechatModal && wechatClose) {
-    let wechatTrigger = null;
+  function initModal(modal, closeBtn, triggerSelector) {
+    if (!modal || !closeBtn) return;
 
-    function openWechat(btn) {
-      wechatTrigger = btn || null;
-      wechatModal.classList.add('open');
-      wechatModal.setAttribute('aria-hidden', 'false');
-      document.body.style.overflow = 'hidden';
-      wechatClose.focus();
+    let trigger = null;
+
+    function openModal(btn) {
+      trigger = btn || null;
+      modal.classList.add('open');
+      modal.setAttribute('aria-hidden', 'false');
+      lockScroll(true);
+      closeBtn.focus();
     }
 
-    function closeWechat() {
-      wechatModal.classList.remove('open');
-      wechatModal.setAttribute('aria-hidden', 'true');
-      document.body.style.overflow = '';
-      if (wechatTrigger) wechatTrigger.focus();
+    function closeModal() {
+      modal.classList.remove('open');
+      modal.setAttribute('aria-hidden', 'true');
+      lockScroll(false);
+      if (trigger) trigger.focus();
     }
 
-    document.querySelectorAll('.wechat-btn').forEach((btn) => {
+    document.querySelectorAll(triggerSelector).forEach((btn) => {
       btn.addEventListener('click', (event) => {
         event.preventDefault();
-        openWechat(btn);
+        openModal(btn);
       });
     });
 
-    wechatClose.addEventListener('click', closeWechat);
+    closeBtn.addEventListener('click', closeModal);
 
-    wechatModal.addEventListener('click', (event) => {
-      if (event.target === wechatModal) closeWechat();
+    modal.addEventListener('click', (event) => {
+      if (event.target === modal) closeModal();
     });
 
     document.addEventListener('keydown', (event) => {
-      if (event.key === 'Escape' && wechatModal.classList.contains('open')) {
-        closeWechat();
+      if (event.key === 'Escape' && modal.classList.contains('open')) {
+        closeModal();
       }
     });
   }
 
-  /* ---------- 评估需求表单 ---------- */
+  initModal(
+    document.getElementById('wechatModal'),
+    document.getElementById('wechatClose'),
+    '.wechat-btn'
+  );
+
+  initModal(
+    document.getElementById('phoneModal'),
+    document.getElementById('phoneClose'),
+    '.phone-btn'
+  );
+
+  (function initPhoneQr() {
+    const holder = document.getElementById('phoneQrHolder');
+    if (!holder) return;
+
+    const PHONE_URL = 'tel:18108010958';
+    const QR_VERSION = 5;
+    const QR_MARGIN = 3;
+    const QR_SIZE = 500;
+
+    function renderFallback() {
+      holder.innerHTML =
+        '<img src="https://api.qrserver.com/v1/create-qr-code/?size=500x500&amp;margin=3&amp;data=tel%3A18108010958"' +
+        ' width="500" height="500" alt="电话联系二维码" />';
+    }
+
+    function render() {
+      if (typeof qrcode !== 'function') {
+        renderFallback();
+        return;
+      }
+      try {
+        const qr = qrcode(QR_VERSION, 'M');
+        qr.addData(PHONE_URL);
+        qr.make();
+
+        const count = qr.getModuleCount();
+        const total = count + QR_MARGIN * 2;
+        const parts = [];
+
+        for (let row = 0; row < count; row++) {
+          for (let col = 0; col < count; col++) {
+            if (qr.isDark(row, col)) {
+              parts.push('M' + (col + QR_MARGIN) + ' ' + (row + QR_MARGIN) + 'h1v1h-1z');
+            }
+          }
+        }
+
+        holder.innerHTML =
+          '<svg xmlns="http://www.w3.org/2000/svg" width="' + QR_SIZE + '" height="' + QR_SIZE + '"' +
+          ' viewBox="0 0 ' + total + ' ' + total + '" shape-rendering="crispEdges"' +
+          ' role="img" aria-label="电话联系二维码">' +
+          '<rect width="' + total + '" height="' + total + '" fill="#ffffff" />' +
+          '<path d="' + parts.join('') + '" fill="#000000" />' +
+          '</svg>';
+      } catch (err) {
+        renderFallback();
+      }
+    }
+
+    if (typeof qrcode === 'function') {
+      render();
+      return;
+    }
+
+    const script = document.createElement('script');
+    script.src = 'qrcode.js';
+    script.async = true;
+    script.onload = render;
+    script.onerror = renderFallback;
+    document.head.appendChild(script);
+  })();
+
   const leadForm = document.getElementById('leadForm');
   const formStatus = document.getElementById('formStatus');
 
