@@ -823,6 +823,7 @@
 
     .case-card { overflow: hidden; }
 
+    /* 需求 4：所有案例卡片统一使用「办公楼更新场景」的背景图案 */
     .case-visual {
       position: relative;
       height: 158px;
@@ -831,7 +832,7 @@
       display: flex;
       align-items: flex-end;
       background:
-        linear-gradient(135deg, rgba(7, 26, 40, 0.88), rgba(14, 143, 126, 0.58)),
+        linear-gradient(135deg, rgba(6, 24, 38, 0.92), rgba(11, 95, 138, 0.55)),
         linear-gradient(45deg, #0b5f8a, #0e8f7e);
     }
 
@@ -843,11 +844,11 @@
       bottom: 0;
       left: 0;
       pointer-events: none;
-      opacity: 0.18;
+      opacity: 0.26;
       background-image:
-        linear-gradient(rgba(255, 255, 255, 0.35) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 255, 255, 0.35) 1px, transparent 1px);
-      background-size: 26px 26px;
+        linear-gradient(rgba(255, 255, 255, 0.45) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.45) 1px, transparent 1px);
+      background-size: 36px 26px;
     }
 
     .case-visual span {
@@ -864,64 +865,6 @@
       border: 1px solid rgba(255, 255, 255, 0.24);
       -webkit-backdrop-filter: blur(4px);
       backdrop-filter: blur(4px);
-    }
-
-    .case-card:nth-child(1) .case-visual {
-      background:
-        linear-gradient(135deg, rgba(6, 24, 38, 0.92), rgba(11, 95, 138, 0.55)),
-        linear-gradient(45deg, #0b5f8a, #0e8f7e);
-    }
-
-    .case-card:nth-child(1) .case-visual::after {
-      opacity: 0.26;
-      background-image:
-        linear-gradient(rgba(255, 255, 255, 0.45) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 255, 255, 0.45) 1px, transparent 1px);
-      background-size: 36px 26px;
-    }
-
-    .case-card:nth-child(2) .case-visual {
-      background:
-        linear-gradient(135deg, rgba(5, 30, 34, 0.92), rgba(14, 143, 126, 0.58)),
-        linear-gradient(45deg, #0b5f8a, #0e8f7e);
-    }
-
-    .case-card:nth-child(2) .case-visual::after {
-      opacity: 0.5;
-      background-image:
-        radial-gradient(circle, rgba(255, 255, 255, 0.55) 1.6px, transparent 1.9px),
-        radial-gradient(circle, rgba(126, 232, 211, 0.6) 1.2px, transparent 1.5px);
-      background-size: 24px 24px, 24px 24px;
-      background-position: 0 0, 12px 12px;
-    }
-
-    .case-card:nth-child(3) .case-visual {
-      background:
-        linear-gradient(135deg, rgba(8, 30, 40, 0.92), rgba(18, 126, 132, 0.56)),
-        linear-gradient(45deg, #0b5f8a, #0e8f7e);
-    }
-
-    .case-card:nth-child(3) .case-visual::after {
-      opacity: 0.3;
-      background-image:
-        linear-gradient(45deg, rgba(255, 255, 255, 0.42) 25%, transparent 25%, transparent 75%, rgba(255, 255, 255, 0.42) 75%),
-        linear-gradient(45deg, rgba(255, 255, 255, 0.42) 25%, transparent 25%, transparent 75%, rgba(255, 255, 255, 0.42) 75%);
-      background-size: 32px 32px;
-      background-position: 0 0, 16px 16px;
-    }
-
-    .case-card:nth-child(4) .case-visual {
-      background:
-        linear-gradient(135deg, rgba(6, 22, 42, 0.92), rgba(40, 88, 150, 0.55)),
-        linear-gradient(45deg, #0b3a5a, #16708a);
-    }
-
-    .case-card:nth-child(4) .case-visual::after {
-      opacity: 0.3;
-      background-image:
-        linear-gradient(45deg, rgba(255, 255, 255, 0.4) 1px, transparent 1px),
-        linear-gradient(-45deg, rgba(255, 255, 255, 0.4) 1px, transparent 1px);
-      background-size: 30px 30px;
     }
 
     .case-body { padding: 22px; }
@@ -960,7 +903,6 @@
         linear-gradient(135deg, #0b3a4a, #0b5f8a 55%, #0e8f7e);
     }
 
-    /* 需求 3：CTA 整体居中，按钮放在文字之后，宽度适中 */
     .cta-inner {
       display: flex;
       flex-direction: column;
@@ -1125,7 +1067,6 @@
       transition: background 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
     }
 
-    /* 需求 1：页脚底部信息与页面左右两端对齐 */
     .footer-bottom {
       display: flex;
       flex-wrap: wrap;
@@ -1375,6 +1316,9 @@
 
       .section-head.services-head p { text-align: left; }
 
+      /* 需求 2、3：手机端这些说明文字改为左对齐 */
+      #page-pain .section-head.center p,
+      #page-goals .section-head.center p,
       #page-process .section-head.center p,
       #page-cases .section-head.center p,
       #page-why .section-head.center p { text-align: left; }
@@ -1388,6 +1332,11 @@
         font-size: clamp(24px, 7vw, 28px);
       }
 
+      /* 需求 1：手机端 CTA 说明文字分两行显示 */
+      .cta-inner p .cta-line {
+        display: block;
+      }
+
       .case-visual { height: 146px; }
       .case-visual span { font-size: 15px; padding: 7px 14px; }
 
@@ -1397,7 +1346,6 @@
       .advantage-grid,
       .flow-grid { grid-template-columns: 1fr; }
 
-      /* 手机端保持 CTA 居中 */
       .cta-inner {
         flex-direction: column;
         align-items: center;
@@ -1432,7 +1380,6 @@
       .about-btn,
       .email-btn { padding: 0 14px; }
 
-      /* 手机端底部信息改为纵向居中 */
       .footer-bottom {
         flex-direction: column;
         align-items: center;
@@ -1517,12 +1464,11 @@
         </div>
       </section>
 
-      <!-- 需求 3：按钮移至文字之后，整体居中，宽度适中 -->
       <section class="cta-band">
         <div class="container cta-inner">
           <div>
             <h2><span class="keep-together">机电更新，</span><span class="keep-together">可先做一次系统评估</span></h2>
-            <p>填写基本信息与主要问题，我们将协助梳理更新重点和实施路径。</p>
+            <p><span class="cta-line">填写基本信息与主要问题，</span><span class="cta-line">我们将协助梳理更新重点和实施路径。</span></p>
           </div>
           <a class="btn btn-outline" href="#contact" target="_blank" rel="noopener">填写表单</a>
         </div>
