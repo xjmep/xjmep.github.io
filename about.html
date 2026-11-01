@@ -499,7 +499,7 @@
   .reveal{opacity:0;transform:translateY(16px);transition:opacity .65s ease, transform .65s ease;}
   .reveal.in{opacity:1;transform:none;}
 
-  /* ---------- 语义断行：窄屏下各占一行 ---------- */
+  /* ---------- 语义断行：窄屏下各占一行（特殊要求） ---------- */
   @media (max-width:720px){
     .ln{display:block;}
   }
@@ -581,7 +581,7 @@
 
     .philosophy .phil-text{white-space:normal;}
 
-    /* 手机端多行文字两端平铺，撑满屏幕宽度 */
+    /* 多行文字：正常左对齐，排满容器宽度后自然换行，不拉伸字间距 */
     .about-text p,
     .section-head p,
     .entity-card .entity-desc,
@@ -589,8 +589,7 @@
     .philosophy .phil-text,
     .hero .lead{
       width:100%;
-      text-align:justify;
-      text-justify:inter-ideograph;
+      text-align:left;
     }
 
     .page-footer-inner{
