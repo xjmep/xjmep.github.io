@@ -823,7 +823,6 @@
 
     .case-card { overflow: hidden; }
 
-    /* 需求 4：所有案例卡片统一使用「办公楼更新场景」的背景图案 */
     .case-visual {
       position: relative;
       height: 158px;
@@ -1001,7 +1000,13 @@
       box-shadow: 0 0 0 4px rgba(14, 143, 126, 0.12);
     }
 
-    .lead-form .btn { grid-column: 1 / -1; width: 100%; }
+    /* 提交按钮不再通栏，宽度与页脚按钮一致 */
+    .lead-form .btn {
+      grid-column: 1 / -1;
+      width: 100%;
+      max-width: 220px;
+      margin: 0 auto;
+    }
 
     .form-status {
       grid-column: 1 / -1;
@@ -1030,13 +1035,12 @@
       border-bottom: 1px solid rgba(255, 255, 255, 0.12);
     }
 
-    /* 页脚四按钮：宽度收窄至与 CTA「填写表单」按钮一致 */
     .footer-actions {
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: 14px;
       width: 100%;
-      max-width: 680px;   /* 4 × 160px + 3 × 14px ≈ 682px */
+      max-width: 680px;
       margin: 0 auto;
     }
 
@@ -1166,35 +1170,6 @@
       appearance: none;
     }
 
-    .phone-qr-link {
-      display: block;
-      width: 100%;
-      max-width: 240px;
-      margin: 0 auto 14px;
-      border-radius: 12px;
-      background: #fff;
-      overflow: hidden;
-      touch-action: manipulation;
-    }
-
-    .phone-qr-holder {
-      display: block;
-      width: 100%;
-      line-height: 0;
-    }
-
-    .phone-qr-holder svg,
-    .phone-qr-holder img {
-      display: block;
-      width: 100%;
-      height: auto;
-      max-width: none;
-      max-height: none;
-      margin: 0;
-      border-radius: 0;
-      background: #fff;
-    }
-
     .phone-dial {
       color: var(--primary);
       text-decoration: none;
@@ -1317,7 +1292,6 @@
 
       .section-head.services-head p { text-align: left; }
 
-      /* 需求 2、3：手机端这些说明文字改为左对齐 */
       #page-pain .section-head.center p,
       #page-goals .section-head.center p,
       #page-process .section-head.center p,
@@ -1333,7 +1307,6 @@
         font-size: clamp(24px, 7vw, 28px);
       }
 
-      /* 需求 1：手机端 CTA 说明文字分两行显示 */
       .cta-inner p .cta-line {
         display: block;
       }
@@ -1370,7 +1343,6 @@
 
       .footer-main { padding-bottom: 18px; }
 
-      /* 手机端/微信内置浏览器：单列居中，最大宽度与 CTA 按钮一致 */
       .footer-actions {
         grid-template-columns: 1fr;
         gap: 10px;
@@ -1889,17 +1861,13 @@
 <div class="modal" id="phoneModal" aria-hidden="true">
   <div class="modal-box" role="dialog" aria-modal="true" aria-label="电话联系二维码">
     <button class="modal-close" type="button" id="phoneClose" aria-label="关闭二维码">✕</button>
-    <a class="phone-qr-link" href="tel:18108010958" aria-label="拨打电话 18108010958">
-      <span class="phone-qr-holder" id="phoneQrHolder"></span>
-    </a>
-    <p class="modal-tip"><a class="phone-dial" href="tel:18108010958">电话：18108010958</a></p>
+    <img src="phone.png" alt="电话联系二维码" />
+    <p class="modal-tip">
+      联系电话：<a class="phone-dial" href="tel:18108010958">18108010958</a><br />
+      手机扫码直接拨打
+    </p>
   </div>
 </div>
-
-<!-- 如果你希望彻底离线、零外部依赖，把 qrcode-generator 1.4.4 的源码粘贴到这里 -->
-<script id="qrcode-lib">
-/* qrcode-generator 1.4.4 源码粘贴处 */
-</script>
 
 <script>
   const HEADER_HTML = `
@@ -2136,68 +2104,6 @@
     document.getElementById('phoneClose'),
     '.phone-btn'
   );
-
-  (function initPhoneQr() {
-    const holder = document.getElementById('phoneQrHolder');
-    if (!holder) return;
-
-    const PHONE_URL = 'tel:18108010958';
-    const QR_VERSION = 5;
-    const QR_MARGIN = 3;
-    const QR_SIZE = 500;
-
-    function renderFallback() {
-      holder.innerHTML =
-        '<img src="https://api.qrserver.com/v1/create-qr-code/?size=500x500&amp;margin=3&amp;data=tel%3A18108010958"' +
-        ' width="500" height="500" alt="电话联系二维码" />';
-    }
-
-    function render() {
-      if (typeof qrcode !== 'function') {
-        renderFallback();
-        return;
-      }
-      try {
-        const qr = qrcode(QR_VERSION, 'M');
-        qr.addData(PHONE_URL);
-        qr.make();
-
-        const count = qr.getModuleCount();
-        const total = count + QR_MARGIN * 2;
-        const parts = [];
-
-        for (let row = 0; row < count; row++) {
-          for (let col = 0; col < count; col++) {
-            if (qr.isDark(row, col)) {
-              parts.push('M' + (col + QR_MARGIN) + ' ' + (row + QR_MARGIN) + 'h1v1h-1z');
-            }
-          }
-        }
-
-        holder.innerHTML =
-          '<svg xmlns="http://www.w3.org/2000/svg" width="' + QR_SIZE + '" height="' + QR_SIZE + '"' +
-          ' viewBox="0 0 ' + total + ' ' + total + '" shape-rendering="crispEdges"' +
-          ' role="img" aria-label="电话联系二维码">' +
-          '<rect width="' + total + '" height="' + total + '" fill="#ffffff" />' +
-          '<path d="' + parts.join('') + '" fill="#000000" />' +
-          '</svg>';
-      } catch (err) {
-        renderFallback();
-      }
-    }
-
-    if (typeof qrcode === 'function') {
-      render();
-      return;
-    }
-
-    const script = document.createElement('script');
-    script.src = 'qrcode.js';
-    script.async = true;
-    script.onload = render;
-    script.onerror = renderFallback;
-    document.head.appendChild(script);
-  })();
 
   const leadForm = document.getElementById('leadForm');
   const formStatus = document.getElementById('formStatus');
