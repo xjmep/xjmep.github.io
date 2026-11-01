@@ -1030,12 +1030,13 @@
       border-bottom: 1px solid rgba(255, 255, 255, 0.12);
     }
 
+    /* 页脚四按钮：宽度收窄至与 CTA「填写表单」按钮一致 */
     .footer-actions {
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: 14px;
       width: 100%;
-      max-width: 760px;
+      max-width: 680px;   /* 4 × 160px + 3 × 14px ≈ 682px */
       margin: 0 auto;
     }
 
@@ -1049,7 +1050,7 @@
       width: 100%;
       min-width: 0;
       min-height: 46px;
-      padding: 0 18px;
+      padding: 0 16px;
       border-radius: 999px;
       border: 1px solid rgba(126, 232, 211, 0.45);
       background: rgba(126, 232, 211, 0.12);
@@ -1369,10 +1370,11 @@
 
       .footer-main { padding-bottom: 18px; }
 
+      /* 手机端/微信内置浏览器：单列居中，最大宽度与 CTA 按钮一致 */
       .footer-actions {
         grid-template-columns: 1fr;
         gap: 10px;
-        max-width: 320px;
+        max-width: 220px;
       }
 
       .wechat-btn,
@@ -1424,7 +1426,7 @@
           <div class="reveal">
             <h1>让老建筑<br /><span>安全、节能、智慧</span><span class="run-text">地运行</span></h1>
             <p class="hero-desc">
-             <p style="text-indent: 2em;">我们专注于建筑机电更新，围绕给排水、暖通空调、供配电与照明、消防、电梯及智能化弱电系统，提供从现状评估、方案编制、图纸设计、技术支持等更新服务。
+             <p style="text-indent: 2em;">我们专注于机电更新，围绕给排水、暖通空调、供配电与照明、消防、电梯、智能化系统，提供从现状评估、方案编制、图纸设计、技术支持等更新服务。
             </p>
             <div class="hero-tags" aria-label="服务标签">
               <span>安全合规</span>
@@ -1443,7 +1445,7 @@
               </div>
               <div class="stat">
                 <div class="num"><strong data-count="15">15</strong><em>%</em></div>
-                <p>主要系统能耗下降目标</p>
+                <p>系统能耗下降目标</p>
               </div>
               <div class="stat">
                 <div class="num"><strong data-count="6">6</strong><em>大</em></div>
@@ -1589,7 +1591,7 @@
         <div class="section-head center reveal">
           <span class="eyebrow">更新目标</span>
           <h2 class="two-line-title"><span class="keep-together">一次更新，</span><span class="keep-together">兼顾安全、能效与长期运维</span></h2>
-          <p>围绕建筑实际使用需求与现状评估结果，形成可量化、可实施、可交接的更新目标。</p>
+          <p>围绕实际使用需求与现状评估结果，形成可量化、可实施、可交接的更新目标。</p>
         </div>
 
         <div class="goal-grid">
@@ -1947,7 +1949,7 @@
         </div>
 
         <div class="footer-bottom">
-          <span class="copyright">© 2025&nbsp;&nbsp;XJ MEP&nbsp;小匠机电</span>
+          <span class="copyright">© 2026&nbsp;&nbsp;XJ MEP&nbsp;小匠机电</span>
           <a href="https://www.xjmep.com" target="_blank" rel="noopener">www.xjmep.com</a>
           <span class="operator">运营主体：四川未来知见工程设计有限公司</span>
           <span class="operator">地址：四川成都</span>
