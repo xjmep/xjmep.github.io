@@ -37,6 +37,14 @@
     display:flex;flex-direction:column;justify-content:center;align-items:center;
     text-align:center;padding:60px 20px;color:#000000;
   }
+  /* 首屏内容容器：宽度与下方 section 内容区一致（1040px），并保证垂直居中 */
+  .hero-inner{
+    width:100%;
+    max-width:1040px;
+    margin:0 auto;
+    display:flex;flex-direction:column;justify-content:center;align-items:center;
+    text-align:center;
+  }
   .hero-logo{width:min(320px,70vw);margin-bottom:26px;}
   .hero h1{
     font-size:clamp(1.6rem,6vw,3.4rem);font-weight:900;letter-spacing:.08em;
@@ -52,11 +60,21 @@
   }
   .sub-line .nw{display:inline-block;white-space:nowrap;margin:0 .12em;}
 
+  /* ===== 首屏按钮组：微信咨询 / 电话咨询 上下排列，大小一致 ===== */
+  .cta-group{
+    display:flex;flex-direction:column;align-items:center;gap:16px;
+    margin-top:46px;
+  }
   .cta{
-    display:inline-block;margin-top:46px;padding:14px 48px;background:#000000;color:var(--bg);
-    font-size:1.15rem;font-weight:800;letter-spacing:.2em;border-radius:999px;
-    text-decoration:none;transition:.25s;cursor:pointer;border:none;
-    white-space:nowrap;
+    display:inline-block;
+    padding:14px 30px;               /* 左右留白缩小，背景只比文字宽一点 */
+    background:#000000;color:var(--bg);
+    font-family:"Source Han Sans SC","思源黑体","Source Han Sans CN",sans-serif;
+    font-size:1.15rem;font-weight:800;letter-spacing:.2em;text-indent:.2em;
+    text-align:center;text-decoration:none;
+    border-radius:999px;border:none;cursor:pointer;
+    -webkit-appearance:none;appearance:none;
+    transition:.25s;white-space:nowrap;
   }
   .cta:hover{transform:translateY(-3px);box-shadow:0 10px 25px rgba(0,0,0,.3);}
 
@@ -118,19 +136,35 @@
   .detail-grid .card p{font-size:.88rem;}
 
   .note-qr{display:block;width:180px;max-width:70vw;margin:16px auto 0;border-radius:10px;border:2px solid #000000;}
-  #qr-modal{
+
+  /* ===== 弹窗（微信 / 电话 共用） ===== */
+  #qr-modal,#phone-modal{
     display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:99;
     align-items:center;justify-content:center;padding:20px;
   }
-  #qr-modal .box{
+  #qr-modal .box,#phone-modal .box{
     background:#FFFFFF;border-radius:18px;padding:34px 40px;text-align:center;position:relative;
     max-width:90vw;
   }
-  #qr-modal img{width:min(280px,70vw);border-radius:10px;}
-  #qr-modal p{margin-top:14px;font-weight:800;color:#000000;font-size:1.05rem;}
-  #qr-modal .close{
+  #qr-modal img,#phone-modal img{width:min(280px,70vw);border-radius:10px;display:block;margin:0 auto;}
+  #qr-modal p,#phone-modal p{margin-top:14px;font-weight:800;color:#000000;font-size:1.05rem;}
+  #qr-modal .close,#phone-modal .close{
     position:absolute;top:8px;right:16px;font-size:1.6rem;cursor:pointer;color:#000000;
-    background:none;border:none;
+    background:none;border:none;line-height:1;
+  }
+
+  /* 电话弹窗文字：思源宋体，加粗，字号已增大一号 */
+  #phone-modal .tel{
+    font-family:"Source Han Serif SC","思源宋体","Source Han Serif CN",serif;
+    font-size:clamp(1.08rem,4.2vw,1.25rem);   /* 增大一号 */
+    font-weight:800;
+    letter-spacing:.04em;color:#000000;margin-top:16px;
+  }
+  #phone-modal .tel-sub{
+    font-family:"Source Han Serif SC","思源宋体","Source Han Serif CN",serif;
+    font-size:clamp(.98rem,3.9vw,1.12rem);    /* 增大一号 */
+    font-weight:800;
+    letter-spacing:.06em;color:#000000;margin-top:6px;
   }
 
   /* ===== 手机端适配 ===== */
@@ -148,12 +182,13 @@
   @media(max-width:600px){
     section{padding:56px 16px;}
     .hero{padding:48px 16px;}
-    .cta{padding:13px 40px;letter-spacing:.15em;}
+    .cta-group{margin-top:38px;gap:14px;}
+    .cta{padding:13px 26px;letter-spacing:.18em;}
     .step{flex-direction:column;gap:12px;align-items:center;}
     .step .num{flex:none;width:46px;height:46px;}
     .step p{padding-top:0;}
     .card{padding:22px 18px;}
-    #qr-modal .box{padding:28px 22px;}
+    #qr-modal .box,#phone-modal .box{padding:28px 22px;}
   }
 </style>
 </head>
@@ -161,11 +196,18 @@
 
 <!-- 首屏 -->
 <header class="hero">
-  <img class="hero-logo" src="logo.png" alt="XJ MEP">
-  <h1>因为专注&nbsp;&nbsp;&nbsp;&nbsp;所以专业</h1>
-  <div class="sub">承接机电全专业&nbsp;CAD 图纸</div>
-  <div class="sub-line"><span class="nw">一对一服务&nbsp;｜</span><span class="nw">非中介&nbsp;·</span><span class="nw">无分包&nbsp;·</span><span class="nw">不转包</span></div>
-  <a class="cta" href="javascript:void(0)" onclick="document.getElementById('qr-modal').style.display='flex'">立即咨询</a>
+  <div class="hero-inner">
+    <img class="hero-logo" src="logo.png" alt="XJ MEP">
+    <h1>因为专注&nbsp;&nbsp;&nbsp;&nbsp;所以专业</h1>
+    <div class="sub">承接机电全专业&nbsp;CAD 图纸</div>
+    <div class="sub-line"><span class="nw">一对一服务&nbsp;｜</span><span class="nw">非中介&nbsp;·</span><span class="nw">无分包&nbsp;·</span><span class="nw">不转包</span></div>
+
+    <!-- 两个按钮：上下排列、大小一致、文字样式相同 -->
+    <div class="cta-group">
+      <button class="cta" type="button" onclick="document.getElementById('qr-modal').style.display='flex'">微信咨询</button>
+      <button class="cta" type="button" onclick="document.getElementById('phone-modal').style.display='flex'">电话咨询</button>
+    </div>
+  </div>
 </header>
 
 <!-- 服务项目 -->
@@ -285,7 +327,7 @@
 
  <a href="https://v.douyin.com/3WKXVOz-JII/" target="_blank" rel="noopener noreferrer" onclick="return openInApp('snssdk1128://', this.href)">
     <img src="dy.png" alt="抖音" width="50">
- </a>
+  </a>
 
   <a href="xjmepupdate.html" target="_blank" rel="noopener noreferrer">
     <img src="xjmepupdate.png" alt="XJ MEP 更新" width="50">
@@ -349,6 +391,16 @@ function tryOpenScheme(scheme, webUrl){
     <button class="close" onclick="document.getElementById('qr-modal').style.display='none'">×</button>
     <img src="wechat.jpg" alt="微信二维码">
     <p>扫码添加微信，一对一咨询</p>
+  </div>
+</div>
+
+<!-- 电话二维码弹窗 -->
+<div id="phone-modal" onclick="if(event.target===this)this.style.display='none'">
+  <div class="box">
+    <button class="close" onclick="document.getElementById('phone-modal').style.display='none'">×</button>
+    <img src="phone.png" alt="电话二维码">
+    <p class="tel">联系电话：18108010958</p>
+    <p class="tel-sub">手机扫码直接拨打</p>
   </div>
 </div>
 
