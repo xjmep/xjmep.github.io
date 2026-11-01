@@ -31,7 +31,8 @@
     --nav-h:68px;
     --footer-h:54px;
 
-    /* 全部为可免费商用字体：Noto Sans SC / Noto Serif SC（SIL OFL）、Rubik（SIL OFL） */
+    /* 全部为可免费商用字体：Noto Sans SC / Noto Serif SC（SIL OFL 1.1）、Rubik（SIL OFL 1.1）
+       其余均为设备本地系统字体，仅作为兜底，不涉及授权问题 */
     --font-sans:"Noto Sans SC","Source Han Sans SC","PingFang SC","Microsoft YaHei",sans-serif;
     --font-serif:"Noto Serif SC","Source Han Serif SC","Songti SC","SimSun",serif;
     --font-mark:"Rubik","Noto Sans SC",sans-serif;
@@ -140,7 +141,7 @@
   .nav-links a:hover{color:var(--accent-bright);}
   .nav-links a:hover::after{width:100%;}
 
-  /* ---------- 固定页脚 ---------- */
+  /* ---------- 固定页脚：文字与图标均为白色 ---------- */
   .page-footer{
     position:fixed;left:0;right:0;bottom:0;z-index:60;
     background:rgba(0,0,0,.9);
@@ -148,7 +149,7 @@
     -webkit-backdrop-filter:saturate(180%) blur(12px);
     border-top:1px solid var(--line);
     font-size:.78rem;
-    color:rgba(255,255,255,.62);
+    color:#ffffff;
     font-family:var(--font-sans);
     padding-bottom:env(safe-area-inset-bottom);
   }
@@ -172,23 +173,24 @@
     font-weight:500;
     line-height:1.4;
     flex:0 1 auto;
+    color:#ffffff;
   }
 
-  .footer-left{color:rgba(255,255,255,.62);}
-  .footer-left .latin{color:rgba(255,255,255,.8);}
+  .footer-left{color:#ffffff;}
+  .footer-left .latin{color:#ffffff;}
 
   .footer-center{
-    color:rgba(255,255,255,.72);
+    color:#ffffff;
     letter-spacing:.14em;
   }
 
-  .footer-org{color:rgba(255,255,255,.62);}
+  .footer-org{color:#ffffff;}
 
   .footer-mail{
     display:inline-flex;
     align-items:center;
-    gap:4px;
-    color:rgba(255,255,255,.8);
+    gap:6px;
+    color:#ffffff;
     transition:color .2s ease;
   }
   .footer-mail:hover{color:#ffffff;}
@@ -197,13 +199,11 @@
     height:14px;
     flex:0 0 auto;
     display:block;
-  }
-  .footer-mail-colon{
-    margin:0 -2px 0 -1px;
-    letter-spacing:0;
+    color:#ffffff;
+    stroke:currentColor;
   }
   .footer-mail-addr{
-    margin-left:-1px;
+    letter-spacing:.01em;
   }
 
   /* ---------- 整屏区块 ---------- */
@@ -232,6 +232,9 @@
     font-weight:700;color:var(--accent-bright);margin:0 0 12px;
     font-family:var(--font-sans);
   }
+
+  /* 需要按语义断行的文本行（窄屏下独占一行） */
+  .ln{display:inline;}
 
   /* ---------- Hero ---------- */
   .hero{
@@ -379,14 +382,18 @@
     font-family:var(--font-sans);
   }
 
-  /* ---------- 覆盖业态：自适应换行 ---------- */
+  /* ---------- 覆盖业态：电脑端 6×2，移动端 4×3 ---------- */
   .pills{
-    display:flex;
-    flex-wrap:wrap;
+    display:grid;
+    grid-template-columns:repeat(6, 1fr);
     gap:12px;
   }
   .pill{
-    padding:12px 26px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    min-height:52px;
+    padding:12px 10px;
     border-radius:10px;
     background:#1c2126;
     border:1px solid #3a424a;
@@ -394,6 +401,7 @@
     font-weight:600;
     font-size:.94rem;
     font-family:var(--font-sans);
+    text-align:center;
     white-space:nowrap;
     letter-spacing:.04em;
     box-shadow:0 10px 22px -16px rgba(0,0,0,.95);
@@ -408,10 +416,10 @@
   }
 
   /* ---------- 专业领域 ---------- */
-  .grid-disc{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;}
+  .grid-disc{display:grid;grid-template-columns:repeat(6,1fr);gap:14px;}
   .disc{
     background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
-    padding:24px 16px;text-align:center;position:relative;overflow:hidden;
+    padding:24px 12px;text-align:center;position:relative;overflow:hidden;
     transition:transform .25s ease, box-shadow .25s ease, border-color .25s ease, background .25s ease;
   }
   .disc::before{
@@ -432,7 +440,7 @@
     white-space:nowrap;
   }
   .disc small{
-    display:block;margin-top:6px;font-size:.7rem;letter-spacing:.16em;color:var(--muted);
+    display:block;margin-top:6px;font-size:.7rem;letter-spacing:.14em;color:var(--muted);
     text-transform:uppercase;font-family:var(--font-sans);font-weight:500;
     white-space:nowrap;
   }
@@ -472,8 +480,8 @@
   }
   .value:hover{background:rgba(255,255,255,.11);border-color:rgba(200,208,216,.45);transform:translateY(-4px);}
   .value .idx{
-    font-size:.72rem;font-weight:800;letter-spacing:.16em;
-    color:#b9c2c9;display:block;margin-bottom:8px;
+    font-size:1.2rem;font-weight:800;letter-spacing:.14em;line-height:1.2;
+    color:#b9c2c9;display:block;margin-bottom:10px;
     font-family:var(--font-sans);
   }
   .value strong{
@@ -490,6 +498,11 @@
   /* ---------- 滚动浮现动画 ---------- */
   .reveal{opacity:0;transform:translateY(16px);transition:opacity .65s ease, transform .65s ease;}
   .reveal.in{opacity:1;transform:none;}
+
+  /* ---------- 语义断行：窄屏下各占一行 ---------- */
+  @media (max-width:720px){
+    .ln{display:block;}
+  }
 
   /* ---------- 平板 / 手机适配 ---------- */
   @media (max-width:1080px){
@@ -563,7 +576,22 @@
       padding:calc(var(--nav-h) + 24px) 0 calc(var(--footer-h) + 36px + env(safe-area-inset-bottom));
     }
 
+    /* 平板 / 手机：多业态 4 列 */
+    .pills{grid-template-columns:repeat(4, 1fr);}
+
     .philosophy .phil-text{white-space:normal;}
+
+    /* 手机端多行文字两端平铺，撑满屏幕宽度 */
+    .about-text p,
+    .section-head p,
+    .entity-card .entity-desc,
+    .value p,
+    .philosophy .phil-text,
+    .hero .lead{
+      width:100%;
+      text-align:justify;
+      text-justify:inter-ideograph;
+    }
 
     .page-footer-inner{
       flex-wrap:wrap;
@@ -621,22 +649,22 @@
     .value strong{font-size:.96rem;}
     .value p{font-size:.82rem;}
 
-    /* 覆盖业态：手机端自适应换行，不使用固定 3×3 网格 */
-    .pills{gap:8px;}
+    /* 覆盖业态：手机端 4 列 3 行 */
+    .pills{gap:8px;grid-template-columns:repeat(4, 1fr);}
     .pill{
-      padding:10px 18px;
-      font-size:.86rem;
+      min-height:46px;
+      padding:10px 4px;
+      font-size:.84rem;
       border-radius:9px;
-      letter-spacing:.02em;
+      letter-spacing:0;
     }
 
-    .page-footer{font-size:.7rem;}
+    .page-footer{font-size:.7rem;color:#ffffff;}
     .page-footer-inner{gap:4px 14px;padding:8px 0;}
-    .footer-item{font-size:.7rem;}
-    .footer-center{font-size:.7rem;}
-    .footer-mail{font-size:.7rem;gap:3px;}
-    .footer-mail svg{width:12px;height:12px;}
-    .footer-mail-colon{margin:0 -1px;}
+    .footer-item{font-size:.7rem;color:#ffffff;}
+    .footer-center{font-size:.7rem;color:#ffffff;}
+    .footer-mail{font-size:.7rem;gap:5px;color:#ffffff;}
+    .footer-mail svg{width:12px;height:12px;color:#ffffff;}
 
     .about-text p{font-size:.94rem;}
     .lead{font-size:.96rem;}
@@ -812,9 +840,7 @@
     <p class="eyebrow">Mechanical · Electrical · Plumbing</p>
     <h1>小匠机电 <span>XJ MEP</span></h1>
     <p class="tagline">以匠造之心 · 做专业之事</p>
-    <p class="lead">
-      工程领域的机电顾问品牌，机电工程全周期顾问服务
-    </p>
+    <p class="lead"><span class="ln">工程领域的机电顾问品牌，</span><span class="ln">机电工程全周期顾问服务。</span></p>
     <div class="hero-actions">
       <a class="btn btn-ghost" href="#about">品牌简介</a>
       <a class="btn btn-primary" href="#services">服务内容</a>
@@ -833,7 +859,7 @@
           <span class="latin">XJ MEP（Xiao Jiang Mechanical Electrical Plumbing）</span>，名称小匠机电，是四川未来知见工程设计有限公司运营的机电顾问品牌。
         </p>
         <p>
-          围绕工程领域机电顾问为核心业务，服务范围涵盖住宅、办公、商业、酒店、厂房、医院、学校、展馆、市政、景观等多业态，为项目提供全周期技术支持。
+          围绕工程领域机电顾问为核心业务，服务范围涵盖住宅、办公、商业、酒店、厂房、医院、学校、展馆、场馆、园区、市政、景观等多业态，为项目提供全周期技术支持。
         </p>
         <p>
           我们关注技术细节与项目实际需求，凭借扎实的工程经验和严谨的顾问方法，帮助业主推动机电工程落地实施，让机电系统真正服务于建筑的使用目标。
@@ -858,7 +884,7 @@
     <div class="section-head reveal">
       <p class="eyebrow">顾问服务 / Services</p>
       <h2>全周期机电顾问服务</h2>
-      <p>从方案策划到运维支持，覆盖项目各阶段，形成完整的机电闭环。</p>
+      <p><span class="ln">从方案策划到运维支持，覆盖项目各阶段，</span><span class="ln">形成完整的机电闭环。</span></p>
     </div>
 
     <div class="grid-4">
@@ -880,7 +906,7 @@
     <div class="section-head reveal">
       <p class="eyebrow">覆盖业态 / Sectors</p>
       <h2>多业态工程实践</h2>
-      <p>面向不同功能属性与使用需求的项目类型，提供有针对性的机电顾问方案。</p>
+      <p><span class="ln">面向不同功能属性与使用需求的项目类型，</span><span class="ln">提供有针对性的机电顾问方案。</span></p>
     </div>
 
     <div class="pills reveal">
@@ -892,6 +918,8 @@
       <span class="pill">医院</span>
       <span class="pill">学校</span>
       <span class="pill">展馆</span>
+      <span class="pill">场馆</span>
+      <span class="pill">园区</span>
       <span class="pill">市政</span>
       <span class="pill">景观</span>
     </div>
@@ -903,8 +931,8 @@
   <div class="wrap">
     <div class="section-head reveal">
       <p class="eyebrow">专业领域 / Disciplines</p>
-      <h2>五大专业方向</h2>
-      <p>以专业协同为基础，统筹机电各系统的技术衔接与整体性能。</p>
+      <h2>六大专业方向</h2>
+      <p><span class="ln">以专业协同为基础，</span><span class="ln">统筹机电各系统的技术衔接与整体性能。</span></p>
     </div>
 
     <div class="grid-disc">
@@ -913,6 +941,7 @@
       <article class="disc reveal"><strong>电气</strong><small>Electrical</small></article>
       <article class="disc reveal"><strong>智能化</strong><small>Intelligent</small></article>
       <article class="disc reveal"><strong>消防</strong><small>Fire Safety</small></article>
+      <article class="disc reveal"><strong>电梯</strong><small>Elevator</small></article>
     </div>
   </div>
 </section>
@@ -954,7 +983,7 @@
 <!-- ================= 固定页脚 ================= -->
 <footer class="page-footer">
   <div class="wrap page-footer-inner">
-    <span class="footer-item footer-left"><span class="latin">© <span id="year"></span> XJ MEP</span> 小匠机电</span>
+    <span class="footer-item footer-left"><span class="latin">© <span id="year"></span>&nbsp;XJ MEP</span>&nbsp;小匠机电</span>
     <span class="footer-item footer-center">以匠造之心 · 做专业之事</span>
     <span class="footer-item footer-org">运营主体：四川未来知见工程设计有限公司</span>
     <a class="footer-item footer-mail" href="mailto:dxj@xjmep.com">
@@ -962,7 +991,6 @@
         <rect x="2.5" y="5" width="19" height="14" rx="2.5"/>
         <path d="M3.2 7.2 L12 13.2 L20.8 7.2"/>
       </svg>
-      <span class="footer-mail-colon">：</span>
       <span class="footer-mail-addr">dxj@xjmep.com</span>
     </a>
   </div>
