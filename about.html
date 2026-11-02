@@ -199,6 +199,8 @@
     display:block;
     color:#ffffff;
     stroke:currentColor;
+    position:relative;
+    top:1px;          /* 视觉居中：与邮箱地址文字对齐 */
   }
   .footer-mail-addr{
     letter-spacing:.01em;
@@ -352,7 +354,7 @@
     box-shadow:0 24px 50px -32px rgba(0,0,0,.95);
   }
   .entity-card .label{
-    font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;
+    font-size:.8rem;letter-spacing:.18em;text-transform:uppercase;
     color:#c3cbd2;font-weight:700;margin-bottom:12px;
     font-family:var(--font-sans);
   }
@@ -483,6 +485,12 @@
     text-align: left;
     word-break: normal;
     overflow-wrap: break-word;
+  }
+
+  /* 品牌理念文案：按语义段整体换行，不在段内断字 */
+  .phil-text .phil-seg{
+    display:inline-block;
+    white-space:nowrap;
   }
 
   .values{
@@ -689,6 +697,9 @@
     .about-text p:not(.eyebrow){font-size:.94rem;}
     .lead{font-size:.96rem;}
     .philosophy .phil-text{font-size:.94rem;}
+
+    /* 手机端：品牌理念文案强制按语义分三行 */
+    .phil-text .phil-seg{display:block;}
   }
 
   @media (max-width:400px){
@@ -975,25 +986,23 @@
   <div class="wrap">
     <p class="eyebrow reveal">品牌理念 / Philosophy</p>
     <blockquote class="quote reveal">以<span>匠造之心</span> · 做<span>专业之事</span></blockquote>
-    <p class="phil-text reveal">
-      关注技术细节与项目实际需求，致力于提升机电系统的安全性、适用性、经济性和低碳运行水平。
-    </p>
+    <p class="phil-text reveal"><span class="phil-seg">我们关注技术细节与项目实际需求，</span><span class="phil-seg">致力于提升机电系统的</span><span class="phil-seg">安全性、适用性、经济性和低碳运行水平。</span></p>
 
     <div class="values">
       <div class="value reveal">
         <span class="idx">01</span>
         <strong>安全性</strong>
-        <p>保障系统可靠运行，为建筑与使用者提供稳定的机电保障。</p>
+        <p>保障机电系统持续运行，为使用者提供稳定可靠的机电保障。</p>
       </div>
       <div class="value reveal">
         <span class="idx">02</span>
         <strong>适用性</strong>
-        <p>贴合项目实际使用需求，让系统配置与功能目标相匹配。</p>
+        <p>贴合项目实际使用需求，让机电系统配置与功能目标相匹配。</p>
       </div>
       <div class="value reveal">
         <span class="idx">03</span>
         <strong>经济性</strong>
-        <p>在投资与运行之间取得平衡，合理控制全生命周期成本。</p>
+        <p>在投资与运行之间取得平衡，控制机电系统全生命周期成本。</p>
       </div>
       <div class="value reveal">
         <span class="idx">04</span>
