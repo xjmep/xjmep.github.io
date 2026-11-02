@@ -38,7 +38,7 @@
 
   html { 
     scroll-behavior: smooth; 
-    overflow-x: hidden; /* 防止横向溢出 */
+    overflow-x: hidden;
   }
   
   body {
@@ -50,14 +50,13 @@
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    overflow-x: hidden; /* 防止横向溢出 */
+    overflow-x: hidden;
   }
   
   .wrap { max-width: var(--max); margin:0 auto; padding:0 24px; width: 100%; }
 
-  /* ===== 手机端标题换行标记（默认不生效，由 JS 在窄屏且单行放不下时启用） ===== */
+  /* ===== 手机端标题换行标记 ===== */
   .m-br { display: none; }
-  .m-br.on { display: inline; }
 
   /* ===== 固定页眉（桌面端） ===== */
   .site-header {
@@ -256,7 +255,7 @@
   .policy-box p:last-child { margin-bottom: 0; }
   .policy-box strong { color: var(--ink); font-weight: 600; }
 
-  /* ===== 行动清单（重新设计） ===== */
+  /* ===== 行动清单 ===== */
   .action-list {
     display: flex;
     flex-direction: column;
@@ -319,7 +318,7 @@
     padding-top: 16px; border-top: 1px solid var(--line);
   }
 
-  /* ===== 模块：服务流程 ===== */
+  /* ===== 服务流程 ===== */
   .service-intro {
     background: #fff; border: 1px solid var(--line); border-radius: var(--radius);
     padding: 28px 26px; margin-bottom: 28px;
@@ -439,7 +438,7 @@
   .map-table {
     width: 100%; border-collapse: collapse;
     background: #fff;
-    min-width: 600px; /* 保证小屏幕不挤压变形 */
+    min-width: 600px;
   }
   .map-table th, .map-table td {
     text-align: left; padding: 14px 16px; font-size: 14px;
@@ -465,7 +464,7 @@
     background: #17333f;
     color: #ffffff;
     padding: 24px 0;
-    padding-bottom: calc(24px + env(safe-area-inset-bottom)); /* 适配 iPhone 底部安全区 */
+    padding-bottom: calc(24px + env(safe-area-inset-bottom));
     font-family: var(--font-sans);
     font-size: 13.5px;
     border-top: 1px solid rgba(255,255,255,0.1);
@@ -498,14 +497,13 @@
   /* ===== 响应式适配（手机、微信内置浏览器） ===== */
   @media (max-width: 960px) {
     .wrap { padding: 0 16px; }
-    /* 去除头部吸顶，改为跟随滚动，避免占用过多屏幕 */
     .site-header { position: relative; padding: 20px 0 16px; }
     .header-body { grid-template-columns: 1fr; gap: 20px; }
     .hero-title { font-size: 22px; margin-bottom: 8px; }
     .hero-sub { font-size: 13px; }
     .eyebrow { margin-bottom: 12px; font-size: 12px; padding: 4px 10px; }
     
-    /* 手机端标签改为 4-4-2 三行网格布局（用 display:contents 让两行按钮汇入同一网格） */
+    /* 手机端标签改为 4-4-2 三行网格布局 */
     .header-right { display: block; }
     .tabs-container {
       display: grid;
@@ -543,7 +541,6 @@
     .flow-cols { grid-template-columns: 1fr; gap: 16px; }
     .flow-step { padding: 22px 18px; }
 
-    /* 行动清单手机端 */
     .action-item {
       gap: 14px;
       padding: 18px 16px;
@@ -555,14 +552,11 @@
     .action-body h3 { font-size: 15px; }
     .action-body p { font-size: 13.5px; }
     
-    /* 手机端数据面板改为 2 列 */
     .data-strip { grid-template-columns: 1fr 1fr; gap: 1px; }
     .data-item { padding: 16px; }
     
-    /* 调整表格内边距 */
     .map-table th, .map-table td { padding: 12px 14px; font-size: 13px; }
 
-    /* 页脚居中排列 */
     .footer-inner {
       flex-direction: column;
       text-align: center;
@@ -570,7 +564,7 @@
     }
   }
 
-  /* 超小屏（如 iPhone SE 320/360 宽度）进一步压缩标签字号，保证 4 列不溢出 */
+  /* 超小屏进一步压缩标签字号 */
   @media (max-width: 400px) {
     .tab {
       font-size: 12px;
@@ -579,7 +573,15 @@
     }
   }
 
-  /* ===== 按要求：main 内思源宋体文字颜色统一为黑色（页眉页脚除外） ===== */
+  /*
+   * 手机端标题强制两行（≤600px 时这些标题在窄屏下无法一行显示）
+   * 用媒体查询直接控制 .m-br，不依赖 JS 测量，确保微信内置浏览器也稳定生效
+   */
+  @media (max-width: 600px) {
+    .m-br { display: inline; }
+  }
+
+  /* ===== main 内思源宋体文字颜色统一为黑色 ===== */
   main .lead,
   main .lead strong,
   main .esg-card p,
@@ -988,7 +990,7 @@
 
     </div>
 
-    <!-- 对应关系表（已添加响应式包裹容器） -->
+    <!-- 对应关系表 -->
     <div class="sec-head" style="margin-top:44px;">
       <h2>三个环节，回扣前面模块</h2>
     </div>
@@ -1065,24 +1067,6 @@
   var valid = tabs.map(function (t) { return t.dataset.tab; });
   var header = document.querySelector('.site-header');
   var mainEl = document.querySelector('main');
-  var mbrs = Array.prototype.slice.call(document.querySelectorAll('.m-br'));
-  var MOBILE_MAX = 960;
-
-  /* 手机端标题断行：仅当该标题在单行状态下宽度超出容器时才启用 <br> */
-  function applyMobileBreaks() {
-    var isMobile = window.innerWidth <= MOBILE_MAX;
-    mbrs.forEach(function (br) {
-      br.classList.remove('on');
-      if (!isMobile) return;
-      var el = br.parentElement;
-      if (!el || el.clientWidth === 0) return; // 隐藏中的面板，等激活时再测
-      var prevWS = el.style.whiteSpace;
-      el.style.whiteSpace = 'nowrap';
-      var needBreak = el.scrollWidth > el.clientWidth + 1;
-      el.style.whiteSpace = prevWS;
-      if (needBreak) br.classList.add('on');
-    });
-  }
 
   function activate(name, shouldScroll) {
     if (valid.indexOf(name) === -1) name = valid[0];
@@ -1100,9 +1084,6 @@
       p.setAttribute('aria-hidden', on ? 'false' : 'true');
     });
 
-    // 面板显示后再测量标题是否需要两行
-    applyMobileBreaks();
-
     if (history.replaceState) {
       history.replaceState(null, '', '#' + name);
     } else {
@@ -1110,12 +1091,10 @@
     }
 
     if (shouldScroll) {
-      // 手机端头部非悬浮，直接滚动到内容区
       var isSticky = window.getComputedStyle(header).position === 'sticky';
       var headerH = isSticky ? header.offsetHeight : 0;
       var top = mainEl.getBoundingClientRect().top + window.pageYOffset - headerH;
       
-      // 如果当前不在顶部，则滚动到内容起点
       if (window.pageYOffset > top + 1) {
         window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
       }
@@ -1146,22 +1125,6 @@
     var h = location.hash.slice(1);
     if (valid.indexOf(h) !== -1) activate(h, true);
   });
-
-  // 窗口尺寸 / 横竖屏变化时重新判断标题断行
-  var resizeTimer = null;
-  window.addEventListener('resize', function () {
-    clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(applyMobileBreaks, 150);
-  });
-  window.addEventListener('orientationchange', function () {
-    clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(applyMobileBreaks, 250);
-  });
-
-  // 字体加载完成后重新测量一次，避免因字体替换导致测量偏差
-  if (document.fonts && document.fonts.ready && typeof document.fonts.ready.then === 'function') {
-    document.fonts.ready.then(function () { applyMobileBreaks(); });
-  }
 
   var initial = location.hash.slice(1);
   activate(valid.indexOf(initial) !== -1 ? initial : valid[0], false);
