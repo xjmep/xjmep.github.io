@@ -55,6 +55,10 @@
   
   .wrap { max-width: var(--max); margin:0 auto; padding:0 24px; width: 100%; }
 
+  /* ===== 手机端标题换行标记（默认不生效，由 JS 在窄屏且单行放不下时启用） ===== */
+  .m-br { display: none; }
+  .m-br.on { display: inline; }
+
   /* ===== 固定页眉（桌面端） ===== */
   .site-header {
     position: sticky; top: 0; z-index: 100;
@@ -501,26 +505,28 @@
     .hero-sub { font-size: 13px; }
     .eyebrow { margin-bottom: 12px; font-size: 12px; padding: 4px 10px; }
     
-    /* 手机端标签改为单行横向滑动，符合微信操作习惯 */
+    /* 手机端标签改为 4-4-2 三行网格布局（用 display:contents 让两行按钮汇入同一网格） */
+    .header-right { display: block; }
     .tabs-container {
-      flex-direction: row;
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
-      padding-bottom: 8px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
       gap: 8px;
-      scrollbar-width: none; /* Firefox */
+      width: 100%;
+      max-width: 100%;
+      overflow: visible;
+      padding-bottom: 0;
     }
-    .tabs-container::-webkit-scrollbar { display: none; } /* Chrome/Safari/微信 */
     .tab-row {
-      display: flex;
-      gap: 8px;
-      flex-shrink: 0;
+      display: contents;
     }
     .tab {
-      flex-shrink: 0;
+      width: 100%;
       border-radius: 8px;
-      padding: 8px 16px;
+      padding: 9px 2px;
       font-size: 13px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
   }
 
@@ -561,6 +567,15 @@
       flex-direction: column;
       text-align: center;
       gap: 8px;
+    }
+  }
+
+  /* 超小屏（如 iPhone SE 320/360 宽度）进一步压缩标签字号，保证 4 列不溢出 */
+  @media (max-width: 400px) {
+    .tab {
+      font-size: 12px;
+      padding: 8px 1px;
+      letter-spacing: -0.01em;
     }
   }
 
@@ -676,7 +691,7 @@
 
     <div class="esg-card e">
       <div class="esg-label">ENVIRONMENT · 环境</div>
-      <h3>能效提升要可量化，“修还是换”也要认真回答</h3>
+      <h3>能效提升要可量化，<br class="m-br">“修还是换”也要认真回答</h3>
       <p>机电更新的环境价值，首先是<strong>运行阶段可量化的能效提升</strong>。高效主机、变频输配与智慧管控相结合，在已有实践中可实现系统能效提升约<strong>80%</strong>、年减排CO₂约<strong>48吨</strong>的记录；单台老旧空调机组替换为高效机型，每年可减少约<strong>1.4吨CO₂e</strong>，15年生命周期内累计减碳超过<strong>21吨</strong>。政策层面，用能设备更新已明确要求改造后能效等级达到<strong>2级及以上</strong>，这正在成为项目准入的底线。</p>
       <p>但“换新”不是唯一答案。机电设备在制造、运输和安装过程中已经产生了碳排放，全部拆除换新意味着这部分碳被“一次性扔掉”。<strong>保留可修复的主机、水泵、桥架与风管，通过部件更换和控制升级恢复性能，同时能保住已经沉没的隐含碳。</strong>部分实践项目显示，将再利用、既有产品升级与再生材料使用相结合，安装工程的整体气候影响比全部采用新产品降低了<strong>75%</strong>；电缆桥架的再利用相比新品，碳减排幅度可达<strong>99%</strong>。</p>
 
@@ -702,7 +717,7 @@
   <!-- 社会 S -->
   <section class="panel" id="panel-s" role="tabpanel" aria-labelledby="tab-s">
     <div class="sec-head">
-      <h2>安全不是态度，是制度：把合规动作写清楚</h2>
+      <h2>安全不是态度，是制度：<br class="m-br">把合规动作写清楚</h2>
     </div>
 
     <div class="esg-card s">
@@ -730,7 +745,7 @@
   <!-- 治理 G -->
   <section class="panel" id="panel-g" role="tabpanel" aria-labelledby="tab-g">
     <div class="sec-head">
-      <h2>不强制披露≠不需要准备：ESG正在沿供应链传导</h2>
+      <h2>不强制披露≠不需要准备：<br class="m-br">ESG正在沿供应链传导</h2>
     </div>
 
     <div class="esg-card g">
@@ -758,7 +773,7 @@
   <!-- 政策窗口 -->
   <section class="panel" id="panel-policy" role="tabpanel" aria-labelledby="tab-policy">
     <div class="sec-head">
-      <h2>2026：机电更新的ESG与商业逻辑正在合流</h2>
+      <h2>2026：<br class="m-br">机电更新的ESG与商业逻辑正在合流</h2>
     </div>
 
     <div class="policy-box">
@@ -843,7 +858,7 @@
     <div class="case-grid">
       
       <div class="case-card">
-        <h4>某2万平方米办公大楼：中央空调系统+智慧控制改造</h4>
+        <h4>某2万平方米办公大楼：<br class="m-br">中央空调系统+智慧控制改造</h4>
         <div class="case-meta">商业办公 · 综合能效提升</div>
         <p><strong>改造前痛点：</strong>两台老旧离心式冷水机组已运行超15年，综合能效比（COP）仅为3.2，且未配置群控系统，夜间与过渡季管网“大流量小温差”现象严重。</p>
         <p><strong>我们的方案：</strong>更换两台高效变频离心机（达到国家一级能效），保留原有部分循环水泵与管网，新增冷站群控系统，并在关键节点补齐热量表与电表。</p>
@@ -1050,6 +1065,24 @@
   var valid = tabs.map(function (t) { return t.dataset.tab; });
   var header = document.querySelector('.site-header');
   var mainEl = document.querySelector('main');
+  var mbrs = Array.prototype.slice.call(document.querySelectorAll('.m-br'));
+  var MOBILE_MAX = 960;
+
+  /* 手机端标题断行：仅当该标题在单行状态下宽度超出容器时才启用 <br> */
+  function applyMobileBreaks() {
+    var isMobile = window.innerWidth <= MOBILE_MAX;
+    mbrs.forEach(function (br) {
+      br.classList.remove('on');
+      if (!isMobile) return;
+      var el = br.parentElement;
+      if (!el || el.clientWidth === 0) return; // 隐藏中的面板，等激活时再测
+      var prevWS = el.style.whiteSpace;
+      el.style.whiteSpace = 'nowrap';
+      var needBreak = el.scrollWidth > el.clientWidth + 1;
+      el.style.whiteSpace = prevWS;
+      if (needBreak) br.classList.add('on');
+    });
+  }
 
   function activate(name, shouldScroll) {
     if (valid.indexOf(name) === -1) name = valid[0];
@@ -1066,6 +1099,9 @@
       p.classList.toggle('active', on);
       p.setAttribute('aria-hidden', on ? 'false' : 'true');
     });
+
+    // 面板显示后再测量标题是否需要两行
+    applyMobileBreaks();
 
     if (history.replaceState) {
       history.replaceState(null, '', '#' + name);
@@ -1110,6 +1146,22 @@
     var h = location.hash.slice(1);
     if (valid.indexOf(h) !== -1) activate(h, true);
   });
+
+  // 窗口尺寸 / 横竖屏变化时重新判断标题断行
+  var resizeTimer = null;
+  window.addEventListener('resize', function () {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(applyMobileBreaks, 150);
+  });
+  window.addEventListener('orientationchange', function () {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(applyMobileBreaks, 250);
+  });
+
+  // 字体加载完成后重新测量一次，避免因字体替换导致测量偏差
+  if (document.fonts && document.fonts.ready && typeof document.fonts.ready.then === 'function') {
+    document.fonts.ready.then(function () { applyMobileBreaks(); });
+  }
 
   var initial = location.hash.slice(1);
   activate(valid.indexOf(initial) !== -1 ? initial : valid[0], false);
