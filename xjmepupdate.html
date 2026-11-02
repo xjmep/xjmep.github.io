@@ -1079,7 +1079,8 @@
       align-items: center;
       gap: 8px 20px;
       padding-top: 18px;
-      font-size: 13px;
+      /* 统一字号：以“运营主体：四川未来知见工程设计有限公司”为基准 */
+      font-size: 14px;
       color: rgba(255, 255, 255, 0.6);
       line-height: 1.7;
     }
@@ -1087,18 +1088,28 @@
     .footer-bottom > span,
     .footer-bottom > a {
       flex: 0 0 auto;
+      font-size: inherit;
     }
 
     .footer-bottom a {
       color: #fff;
       text-decoration: none;
+      font-size: inherit;
       touch-action: manipulation;
       transition: color 0.2s ease;
     }
 
-    .footer-bottom .copyright { color: #fff; }
+    /* 英文域名在相同字号下视觉偏小，单独补偿至与中文观感一致 */
+    .footer-bottom a[href*="xjmep.com"] {
+      font-size: 1.08em;
+      letter-spacing: 0.01em;
+    }
 
-    .footer-bottom .operator { color: #fff; }
+    .footer-bottom .copyright,
+    .footer-bottom .operator {
+      color: #fff;
+      font-size: inherit;
+    }
 
     .modal {
       position: fixed;
@@ -1360,7 +1371,7 @@
         justify-content: center;
         gap: 6px;
         padding-top: 16px;
-        font-size: 12.5px;
+        font-size: 13px;
         text-align: center;
       }
     }
@@ -1891,7 +1902,7 @@
         </button>
 
         <nav class="nav-links" aria-label="主导航">
-          <a href="#home" data-nav="home">更新概览</a>
+          <a href="#home" data-nav="home">机电更新</a>
           <a href="#pain" data-nav="pain">现存问题</a>
           <a href="#services" data-nav="services">服务范围</a>
           <a href="#goals" data-nav="goals">更新目标</a>
