@@ -200,7 +200,7 @@
     color:#ffffff;
     stroke:currentColor;
     position:relative;
-    top:1px;          /* 视觉居中：与邮箱地址文字对齐 */
+    top:1px;
   }
   .footer-mail-addr{
     letter-spacing:.01em;
@@ -287,7 +287,7 @@
     font-size:clamp(1.9rem,4.8vw,3rem);
     color:#fff;font-weight:800;letter-spacing:.01em;
     display:flex;flex-wrap:wrap;align-items:baseline;
-    gap:1ch;  /* 一个字符间距 */
+    gap:1ch;
     font-family:var(--font-sans);
     white-space:nowrap;
   }
@@ -298,12 +298,11 @@
     font-weight:500;
     letter-spacing:.01em;
   }
-  /* XJ MEP 右上角注册商标 R 标 */
   .hero h1 .hero-en .reg-mark{
     font-family:var(--font-sans);
     font-style:normal;
     font-weight:600;
-    font-size:.68em;          /* 再放大一号 */
+    font-size:.68em;
     vertical-align:super;
     line-height:1;
     margin-left:.08em;
@@ -461,12 +460,9 @@
     white-space:nowrap;
   }
 
-  /* ---------- 品牌理念 + 价值主张 ---------- */
+  /* ---------- 品牌理念（背景为默认黑） ---------- */
   .philosophy{
     position:relative;color:#fff;overflow:hidden;
-    background:
-      radial-gradient(circle at 15% 0%, rgba(150,158,166,.22), transparent 50%),
-      linear-gradient(150deg,#0b0d0f,#191e22 70%,#101316);
   }
   .philosophy .eyebrow{color:#c3cbd2;}
 
@@ -487,7 +483,6 @@
     overflow-wrap: break-word;
   }
 
-  /* 品牌理念文案：按语义段整体换行，不在段内断字 */
   .phil-text .phil-seg{
     display:inline-block;
     white-space:nowrap;
@@ -521,6 +516,131 @@
     word-break: normal;
     overflow-wrap: break-word;
   }
+
+  /* ---------- ESG 可持续发展（渐变背景） ---------- */
+  .esg-bg{
+    position:relative;color:#fff;overflow:hidden;
+    background:
+      radial-gradient(circle at 15% 0%, rgba(150,158,166,.22), transparent 50%),
+      linear-gradient(150deg,#0b0d0f,#191e22 70%,#101316);
+  }
+  .esg-bg .eyebrow{color:#c3cbd2;}
+
+  /* ESG 模块字体：标题用思源黑体，正文用思源宋体 */
+  .esg-bg h2,
+  .esg-bg h3,
+  .esg-bg .esg-en,
+  .esg-bg .btn-esg{
+    font-family:var(--font-sans);
+  }
+  .esg-bg .section-head p:not(.eyebrow),
+  .esg-bg .esg-desc{
+    font-family:var(--font-serif);
+  }
+
+  .esg-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:14px;
+  }
+  .esg-card{
+    position:relative;
+    background:rgba(255,255,255,.06);
+    border:1px solid rgba(255,255,255,.16);
+    border-radius:var(--radius);
+    padding:26px 22px;
+    overflow:hidden;
+    transition:transform .25s ease, box-shadow .25s ease, border-color .25s ease, background .25s ease;
+  }
+  .esg-card::before{
+    content:"";position:absolute;top:0;left:0;right:0;height:3px;
+    background:linear-gradient(90deg,var(--accent-dark),var(--accent-bright));
+    transform:scaleX(0);transform-origin:left;transition:transform .3s ease;
+  }
+  .esg-card:hover{
+    transform:translateY(-4px);
+    background:rgba(255,255,255,.11);
+    border-color:rgba(200,208,216,.45);
+    box-shadow:0 18px 36px -24px rgba(0,0,0,.95);
+  }
+  .esg-card:hover::before{transform:scaleX(1);}
+
+  .esg-letter{
+    display:block;
+    font-family:var(--font-mark);
+    font-style:italic;
+    font-weight:500;
+    font-size:2.6rem;
+    line-height:1;
+    letter-spacing:-.02em;
+    color:var(--accent-bright);
+    margin-bottom:14px;
+  }
+  .esg-card h3{
+    font-size:1rem;
+    font-weight:700;
+    letter-spacing:.04em;
+    white-space:nowrap;
+  }
+  .esg-card .esg-en{
+    display:block;
+    margin-top:3px;
+    font-size:.7rem;
+    letter-spacing:.16em;
+    text-transform:uppercase;
+    color:var(--muted);
+    font-weight:500;
+    white-space:nowrap;
+  }
+  .esg-card .esg-desc{
+    margin-top:14px;
+    font-size:.86rem;
+    color:rgba(255,255,255,.8);
+    font-weight:500;
+    line-height:1.8;
+    text-align:left;
+    word-break:normal;
+    overflow-wrap:break-word;
+  }
+
+  /* ---------- ESG 专题按钮（居中） ---------- */
+  .esg-cta{
+    display:flex;
+    justify-content:center;   /* 居中布置 */
+    margin-top:32px;
+  }
+  .btn-esg{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    padding:13px 32px;
+    border-radius:999px;
+    border:1px solid rgba(255,255,255,.28);
+    background:rgba(255,255,255,.08);
+    color:#fff;
+    font-size:.92rem;
+    font-weight:700;
+    letter-spacing:.06em;
+    white-space:nowrap;
+    transition:background .25s ease, border-color .25s ease, transform .25s ease, box-shadow .25s ease, color .25s ease;
+  }
+  .btn-esg svg{
+    width:14px;
+    height:14px;
+    flex:0 0 auto;
+    display:block;
+    stroke:currentColor;
+    transition:transform .25s ease;
+  }
+  .btn-esg:hover{
+    background:rgba(255,255,255,.16);
+    border-color:rgba(200,208,216,.6);
+    color:#ffffff;
+    transform:translateY(-2px);
+    box-shadow:0 16px 32px -20px rgba(0,0,0,.95);
+  }
+  .btn-esg:hover svg{transform:translate(2px,-2px);}
 
   /* ---------- 滚动浮现动画 ---------- */
   .reveal{opacity:0;transform:translateY(16px);transition:opacity .65s ease, transform .65s ease;}
@@ -572,16 +692,19 @@
       padding:10px 0;
     }
 
+    /* 手机 / 微信内置浏览器：导航 6 项按 3×2 布局 */
     .nav-links{
-      display:flex;
+      display:grid;
+      grid-template-columns:repeat(3, 1fr);
       width:100%;
-      justify-content:center;
-      flex-wrap:wrap;
-      gap:2px 18px;
+      justify-items:center;
+      align-items:center;
+      gap:4px 8px;
       font-size:.82rem;
     }
     .nav-links a{
-      padding:3px 0;
+      padding:4px 0;
+      text-align:center;
     }
 
     .hero-diagram{
@@ -599,6 +722,7 @@
     .grid-4{grid-template-columns:repeat(2,1fr);}
     .grid-disc{grid-template-columns:repeat(3,1fr);}
     .values{grid-template-columns:repeat(2,1fr);}
+    .esg-grid{grid-template-columns:1fr;}
     .section{
       padding:calc(var(--nav-h) + 24px) 0 calc(var(--footer-h) + 36px + env(safe-area-inset-bottom));
     }
@@ -611,6 +735,7 @@
     .section-head p:not(.eyebrow),
     .entity-card .entity-desc,
     .value p,
+    .esg-card .esg-desc,
     .philosophy .phil-text,
     .hero .lead{
       width:100%;
@@ -647,10 +772,10 @@
 
     .nav-inner{gap:6px;padding:8px 0;}
     .nav-links{
-      gap:2px 12px;
+      gap:2px 4px;
       font-size:.74rem;
     }
-    .nav-links a{padding:2px 0;}
+    .nav-links a{padding:3px 0;}
 
     .eyebrow-split{
       flex-direction:column;
@@ -678,6 +803,20 @@
     .value strong{font-size:.96rem;}
     .value p{font-size:.82rem;}
 
+    .esg-card{padding:20px 16px;}
+    .esg-letter{font-size:2.2rem;margin-bottom:10px;}
+    .esg-card h3{font-size:.96rem;}
+    .esg-card .esg-en{font-size:.64rem;letter-spacing:.12em;}
+    .esg-card .esg-desc{font-size:.84rem;}
+
+    .esg-cta{justify-content:center;margin-top:24px;}
+    .btn-esg{
+      width:100%;
+      justify-content:center;
+      padding:12px 20px;
+      font-size:.86rem;
+    }
+
     .pills{gap:8px;grid-template-columns:repeat(4, 1fr);}
     .pill{
       min-height:46px;
@@ -698,7 +837,6 @@
     .lead{font-size:.96rem;}
     .philosophy .phil-text{font-size:.94rem;}
 
-    /* 手机端：品牌理念文案强制按语义分三行 */
     .phil-text .phil-seg{display:block;}
   }
 
@@ -735,6 +873,7 @@
       <a href="#sectors">覆盖业态</a>
       <a href="#disciplines">专业领域</a>
       <a href="#philosophy">品牌理念</a>
+      <a href="#esg">ESG</a>
     </nav>
   </div>
 </header>
@@ -1009,6 +1148,50 @@
         <strong>低碳运行</strong>
         <p>关注系统能效与运行表现，助力项目实现低碳、可持续运行。</p>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 可持续发展 / ESG ================= -->
+<section class="section esg-bg" id="esg">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <p class="eyebrow">可持续发展 / ESG</p>
+      <h2>以专业之力，践行可持续</h2>
+      <p><span class="ln">将环境、社会与治理理念融入机电顾问服务，</span><span class="ln">在项目全周期中推动可持续价值落地。</span></p>
+    </div>
+
+    <div class="esg-grid">
+      <article class="esg-card reveal">
+        <span class="esg-letter">E</span>
+        <h3>环境</h3>
+        <span class="esg-en">Environmental</span>
+        <p class="esg-desc">关注系统能效与低碳运行，在方案策划与设计阶段引入节能策略，助力项目降低能耗、水耗与碳排放。</p>
+      </article>
+
+      <article class="esg-card reveal">
+        <span class="esg-letter">S</span>
+        <h3>社会</h3>
+        <span class="esg-en">Social</span>
+        <p class="esg-desc">以安全、适用、健康的机电系统服务使用者，关注室内环境品质与运行可靠性，回应项目的社会责任。</p>
+      </article>
+
+      <article class="esg-card reveal">
+        <span class="esg-letter">G</span>
+        <h3>治理</h3>
+        <span class="esg-en">Governance</span>
+        <p class="esg-desc">以规范的顾问方法与严谨的技术流程推进项目，注重过程透明、专业协同与全生命周期成本的可控。</p>
+      </article>
+    </div>
+
+    <div class="esg-cta reveal">
+      <a class="btn-esg" href="esg.html" target="_blank" rel="noopener noreferrer">
+        <span>打开 ESG 专题</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+          <path d="M7 17 L17 7"/>
+          <path d="M9 7 H17 V15"/>
+        </svg>
+      </a>
     </div>
   </div>
 </section>

@@ -1,0 +1,1120 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<!-- 适配手机端视口，防止微信内缩放错乱，支持安全区 -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>ESG</title>
+
+<!-- 思源黑体 / 思源宋体（Google Fonts，SIL OFL 开源可商用） -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&amp;family=Noto+Serif+SC:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --ink: #1a2a33;
+    --ink-soft: #3f5560;
+    --paper: #f6f8f7;
+    --card: #ffffff;
+    --green: #2f6b4f;
+    --green-light: #e8f1ec;
+    --blue: #1f4e6b;
+    --line: #dce4e1;
+    --accent: #c4a35a;
+    --radius: 10px;
+    --max: 1040px;
+
+    --font-sans: "Noto Sans SC", "Source Han Sans SC", "Source Han Sans CN", system-ui, sans-serif;
+    --font-serif: "Noto Serif SC", "Source Han Serif SC", "Source Han Serif CN", serif;
+  }
+  
+  * { 
+    margin: 0; 
+    padding: 0; 
+    box-sizing: border-box; 
+    -webkit-tap-highlight-color: transparent; 
+  }
+
+  html { 
+    scroll-behavior: smooth; 
+    overflow-x: hidden; /* 防止横向溢出 */
+  }
+  
+  body {
+    font-family: var(--font-serif);
+    background: var(--paper);
+    color: var(--ink);
+    line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    overflow-x: hidden; /* 防止横向溢出 */
+  }
+  
+  .wrap { max-width: var(--max); margin:0 auto; padding:0 24px; width: 100%; }
+
+  /* ===== 固定页眉（桌面端） ===== */
+  .site-header {
+    position: sticky; top: 0; z-index: 100;
+    background: linear-gradient(180deg, #17333f 0%, #1f4e6b 55%, #2f6b4f 100%);
+    color: #fff;
+    padding: 28px 0 32px;
+    box-shadow: 0 4px 20px rgba(23, 51, 63, 0.2);
+    overflow: hidden;
+  }
+
+  .header-body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: center;
+    position: relative; z-index: 1;
+  }
+
+  .header-left { max-width: 620px; }
+  
+  .eyebrow {
+    display: inline-block; font-family: var(--font-sans);
+    font-size: 14px; 
+    letter-spacing: 0.16em; text-transform: uppercase;
+    color: #ffffff; 
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 6px 14px; border-radius: 100px; margin-bottom: 20px;
+    font-weight: 500;
+  }
+
+  .hero-title {
+    font-family: var(--font-sans);
+    font-size: clamp(24px, 3.6vw, 36px);
+    line-height: 1.28; font-weight: 600;
+    letter-spacing: -0.01em; margin-bottom: 14px;
+  }
+  .hero-title span { 
+    color: #d9f7e8; 
+    text-shadow: 0 2px 4px rgba(0,0,0,0.15);
+  }
+  .hero-sub {
+    font-size: clamp(14px, 1.5vw, 16px);
+    color: rgba(255,255,255,0.95);
+    font-weight: 500;
+    line-height: 1.8;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.25);
+  }
+
+  /* ===== 标签网格矩阵 (桌面端) ===== */
+  .header-right {
+    display: flex; justify-content: center;
+    width: 100%;
+  }
+  .tabs-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    max-width: 500px;
+  }
+  .tab-row {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 8px;
+  }
+  .tab {
+    appearance: none;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 100px;
+    font-family: var(--font-sans);
+    font-size: 13.5px;
+    color: rgba(255, 255, 255, 0.90);
+    padding: 9px 2px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.22s ease;
+    white-space: nowrap;
+    backdrop-filter: blur(4px);
+  }
+  .tab:hover {
+    background: rgba(255, 255, 255, 0.18);
+    border-color: rgba(255, 255, 255, 0.35);
+    color: #fff;
+    transform: translateY(-1px);
+  }
+  .tab:focus-visible {
+    outline: 2px solid #b9dcc9; outline-offset: 2px;
+  }
+  .tab.active {
+    background: #ffffff;
+    color: var(--green);
+    font-weight: 600;
+    border-color: #ffffff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transform: none;
+  }
+
+  /* ===== 内容区域 ===== */
+  main { flex: 1; }
+  .panel { display: none; padding: 48px 0 64px; }
+  .panel.active { display: block; animation: fadeUp .32s ease both; }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: none; }
+  }
+
+  .sec-head { margin-bottom: 24px; }
+  .sec-head h2 {
+    font-family: var(--font-sans);
+    font-size: clamp(21px, 2.6vw, 28px); font-weight: 600; line-height: 1.38;
+    letter-spacing: -0.01em;
+  }
+  .lead { font-size: 16px; color: var(--ink-soft); max-width: 790px; margin-bottom: 24px; }
+  .lead:last-child { margin-bottom: 0; }
+  .lead strong { color: var(--ink); font-weight: 600; }
+
+  .esg-card {
+    background: var(--card); border: 1px solid var(--line); border-radius: var(--radius);
+    padding: 32px 28px; position: relative;
+  }
+  .esg-card::before {
+    content: ""; position: absolute; left: 0; top: 28px; bottom: 28px;
+    width: 3px; border-radius: 3px;
+  }
+  .esg-card.e::before { background: #1f4e6b; }
+  .esg-card.s::before { background: #1f4e6b; }
+  .esg-card.g::before { background: #1f4e6b; }
+  
+  .esg-label {
+    font-family: var(--font-sans);
+    font-size: 16.5px; 
+    letter-spacing: 0.08em; 
+    font-weight: 600; 
+    margin-bottom: 14px;
+    color: #000000; 
+  }
+  
+  .esg-card h3 {
+    font-family: var(--font-sans);
+    font-size: 20px; font-weight: 600; margin-bottom: 16px; line-height: 1.45;
+  }
+  .esg-card p { font-size: 14.5px; color: var(--ink-soft); line-height: 1.85; margin-bottom: 12px; }
+  .esg-card p:last-child { margin-bottom: 0; }
+  .esg-card strong { color: var(--ink); font-weight: 600; }
+
+  .sub-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-top: 20px; }
+  .sub-item {
+    background: #f9fbfa; border: 1px solid var(--line); border-radius: 8px; padding: 18px;
+  }
+  .sub-item h4 {
+    font-family: var(--font-sans);
+    font-size: 14px; font-weight: 600; margin-bottom: 8px; line-height: 1.5;
+  }
+  .sub-item p { font-size: 13px; color: var(--ink-soft); line-height: 1.75; margin-bottom: 0; }
+  .sub-item .num {
+    font-family: var(--font-sans);
+    display: inline-block; font-size: 20px; font-weight: 700; color: var(--green);
+    line-height: 1.2; margin-bottom: 4px;
+  }
+
+  .callout {
+    border-left: 3px solid var(--green);
+    background: #eef5f1;
+    border-radius: 0 8px 8px 0;
+    padding: 18px 20px;
+    margin-top: 20px;
+    font-size: 14px; color: #1e3d2d; line-height: 1.85;
+  }
+  .callout strong { font-weight: 600; }
+
+  .data-strip {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px;
+    background: var(--line); border-radius: var(--radius); overflow: hidden; margin-top: 32px;
+  }
+  .data-item { background: #fff; padding: 24px 20px; }
+  .data-item .big {
+    font-family: var(--font-sans);
+    font-size: 26px; font-weight: 700; color: var(--green);
+    line-height: 1.15; letter-spacing: -0.02em;
+  }
+  .data-item .big small { font-size: 14px; font-weight: 500; }
+  .data-item .desc { font-size: 12.5px; color: var(--ink-soft); margin-top: 8px; line-height: 1.65; }
+
+  .policy-box {
+    background: #fff; border: 1px solid var(--line); border-radius: var(--radius);
+    padding: 30px 28px;
+  }
+  .policy-box h4 {
+    font-family: var(--font-sans);
+    font-size: 16px; font-weight: 600; margin-bottom: 12px;
+  }
+  .policy-box p { font-size: 14.5px; color: var(--ink-soft); line-height: 1.85; margin-bottom: 12px; }
+  .policy-box p:last-child { margin-bottom: 0; }
+  .policy-box strong { color: var(--ink); font-weight: 600; }
+
+  /* ===== 行动清单（重新设计） ===== */
+  .action-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 8px;
+  }
+  .action-item {
+    display: flex;
+    gap: 20px;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 22px 24px;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+  .action-item:hover {
+    border-color: #c3d5cc;
+    box-shadow: 0 4px 16px rgba(23, 51, 63, 0.06);
+  }
+  .action-index {
+    font-family: var(--font-sans);
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--green);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    flex-shrink: 0;
+    width: 48px;
+    padding-top: 2px;
+  }
+  .action-body { flex: 1; min-width: 0; }
+  .action-body h3 {
+    font-family: var(--font-sans);
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1.5;
+    margin-bottom: 6px;
+    color: var(--ink);
+  }
+  .action-body p {
+    font-size: 14px;
+    color: var(--ink-soft);
+    line-height: 1.8;
+    margin-bottom: 0;
+  }
+  .action-body p strong {
+    color: var(--ink);
+    font-weight: 600;
+  }
+
+  .commit-box {
+    background: var(--green-light); border-radius: var(--radius);
+    padding: 34px 30px; border: 1px solid #cfe1d6;
+  }
+  .commit-box p { font-size: 16px; color: #1e3d2d; line-height: 1.95; max-width: 840px; }
+  .commit-box p strong { font-weight: 600; }
+
+  .note {
+    font-size: 12px; color: #7a8e87; line-height: 1.7; margin-top: 20px;
+    padding-top: 16px; border-top: 1px solid var(--line);
+  }
+
+  /* ===== 模块：服务流程 ===== */
+  .service-intro {
+    background: #fff; border: 1px solid var(--line); border-radius: var(--radius);
+    padding: 28px 26px; margin-bottom: 28px;
+  }
+  .service-intro p { font-size: 15px; color: var(--ink-soft); line-height: 1.9; margin-bottom: 10px; }
+  .service-intro p:last-child { margin-bottom: 0; }
+  .service-intro strong { color: var(--ink); font-weight: 600; }
+
+  .flow { display: flex; flex-direction: column; gap: 16px; }
+  .flow-step {
+    background: #fff; border: 1px solid var(--line); border-radius: var(--radius);
+    padding: 28px 26px 26px; position: relative;
+  }
+  .flow-step::before {
+    content: ""; position: absolute; left: 0; top: 26px; bottom: 26px;
+    width: 3px; border-radius: 3px; background: var(--green);
+  }
+  .flow-head {
+    display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+    margin-bottom: 6px;
+  }
+  .flow-num {
+    font-family: var(--font-sans);
+    font-size: 26px; font-weight: 700; color: var(--green);
+    line-height: 1; letter-spacing: -0.02em;
+  }
+  .flow-head h3 {
+    font-family: var(--font-sans);
+    font-size: 19px; font-weight: 600; line-height: 1.4;
+  }
+  .flow-step > p {
+    font-size: 14.5px; color: var(--ink-soft); line-height: 1.85;
+    margin: 10px 0 16px;
+  }
+  .flow-step > p strong { color: var(--ink); font-weight: 600; }
+
+  .flow-cols { display: grid; grid-template-columns: 1.15fr 1fr; gap: 18px; }
+  .flow-col h4 {
+    font-family: var(--font-sans);
+    font-size: 12px; letter-spacing: 0.1em; font-weight: 700;
+    color: #7a8e87; margin-bottom: 8px;
+  }
+  .flow-col ul { list-style: none; }
+  .flow-col ul li {
+    font-size: 13.5px; color: var(--ink-soft); line-height: 1.75;
+    padding-left: 16px; position: relative; margin-bottom: 6px;
+  }
+  .flow-col ul li::before {
+    content: ""; position: absolute; left: 0; top: 9px;
+    width: 6px; height: 6px; border-radius: 50%;
+    background: #c3d5cc;
+  }
+  .flow-col ul li strong { color: var(--ink); font-weight: 600; }
+  .flow-deliver {
+    background: #f9fbfa; border: 1px solid var(--line); border-radius: 8px;
+    padding: 14px 16px; font-size: 13.5px; color: var(--ink-soft); line-height: 1.8;
+  }
+  .flow-deliver strong {
+    font-family: var(--font-sans);
+    color: var(--ink); font-weight: 600; display: block;
+    margin-bottom: 4px; font-size: 12px; letter-spacing: 0.08em;
+  }
+
+  .flow-link {
+    margin-top: 16px; padding-top: 14px; border-top: 1px dashed var(--line);
+    font-size: 13px; color: #5d726a; line-height: 1.8;
+  }
+  .flow-link strong { color: var(--green); font-weight: 600; }
+
+  /* ===== 行业案例 & FAQ ===== */
+  .case-grid {
+    display: grid; grid-template-columns: 1fr; gap: 20px;
+  }
+  .case-card {
+    background: #fff; border: 1px solid var(--line); border-radius: var(--radius);
+    padding: 28px; position: relative;
+  }
+  .case-card h4 {
+    font-family: var(--font-sans); font-size: 18px; font-weight: 600;
+    margin-bottom: 12px; color: var(--ink);
+  }
+  .case-card .case-meta {
+    font-size: 13px; color: var(--green); margin-bottom: 14px;
+    background: var(--green-light); display: inline-block; padding: 4px 10px; border-radius: 4px;
+  }
+  .case-card p { font-size: 14.5px; color: var(--ink-soft); line-height: 1.85; margin-bottom: 8px; }
+  .case-card p:last-child { margin-bottom: 0; }
+
+  .faq-item {
+    background: #fff; border: 1px solid var(--line); border-radius: var(--radius);
+    padding: 22px 24px; margin-bottom: 12px;
+  }
+  .faq-item h4 {
+    font-family: var(--font-sans); font-size: 15.5px; font-weight: 600;
+    margin-bottom: 10px; color: var(--ink);
+  }
+  .faq-item h4::before {
+    content: "Q "; color: var(--green); font-weight: 700;
+  }
+  .faq-item p {
+    font-size: 14px; color: var(--ink-soft); line-height: 1.8;
+  }
+  .faq-item p::before {
+    content: "A "; color: var(--accent); font-weight: 700;
+  }
+
+  /* 表格外层包装，用于手机端横向滑动 */
+  .table-responsive {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin-top: 8px;
+    border-radius: var(--radius);
+    border: 1px solid var(--line);
+    background: #fff;
+  }
+  .map-table {
+    width: 100%; border-collapse: collapse;
+    background: #fff;
+    min-width: 600px; /* 保证小屏幕不挤压变形 */
+  }
+  .map-table th, .map-table td {
+    text-align: left; padding: 14px 16px; font-size: 14px;
+    border-bottom: 1px solid var(--line); vertical-align: top;
+  }
+  .map-table th {
+    font-family: var(--font-sans);
+    background: #f0f5f2; font-weight: 600; color: var(--ink);
+    font-size: 13px; letter-spacing: 0.04em;
+  }
+  .map-table td { color: var(--ink-soft); line-height: 1.75; }
+  .map-table tr:last-child td { border-bottom: none; }
+  .map-table td strong { color: var(--ink); font-weight: 600; }
+  .map-table .mod {
+    font-family: var(--font-sans);
+    display: inline-block; font-size: 11px; color: var(--green);
+    background: var(--green-light); border-radius: 4px;
+    padding: 2px 7px; margin: 2px 4px 2px 0; white-space: nowrap;
+  }
+
+  /* ===== 页脚 ===== */
+  .site-footer {
+    background: #17333f;
+    color: #ffffff;
+    padding: 24px 0;
+    padding-bottom: calc(24px + env(safe-area-inset-bottom)); /* 适配 iPhone 底部安全区 */
+    font-family: var(--font-sans);
+    font-size: 13.5px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    margin-top: auto;
+  }
+  .footer-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px 24px;
+  }
+  .footer-inner span {
+    white-space: nowrap;
+    color: #ffffff;
+  }
+  .footer-link {
+    font-size: 15px;
+    letter-spacing: 0.02em;
+  }
+  .footer-link a {
+    color: #ffffff;
+    text-decoration: none;
+    transition: opacity 0.2s;
+  }
+  .footer-link a:hover {
+    opacity: 0.8;
+  }
+
+  /* ===== 响应式适配（手机、微信内置浏览器） ===== */
+  @media (max-width: 960px) {
+    .wrap { padding: 0 16px; }
+    /* 去除头部吸顶，改为跟随滚动，避免占用过多屏幕 */
+    .site-header { position: relative; padding: 20px 0 16px; }
+    .header-body { grid-template-columns: 1fr; gap: 20px; }
+    .hero-title { font-size: 22px; margin-bottom: 8px; }
+    .hero-sub { font-size: 13px; }
+    .eyebrow { margin-bottom: 12px; font-size: 12px; padding: 4px 10px; }
+    
+    /* 手机端标签改为单行横向滑动，符合微信操作习惯 */
+    .tabs-container {
+      flex-direction: row;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      padding-bottom: 8px;
+      gap: 8px;
+      scrollbar-width: none; /* Firefox */
+    }
+    .tabs-container::-webkit-scrollbar { display: none; } /* Chrome/Safari/微信 */
+    .tab-row {
+      display: flex;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+    .tab {
+      flex-shrink: 0;
+      border-radius: 8px;
+      padding: 8px 16px;
+      font-size: 13px;
+    }
+  }
+
+  @media (max-width: 820px) {
+    .panel { padding: 28px 0 40px; }
+    .sec-head { margin-bottom: 16px; }
+    .sec-head h2 { font-size: 20px; }
+    .lead { font-size: 15px; margin-bottom: 20px; }
+    
+    .esg-card, .case-card, .faq-item, .policy-box { padding: 22px 18px; }
+    .commit-box { padding: 24px 20px; }
+    
+    .sub-grid { grid-template-columns: 1fr; gap: 12px; }
+    .flow-cols { grid-template-columns: 1fr; gap: 16px; }
+    .flow-step { padding: 22px 18px; }
+
+    /* 行动清单手机端 */
+    .action-item {
+      gap: 14px;
+      padding: 18px 16px;
+    }
+    .action-index {
+      font-size: 24px;
+      width: 38px;
+    }
+    .action-body h3 { font-size: 15px; }
+    .action-body p { font-size: 13.5px; }
+    
+    /* 手机端数据面板改为 2 列 */
+    .data-strip { grid-template-columns: 1fr 1fr; gap: 1px; }
+    .data-item { padding: 16px; }
+    
+    /* 调整表格内边距 */
+    .map-table th, .map-table td { padding: 12px 14px; font-size: 13px; }
+
+    /* 页脚居中排列 */
+    .footer-inner {
+      flex-direction: column;
+      text-align: center;
+      gap: 8px;
+    }
+  }
+
+  /* ===== 按要求：main 内思源宋体文字颜色统一为黑色（页眉页脚除外） ===== */
+  main .lead,
+  main .lead strong,
+  main .esg-card p,
+  main .esg-card strong,
+  main .sub-item p,
+  main .callout,
+  main .callout strong,
+  main .data-item .desc,
+  main .policy-box p,
+  main .policy-box strong,
+  main .action-body p,
+  main .action-body p strong,
+  main .commit-box p,
+  main .commit-box p strong,
+  main .note,
+  main .service-intro p,
+  main .service-intro strong,
+  main .flow-step > p,
+  main .flow-step > p strong,
+  main .flow-col ul li,
+  main .flow-col ul li strong,
+  main .flow-deliver,
+  main .flow-link,
+  main .flow-link strong,
+  main .case-card p,
+  main .case-card p strong,
+  main .case-card .case-meta,
+  main .faq-item p,
+  main .faq-item p::before,
+  main .map-table td,
+  main .map-table td strong {
+    color: #000000;
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== 页眉 ===== -->
+<header class="site-header">
+  <div class="wrap">
+    <div class="header-body">
+      
+      <div class="header-left">
+        <div class="eyebrow">Environmental · Social · Governance</div>
+        <h1 class="hero-title">让每一度电、每一台设备，<br><span>都走向更长的生命周期</span></h1>
+        <p class="hero-sub">建筑机电更新中的ESG实践——<br>不做宏大叙事，只做可测量、可验证的改变。</p>
+      </div>
+
+      <!-- 标签矩阵 -->
+      <div class="header-right">
+        <div class="tabs-container" role="tablist" aria-label="ESG 主题">
+          <div class="tab-row">
+            <button class="tab" role="tab" id="tab-why"     aria-controls="panel-why"     data-tab="why">     为什么做</button>
+            <button class="tab" role="tab" id="tab-e"       aria-controls="panel-e"       data-tab="e">       环境 E</button>
+            <button class="tab" role="tab" id="tab-s"       aria-controls="panel-s"       data-tab="s">       社会 S</button>
+            <button class="tab" role="tab" id="tab-g"       aria-controls="panel-g"       data-tab="g">       治理 G</button>
+            <button class="tab" role="tab" id="tab-policy"  aria-controls="panel-policy"  data-tab="policy">  政策窗口</button>
+          </div>
+          <div class="tab-row">
+            <button class="tab" role="tab" id="tab-action"  aria-controls="panel-action"  data-tab="action">  行动清单</button>
+            <button class="tab" role="tab" id="tab-case"    aria-controls="panel-case"    data-tab="case">    行业案例</button>
+            <button class="tab" role="tab" id="tab-faq"     aria-controls="panel-faq"     data-tab="faq">     常见问题</button>
+            <button class="tab" role="tab" id="tab-service" aria-controls="panel-service" data-tab="service"> 我们的服务</button>
+            <button class="tab" role="tab" id="tab-promise" aria-controls="panel-promise" data-tab="promise"> 我们的理解</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- 为什么做 -->
+  <section class="panel" id="panel-why" role="tabpanel" aria-labelledby="tab-why">
+    <div class="sec-head">
+      <h2>建筑机电更新，本身就是一种ESG</h2>
+    </div>
+    <p class="lead">我国在运行的制冷空调设备年用电量占全社会总用电量的<strong>20%以上</strong>，其中能效等级低于3级的设备占比超过<strong>40%</strong>。这意味着大量存量建筑中，机电系统仍在以低于合理能效水平的方式持续消耗能源。<strong>把一台低效设备更新为高效设备，把一套粗放运行的系统优化为按需供能，就是最直接、最可测量的减碳动作。</strong></p>
+    <p class="lead">但机电更新的ESG意义不止于“换上新设备省电”。被拆除的旧设备、旧管道、旧桥架，本身携带着已经发生过的碳排放——这部分<strong>隐含碳</strong>，在更新决策中同样值得被认真对待。行业研究显示，在改造项目中，建筑服务系统的隐含碳可占到前期隐含碳的<strong>40%—50%</strong>，既有建筑改造中这一比例甚至可达<strong>75%</strong>。选择“拆掉全换”还是“修复保留”，本身就是一项ESG决策。</p>
+
+    <div class="data-strip">
+      <div class="data-item">
+        <div class="big">80<small>%</small></div>
+        <div class="desc">中央空调系统更新中，已有项目实现系统能效提升约80%的实践记录。</div>
+      </div>
+      <div class="data-item">
+        <div class="big">75<small>%</small></div>
+        <div class="desc">再利用、升级与再生材料结合，安装工程整体气候影响可降低的比例。</div>
+      </div>
+      <div class="data-item">
+        <div class="big">2<small>级</small></div>
+        <div class="desc">设备更新政策对能效等级的基本要求，已进入项目审核的硬性门槛。</div>
+      </div>
+      <div class="data-item">
+        <div class="big">20<small>%</small></div>
+        <div class="desc">中小企业设备更新补贴比例最高可在一般基础上浮后达到的水平。</div>
+      </div>
+    </div>
+    <p class="note">数据引自公开行业研究、政策文件与实践案例，用于说明建筑机电更新的典型效益区间与政策方向，不构成对特定项目结果的承诺。</p>
+  </section>
+
+  <!-- 环境 E -->
+  <section class="panel" id="panel-e" role="tabpanel" aria-labelledby="tab-e">
+    <div class="sec-head">
+      <h2>运行能效+隐含碳，两条线一起看</h2>
+    </div>
+
+    <div class="esg-card e">
+      <div class="esg-label">ENVIRONMENT · 环境</div>
+      <h3>能效提升要可量化，“修还是换”也要认真回答</h3>
+      <p>机电更新的环境价值，首先是<strong>运行阶段可量化的能效提升</strong>。高效主机、变频输配与智慧管控相结合，在已有实践中可实现系统能效提升约<strong>80%</strong>、年减排CO₂约<strong>48吨</strong>的记录；单台老旧空调机组替换为高效机型，每年可减少约<strong>1.4吨CO₂e</strong>，15年生命周期内累计减碳超过<strong>21吨</strong>。政策层面，用能设备更新已明确要求改造后能效等级达到<strong>2级及以上</strong>，这正在成为项目准入的底线。</p>
+      <p>但“换新”不是唯一答案。机电设备在制造、运输和安装过程中已经产生了碳排放，全部拆除换新意味着这部分碳被“一次性扔掉”。<strong>保留可修复的主机、水泵、桥架与风管，通过部件更换和控制升级恢复性能，同时能保住已经沉没的隐含碳。</strong>部分实践项目显示，将再利用、既有产品升级与再生材料使用相结合，安装工程的整体气候影响比全部采用新产品降低了<strong>75%</strong>；电缆桥架的再利用相比新品，碳减排幅度可达<strong>99%</strong>。</p>
+
+      <div class="sub-grid">
+        <div class="sub-item">
+          <span class="num">75%</span>
+          <h4>再利用+升级，隐含碳可降75%</h4>
+          <p>不是“凑合用旧货”，而是在质量保证和性能恢复的前提下，让仍然完好的部件继续服役。</p>
+        </div>
+        <div class="sub-item">
+          <span class="num">再制造</span>
+          <h4>循环经济“十五五”的明确方向</h4>
+          <p>规划提出推动再制造产业规模翻倍。中央空调主机、冷却塔、水泵、变压器等设备，并非到了年限就必须报废。</p>
+        </div>
+      </div>
+
+      <div class="callout"><strong>我们在项目中坚持的三件事：</strong>优先选择高能效设备；在条件允许时保留和修复可继续服役的部件，而非整机废弃；对更换下来的废旧机电设备，纳入规范的回收或再制造渠道，让仍有价值的材料与部件回到使用链条中。</div>
+    </div>
+
+    <p class="note">数据引自公开行业研究、政策文件与实践案例，用于说明建筑机电更新的典型效益区间与政策方向，不构成对特定项目结果的承诺。</p>
+  </section>
+
+  <!-- 社会 S -->
+  <section class="panel" id="panel-s" role="tabpanel" aria-labelledby="tab-s">
+    <div class="sec-head">
+      <h2>安全不是态度，是制度：把合规动作写清楚</h2>
+    </div>
+
+    <div class="esg-card s">
+      <div class="esg-label">SOCIAL · 社会</div>
+      <h3>更新的是设备，守住的是人</h3>
+      <p>机电更新发生在既有建筑内部，与人的距离比想象中更近。设备更新后运行更平稳、温控更可靠、室内环境更可控，最终受益的是楼里的使用者。对施工团队而言，社会维度的ESG首先不是“做公益”，而是<strong>让每一个作业动作都有可执行的制度依据，让每一个人安全地完成工作</strong>。以下这些不是“高标准”，而是机电施工安全的基本底线：</p>
+
+      <div class="sub-grid">
+        <div class="sub-item">
+          <h4>临时用电：作业票+TN-S系统</h4>
+          <p>临时用电实行作业票许可制度；施工现场采用TN-S三相五线制系统，所有临时用电设置接地保护。</p>
+        </div>
+        <div class="sub-item">
+          <h4>有限空间：2名监护人员+断电上锁</h4>
+          <p>受限空间作业时，内部用电设备停止运行并有效切断电源，开关处上锁挂牌；密闭空间内作业设备不少于<strong>2名</strong>监护人员。</p>
+        </div>
+      </div>
+
+      <p style="margin-top:18px;">把这些制度固定下来，对小微企业的意义是双重的：<strong>对内守住人的安全，对外满足供应链与项目准入的基本要求。</strong>大型建筑央企和国企的供应商履约评价中，安全绩效和环境合规正在成为与价格、质量并列的考察项。安全制度不是成本，是小微企业进入更大市场的“通行证”。</p>
+
+      <div class="callout"><strong>还有一层社会价值常被忽略：</strong>机电更新是技术密集型工种。变频控制、智慧调试、能效诊断这些能力，不会停留在旧设备上——让一线技术人员在真实项目中持续积累新技能，是小微企业能够提供给员工的最实在的成长路径。</div>
+    </div>
+  </section>
+
+  <!-- 治理 G -->
+  <section class="panel" id="panel-g" role="tabpanel" aria-labelledby="tab-g">
+    <div class="sec-head">
+      <h2>不强制披露≠不需要准备：ESG正在沿供应链传导</h2>
+    </div>
+
+    <div class="esg-card g">
+      <div class="esg-label">GOVERNANCE · 治理</div>
+      <h3>合规透明，是最实在的ESG</h3>
+      <p>截至2026年9月，我国尚无法律法规要求中小企业强制披露ESG信息。但“不强制”不等于“无关”。十部门《促进中小企业发展“十五五”规划》已明确提出<strong>“研究制定中小企业可持续披露准则，引导有意愿的中小企业开展可持续发展信息披露”</strong>。更现实的压力来自客户要求：</p>
+
+      <div class="sub-grid">
+        <div class="sub-item">
+          <h4>央国企招投标：ESG已是评分项</h4>
+          <p>多数央国企招投标中，ESG报告已成为技术标评分项；上市公司为完成自身披露，也会向供应商索要ESG数据。无相关准备可能直接影响合作资格。</p>
+        </div>
+        <div class="sub-item">
+          <h4>绿色准入：从“加分项”变“门槛项”</h4>
+          <p>2026年3月国务院国资委印发央企绿色低碳供应链建设指引，供应链的环境、安全、用工与碳排放信息正在被系统性地纳入管理。</p>
+        </div>
+      </div>
+
+      <p style="margin-top:18px;">对小微企业的治理要求因此变得清晰而务实：<strong>不必编制一份“漂亮”的ESG报告，但需要能够向客户提供真实、可核对的数据和制度记录</strong>——用了多少能、减了多少碳、旧设备去了哪里、安全制度是否执行、用工是否合规。真实披露优先于完美披露，有据可查优先于包装叙事。这恰恰是小微企业能够做到的治理。</p>
+
+      <div class="callout"><strong>具体做法：</strong>合同约定的能效目标与实际运行数据对标；施工过程文件与验收记录完整留存；废旧设备去向有据可查；对客户如实说明改造的预期效果与边界条件。不夸大单次改造的减碳量，但每一个给出的数字都有运行数据支撑。</div>
+    </div>
+  </section>
+
+  <!-- 政策窗口 -->
+  <section class="panel" id="panel-policy" role="tabpanel" aria-labelledby="tab-policy">
+    <div class="sec-head">
+      <h2>2026：机电更新的ESG与商业逻辑正在合流</h2>
+    </div>
+
+    <div class="policy-box">
+      <h4>补贴不再只是“省钱”，它开始看“效果”</h4>
+      <p>2026年用于设备更新的<strong>2000亿</strong>超长期特别国债专项资金已全部拨付，覆盖22个领域约1.1万个项目。中小企业补贴比例最高可在一般基础之上再上浮<strong>5个百分点，达到20%</strong>；商业设施首次被明确纳入补贴范围。一个200万元的机电改造项目，补贴规模可达30—40万元。</p>
+      <p>更值得关注的变化在于资金监管逻辑：<strong>“设备能效高”不再自动等于“能拿到补贴”，只有实际运行中实现可验证的节能量与碳减排，才能通过审核</strong>。这对小微企业的启示很直接：<strong>ESG能力——尤其是数据记录与效果验证能力——正在从“宣传需要”变成“拿得到政策资源的前提”。</strong>把改造前后的能耗数据留好，把运行效果说清楚，本身就是治理能力的一部分。</p>
+    </div>
+
+    <div class="data-strip">
+      <div class="data-item">
+        <div class="big">2000<small>亿</small></div>
+        <div class="desc">2026年设备更新超长期特别国债专项资金规模，已全部拨付。</div>
+      </div>
+      <div class="data-item">
+        <div class="big">1.1<small>万个</small></div>
+        <div class="desc">专项资金覆盖的项目数量，涉及22个领域。</div>
+      </div>
+      <div class="data-item">
+        <div class="big">20<small>%</small></div>
+        <div class="desc">中小企业补贴比例最高可在一般基础之上再上浮后达到的水平。</div>
+      </div>
+      <div class="data-item">
+        <div class="big">2<small>级</small></div>
+        <div class="desc">改造后用能设备能效等级的基本要求，属于项目审核的硬性门槛。</div>
+      </div>
+    </div>
+
+    <p class="note">数据引自公开行业研究、政策文件与实践案例，用于说明建筑机电更新的典型效益区间与政策方向，不构成对特定项目结果的承诺。</p>
+  </section>
+
+  <!-- 行动清单 -->
+  <section class="panel" id="panel-action" role="tabpanel" aria-labelledby="tab-action">
+    <div class="sec-head">
+      <h2>小微企业可以从这五件事开始</h2>
+    </div>
+    <p class="lead">不需要成立ESG部门，不需要购买复杂系统。以下五件事，用现有的项目记录和Excel就可以启动，而且每一件都直接服务于业务：</p>
+    <div class="action-list">
+      <div class="action-item">
+        <div class="action-index">01</div>
+        <div class="action-body">
+          <h3>建立“一项目一页”的能效记录</h3>
+          <p>记录改造前设备铭牌参数、运行时长、能耗基线，以及改造后的实测数据。这是未来应对客户询问和补贴审核最基础的素材。</p>
+        </div>
+      </div>
+      <div class="action-item">
+        <div class="action-index">02</div>
+        <div class="action-body">
+          <h3>把废旧设备去向做成台账</h3>
+          <p>哪台设备拆下来、去了哪里（回收、再制造、合规处置）、重量或数量是多少。循环经济的叙事，起点就是一条可查的去向记录。</p>
+        </div>
+      </div>
+      <div class="action-item">
+        <div class="action-index">03</div>
+        <div class="action-body">
+          <h3>将临时用电和有限空间作业的制度固定为项目标配</h3>
+          <p>作业票、断电确认、监护人员、TN-S系统，不是“大项目才做”，而是每一个项目都应当留存的安全治理证据。</p>
+        </div>
+      </div>
+      <div class="action-item">
+        <div class="action-index">04</div>
+        <div class="action-body">
+          <h3>在方案阶段多问一句“能不能修，而不是只能换”</h3>
+          <p>对客户而言，保留可修复部件往往意味着更低的初始投入和更少的施工干扰；对企业而言，这是隐含碳减量和循环经济实践的真实来源。</p>
+        </div>
+      </div>
+      <div class="action-item">
+        <div class="action-index">05</div>
+        <div class="action-body">
+          <h3>准备一份轻量化的ESG信息页（不是“报告”）</h3>
+          <p>一页纸说明：公司做什么、典型项目的能效数据、安全制度、废旧设备处理方式、合规记录。当客户发来供应商ESG调查表时，有东西可交，比临时拼凑更有说服力。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 行业案例 -->
+  <section class="panel" id="panel-case" role="tabpanel" aria-labelledby="tab-case">
+    <div class="sec-head">
+      <h2>用真实的改造数据说话</h2>
+    </div>
+    <p class="lead" style="margin-bottom:32px;">机电更新不是只讲概念，落地效果最终要体现在电表与运行记录里。以下是在不同建筑类型中的典型实践路径。</p>
+    <div class="case-grid">
+      
+      <div class="case-card">
+        <h4>某2万平方米办公大楼：中央空调系统+智慧控制改造</h4>
+        <div class="case-meta">商业办公 · 综合能效提升</div>
+        <p><strong>改造前痛点：</strong>两台老旧离心式冷水机组已运行超15年，综合能效比（COP）仅为3.2，且未配置群控系统，夜间与过渡季管网“大流量小温差”现象严重。</p>
+        <p><strong>我们的方案：</strong>更换两台高效变频离心机（达到国家一级能效），保留原有部分循环水泵与管网，新增冷站群控系统，并在关键节点补齐热量表与电表。</p>
+        <p><strong>改造后验证：</strong>实测系统综合能效比提升至5.5，年节约用电量约68万度，对应年减排CO₂约380吨。改造中保留了2台水泵，减少隐含碳近20吨，成功申报地方设备更新补贴。</p>
+      </div>
+
+      <div class="case-card">
+        <h4>某星级酒店：水泵变频+余热回收升级</h4>
+        <div class="case-meta">酒店建筑 · 舒适度与能耗双赢</div>
+        <p><strong>改造前痛点：</strong>生活热水与空调冷冻水系统水泵全部定频运行，不仅能耗高，且因负荷波动大，夜间客房末端噪音明显。</p>
+        <p><strong>我们的方案：</strong>对水泵进行变频控制改造，加装减振垫，并接入酒店现有BA系统；在冷冻机房新增板式换热器，回收冷凝热用于预热生活热水。</p>
+        <p><strong>改造后验证：</strong>水泵节电率达到45%以上，客房噪音问题彻底解决。通过余热回收，过渡季可完全停用锅炉，每月燃气费下降30%。客户在ESG考核中获得了“绿色运营”加分。</p>
+      </div>
+
+    </div>
+
+    <p class="note">数据引自公开行业研究、政策文件与实践案例，用于说明建筑机电更新的典型效益区间与政策方向，不构成对特定项目结果的承诺。</p>
+  </section>
+
+  <!-- 常见问题 -->
+  <section class="panel" id="panel-faq" role="tabpanel" aria-labelledby="tab-faq">
+    <div class="sec-head">
+      <h2>常见问题</h2>
+    </div>
+    <div class="faq-item">
+      <h4>改造需要停机很久吗？会不会影响正常办公或营业？</h4>
+      <p>通常在“评估”阶段就要摸清客户的用能规律。机电更新多采用分区分时施工，例如利用夜间、周末或过渡季进行主要设备切换，冷热源也常采用临时机组过渡。只要提前规划，完全可以把对正常运营的影响降到最低。</p>
+    </div>
+    <div class="faq-item">
+      <h4>如何申请设备更新补贴？我们符合条件吗？</h4>
+      <p>2026年的政策要求改造后设备达到二级能效及以上，并且实际运行中实现可验证的节能量。在“方案”阶段就需对项目进行补贴适配评估，测算预期补贴金额，并准备申报材料，避免改造完才发现不符合要求。</p>
+    </div>
+    <div class="faq-item">
+      <h4>怎么证明改造真的省了电、减了碳？</h4>
+      <p>这就是为什么在“设计”阶段坚持预留计量点位。这会为您建立改造前后的能耗基线，并依据实测数据出具验证报告。不夸大单次改造的减碳量，每一个数字都有电表、燃气表或系统运行记录作为支撑。</p>
+    </div>
+    <div class="faq-item">
+      <h4>有些设备还能用，但能效偏低，必须全部换掉吗？</h4>
+      <p>不。全部拆除换新意味着旧设备在制造时的隐含碳被直接丢弃。需根据设备剩余寿命、故障率以及修复成本综合判断。如果保留部分部件（如水泵、管网、桥架）并通过控制升级恢复性能，往往能实现更低的投资与更少的碳代价。</p>
+    </div>
+  </section>
+
+  <!-- 我们的服务 -->
+  <section class="panel" id="panel-service" role="tabpanel" aria-labelledby="tab-service">
+    <div class="sec-head">
+      <h2>从认知到交付：评估 · 方案 · 设计</h2>
+    </div>
+
+    <div class="service-intro">
+      <p>前面内容回答的是“<strong>怎么理解ESG</strong>”。这里回答另一个问题：<strong>我们如何把这种理解，变成客户可以使用的服务。</strong></p>
+      <p>建筑机电更新的ESG价值不会自动发生——它需要在<strong>评估</strong>阶段被看清楚，在<strong>方案</strong>阶段被算清楚，在<strong>设计</strong>阶段被画清楚。三个环节，分别对应前面讲过的环境、政策、社会与治理维度；客户拿到的不是一份理念说明书，而是一条从现状诊断到落地验证的完整路径。</p>
+    </div>
+
+    <div class="flow">
+
+      <div class="flow-step">
+        <div class="flow-head">
+          <span class="flow-num">01</span>
+          <h3>评估：先把现状看清楚</h3>
+        </div>
+        <p><strong>没有基线，后面的减碳数字都是空的。</strong>评估环节要回答的是：客户这栋楼的机电系统，到底在哪些环节拖后腿、能省多少、哪些设备还能救。</p>
+        <div class="flow-cols">
+          <div class="flow-col">
+            <h4>我们做什么</h4>
+            <ul>
+              <li><strong>能耗基线诊断：</strong>调取12个月电费、燃气费账单，核对设备铭牌参数与运行时长，建立改造前能耗与碳排基线</li>
+              <li><strong>能效等级核查：</strong>对照现行能效标准，标注每台主要设备的能效等级，识别低于3级的设备</li>
+              <li><strong>隐含碳初步判断：</strong>区分“必须更换”与“可修复保留”，给出保留vs更换的初步碳代价对比</li>
+              <li><strong>更新优先级排序：</strong>按能耗占比、故障率、剩余寿命、政策适配性四个维度排序</li>
+            </ul>
+          </div>
+          <div class="flow-col">
+            <h4>客户拿到什么</h4>
+            <div class="flow-deliver"><strong>《机电系统ESG现状评估表》</strong>不是长篇报告，是一张能看懂的表：哪些设备在拖后腿、换掉能省多少、哪些可以修、先动哪一台。</div>
+          </div>
+        </div>
+        <div class="flow-link"><strong>与前面的关系：</strong>前面说“低效设备占比超40%”，评估就是帮客户找到自己楼里的那40%；前面说“运行能效+隐含碳两条线”，评估就是两条线都测一遍。评估做扎实了，客户才能拿着数据去申请补贴、回应客户或业主的ESG问询。</div>
+      </div>
+
+      <div class="flow-step">
+        <div class="flow-head">
+          <span class="flow-num">02</span>
+          <h3>方案：把路径和账算清楚</h3>
+        </div>
+        <p><strong>方案不是堆设备清单，是回答“这笔钱花下去，环境和财务上各自回来多少”。</strong>同一个目标，往往不止一条路；哪条路更划算、哪条路补贴拿得到、哪条路碳代价更低，需要在纸面上先算一遍。</p>
+        <div class="flow-cols">
+          <div class="flow-col">
+            <h4>我们做什么</h4>
+            <ul>
+              <li><strong>技术路径比选：</strong>同一目标下给出2—3个方案（如“主机更换+变频改造”vs“控制系统升级+部分保留”），对比初投资、运行费、节能量、回收期</li>
+              <li><strong>修、换决策建议：</strong>基于评估结果，明确哪些建议更换、哪些建议修复保留，并说明各自的碳代价与经济性</li>
+              <li><strong>补贴适配：</strong>对照设备更新政策要求（能效2级及以上、节能量可验证），判断是否符合申报条件，测算补贴后实际投资</li>
+              <li><strong>能效目标设定：</strong>与客户约定改造后可验证的目标（如系统COP、单位面积能耗下降比例），写进合同</li>
+            </ul>
+          </div>
+          <div class="flow-col">
+            <h4>客户拿到什么</h4>
+            <div class="flow-deliver"><strong>《更新方案比选与投资测算》</strong>每个方案都有数字，不推荐“最贵的”，推荐“账算得过来的”。补贴部分单独列，让客户清楚实际出资和预期回报。</div>
+          </div>
+        </div>
+        <div class="flow-link"><strong>与前面的关系：</strong>前面讲了“拆掉全换vs修复保留”是ESG决策，方案环节就是帮客户做这个决策；前面讲了补贴开始看“可验证的节能量”，方案环节就要把能效目标和补贴申报路径提前设计进去，而不是改造完了再补材料。</div>
+      </div>
+
+      <div class="flow-step">
+        <div class="flow-head">
+          <span class="flow-num">03</span>
+          <h3>设计：把承诺画进图纸</h3>
+        </div>
+        <p><strong>改造完了想测却没表、想验却没数据，是机电更新中最常见的治理漏洞。</strong>设计阶段是最后一次“低成本把ESG装进去”的机会——一旦图纸定了，后面再补计量、补安全措施，成本会成倍上升。</p>
+        <div class="flow-cols">
+          <div class="flow-col">
+            <h4>我们做什么</h4>
+            <ul>
+              <li><strong>计量与监测点位设计：</strong>在配电回路、冷热源、输配系统关键节点预留计量表计和数据接口，确保改造后能测、能验</li>
+              <li><strong>设备选型参数锁定：</strong>在设计文件中明确能效等级、COP/IPLV、变频范围等参数，避免施工阶段被“等价替换”降标</li>
+              <li><strong>安全作业条件设计：</strong>既有建筑改造的临时用电方案、有限空间作业条件、断电隔离点，在图纸阶段标注清楚</li>
+              <li><strong>竣工数据交付清单：</strong>设计阶段就约定竣工时要交付哪些运行数据、以什么格式交付</li>
+            </ul>
+          </div>
+          <div class="flow-col">
+            <h4>客户拿到什么</h4>
+            <div class="flow-deliver"><strong>带ESG约束条件的设计文件</strong>图纸上不只有设备和管线，还有“未来怎么测、怎么验、怎么证明”。竣工时按清单交数据，客户的ESG披露和补贴核验都有据可依。</div>
+          </div>
+        </div>
+        <div class="flow-link"><strong>与前面的关系：</strong>前面说“安全是制度”，设计阶段就要把安全作业条件画进去；前面说“数据可追溯是最实在的治理”，设计阶段就要预留计量点位——否则改造完了想测都没法测，治理承诺就落不了地。</div>
+      </div>
+
+    </div>
+
+    <!-- 对应关系表（已添加响应式包裹容器） -->
+    <div class="sec-head" style="margin-top:44px;">
+      <h2>三个环节，回扣前面模块</h2>
+    </div>
+    <div class="table-responsive">
+      <table class="map-table">
+        <thead>
+          <tr>
+            <th style="width:16%;">服务环节</th>
+            <th style="width:30%;">回答客户什么问题</th>
+            <th style="width:26%;">对应前面模块</th>
+            <th style="width:28%;">交付物</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>评估</strong></td>
+            <td>从哪里开始？现状差多少？哪些能修、哪些该换？</td>
+            <td>
+              <span class="mod">为什么</span>
+              <span class="mod">环境E</span>
+            </td>
+            <td>《机电系统ESG现状评估表》</td>
+          </tr>
+          <tr>
+            <td><strong>方案</strong></td>
+            <td>怎么改？值不值？补贴能不能拿？能效目标定多少？</td>
+            <td>
+              <span class="mod">环境E</span>
+              <span class="mod">政策窗口</span>
+            </td>
+            <td>《更新方案比选与投资测算》</td>
+          </tr>
+          <tr>
+            <td><strong>设计</strong></td>
+            <td>怎么保证落地不走样？数据怎么留？安全条件怎么落？</td>
+            <td>
+              <span class="mod">社会S</span>
+              <span class="mod">治理G</span>
+            </td>
+            <td>带ESG约束条件的设计文件</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 我们的理解 -->
+  <section class="panel" id="panel-promise" role="tabpanel" aria-labelledby="tab-promise">
+    <div class="sec-head">
+      <h2>我们理解的“小微ESG”</h2>
+    </div>
+    <p class="lead">中小企业的ESG不必追求“大而全”，更可行的路径是在关键环节做“小而实”的突破：环境端把运行能效和隐含碳一起纳入更新决策，社会端把安全合规落成可执行的制度，治理端做到数据真实、记录可查、不夸大单次项目的效果。建筑机电更新恰好落在环境端最具操作性的位置——它直接作用于建筑的能耗入口，效果可以用电表、燃气表和运行记录来检验；同时，它也触及隐含碳和循环经济，让“修还是换”成为一个值得认真回答的ESG问题。</p>
+    <div class="commit-box">
+      <p>每做一个项目，让被更新的那套系统，<strong>比原来更高效一点</strong>；<br>让经手的每一台旧设备，<strong>尽可能不被当作废物丢掉</strong>；<br>让参与项目的每一个人，<strong>安全地完成工作</strong>；<br>让给出的每一个数字，<strong>都能在运行记录里找到依据</strong>。</p>
+    </div>
+  </section>
+
+</main>
+
+<!-- ===== 页脚 ===== -->
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <span>© 2026 &nbsp; XJ MEP 小匠机电</span>
+    <span class="footer-link"><a href="http://www.xjmep.com" target="_blank">www.xjmep.com</a></span>
+    <span class="footer-link">email：dxj@xjmep.com</span>
+    <span>运营主体：四川未来知见工程设计有限公司</span>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var tabs = Array.prototype.slice.call(document.querySelectorAll('.tab'));
+  var panels = Array.prototype.slice.call(document.querySelectorAll('.panel'));
+  var valid = tabs.map(function (t) { return t.dataset.tab; });
+  var header = document.querySelector('.site-header');
+  var mainEl = document.querySelector('main');
+
+  function activate(name, shouldScroll) {
+    if (valid.indexOf(name) === -1) name = valid[0];
+
+    tabs.forEach(function (t) {
+      var on = t.dataset.tab === name;
+      t.classList.toggle('active', on);
+      t.setAttribute('aria-selected', on ? 'true' : 'false');
+      t.tabIndex = on ? 0 : -1;
+    });
+
+    panels.forEach(function (p) {
+      var on = p.id === 'panel-' + name;
+      p.classList.toggle('active', on);
+      p.setAttribute('aria-hidden', on ? 'false' : 'true');
+    });
+
+    if (history.replaceState) {
+      history.replaceState(null, '', '#' + name);
+    } else {
+      location.hash = name;
+    }
+
+    if (shouldScroll) {
+      // 手机端头部非悬浮，直接滚动到内容区
+      var isSticky = window.getComputedStyle(header).position === 'sticky';
+      var headerH = isSticky ? header.offsetHeight : 0;
+      var top = mainEl.getBoundingClientRect().top + window.pageYOffset - headerH;
+      
+      // 如果当前不在顶部，则滚动到内容起点
+      if (window.pageYOffset > top + 1) {
+        window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
+      }
+    }
+  }
+
+  tabs.forEach(function (tab) {
+    tab.addEventListener('click', function () {
+      activate(tab.dataset.tab, true);
+    });
+
+    tab.addEventListener('keydown', function (e) {
+      var i = tabs.indexOf(tab);
+      var next = null;
+      if (e.key === 'ArrowRight') next = tabs[(i + 1) % tabs.length];
+      if (e.key === 'ArrowLeft')  next = tabs[(i - 1 + tabs.length) % tabs.length];
+      if (e.key === 'Home')       next = tabs[0];
+      if (e.key === 'End')        next = tabs[tabs.length - 1];
+      if (next) {
+        e.preventDefault();
+        next.focus();
+        activate(next.dataset.tab, false);
+      }
+    });
+  });
+
+  window.addEventListener('hashchange', function () {
+    var h = location.hash.slice(1);
+    if (valid.indexOf(h) !== -1) activate(h, true);
+  });
+
+  var initial = location.hash.slice(1);
+  activate(valid.indexOf(initial) !== -1 ? initial : valid[0], false);
+})();
+</script>
+
+</body>
+</html>
