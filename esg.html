@@ -2,11 +2,9 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<!-- 适配手机端视口，防止微信内缩放错乱，支持安全区 -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <title>ESG</title>
 
-<!-- 思源黑体 / 思源宋体（Google Fonts，SIL OFL 开源可商用） -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&amp;family=Noto+Serif+SC:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
@@ -25,7 +23,8 @@
     --radius: 10px;
     --max: 1040px;
 
-    --font-sans: "Noto Sans SC", "Source Han Sans SC", "Source Han Sans CN", system-ui, sans-serif;
+    /* 仅保留思源黑体、思源宋体，移除 system-ui 等其他字体名称 */
+    --font-sans: "Noto Sans SC", "Source Han Sans SC", "Source Han Sans CN", sans-serif;
     --font-serif: "Noto Serif SC", "Source Han Serif SC", "Source Han Serif CN", serif;
   }
   
@@ -58,7 +57,7 @@
   /* ===== 手机端标题换行标记 ===== */
   .m-br { display: none; }
 
-  /* ===== 固定页眉（桌面端） ===== */
+  /* ===== 固定页眉 ===== */
   .site-header {
     position: sticky; top: 0; z-index: 100;
     background: linear-gradient(180deg, #17333f 0%, #1f4e6b 55%, #2f6b4f 100%);
@@ -88,6 +87,7 @@
     padding: 6px 14px; border-radius: 100px; margin-bottom: 20px;
     font-weight: 500;
   }
+  .eyebrow .sep { display: inline; }
 
   .hero-title {
     font-family: var(--font-sans);
@@ -107,7 +107,7 @@
     text-shadow: 0 1px 3px rgba(0,0,0,0.25);
   }
 
-  /* ===== 标签网格矩阵 (桌面端) ===== */
+  /* ===== 标签网格矩阵 ===== */
   .header-right {
     display: flex; justify-content: center;
     width: 100%;
@@ -306,12 +306,23 @@
     font-weight: 600;
   }
 
+  /* ===== 承诺区：改为对称网格布局 ===== */
   .commit-box {
     background: var(--green-light); border-radius: var(--radius);
     padding: 34px 30px; border: 1px solid #cfe1d6;
   }
-  .commit-box p { font-size: 16px; color: #1e3d2d; line-height: 1.95; max-width: 840px; }
-  .commit-box p strong { font-weight: 600; }
+  .commit-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 22px 36px;
+  }
+  .commit-item {
+    font-size: 16px;
+    color: #1e3d2d;
+    line-height: 1.9;
+    text-align: center;
+  }
+  .commit-item strong { font-weight: 600; }
 
   .note {
     font-size: 12px; color: #7a8e87; line-height: 1.7; margin-top: 20px;
@@ -425,7 +436,6 @@
     content: "A "; color: var(--accent); font-weight: 700;
   }
 
-  /* 表格外层包装，用于手机端横向滑动 */
   .table-responsive {
     width: 100%;
     overflow-x: auto;
@@ -494,7 +504,7 @@
     opacity: 0.8;
   }
 
-  /* ===== 响应式适配（手机、微信内置浏览器） ===== */
+  /* ===== 响应式适配 ===== */
   @media (max-width: 960px) {
     .wrap { padding: 0 16px; }
     .site-header { position: relative; padding: 20px 0 16px; }
@@ -503,7 +513,6 @@
     .hero-sub { font-size: 13px; }
     .eyebrow { margin-bottom: 12px; font-size: 12px; padding: 4px 10px; }
     
-    /* 手机端标签改为 4-4-2 三行网格布局 */
     .header-right { display: block; }
     .tabs-container {
       display: grid;
@@ -514,9 +523,7 @@
       overflow: visible;
       padding-bottom: 0;
     }
-    .tab-row {
-      display: contents;
-    }
+    .tab-row { display: contents; }
     .tab {
       width: 100%;
       border-radius: 8px;
@@ -541,14 +548,8 @@
     .flow-cols { grid-template-columns: 1fr; gap: 16px; }
     .flow-step { padding: 22px 18px; }
 
-    .action-item {
-      gap: 14px;
-      padding: 18px 16px;
-    }
-    .action-index {
-      font-size: 24px;
-      width: 38px;
-    }
+    .action-item { gap: 14px; padding: 18px 16px; }
+    .action-index { font-size: 24px; width: 38px; }
     .action-body h3 { font-size: 15px; }
     .action-body p { font-size: 13.5px; }
     
@@ -564,7 +565,36 @@
     }
   }
 
-  /* 超小屏进一步压缩标签字号 */
+  @media (max-width: 600px) {
+    .m-br { display: inline; }
+
+    /* 页眉 eyebrow：三行左对齐，去背景和边框 */
+    .eyebrow {
+      display: block;
+      text-align: left;
+      background: none;
+      border: none;
+      padding: 0;
+      border-radius: 0;
+      line-height: 1.9;
+      letter-spacing: 0.08em;
+      margin-bottom: 12px;
+    }
+    .eyebrow .sep {
+      display: none;
+    }
+
+    /* 承诺区手机端单列 */
+    .commit-grid {
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+    .commit-item {
+      text-align: left;
+      font-size: 15px;
+    }
+  }
+
   @media (max-width: 400px) {
     .tab {
       font-size: 12px;
@@ -573,15 +603,7 @@
     }
   }
 
-  /*
-   * 手机端标题强制两行（≤600px 时这些标题在窄屏下无法一行显示）
-   * 用媒体查询直接控制 .m-br，不依赖 JS 测量，确保微信内置浏览器也稳定生效
-   */
-  @media (max-width: 600px) {
-    .m-br { display: inline; }
-  }
-
-  /* ===== main 内思源宋体文字颜色统一为黑色 ===== */
+  /* main 内思源宋体文字颜色统一为黑色 */
   main .lead,
   main .lead strong,
   main .esg-card p,
@@ -594,8 +616,8 @@
   main .policy-box strong,
   main .action-body p,
   main .action-body p strong,
-  main .commit-box p,
-  main .commit-box p strong,
+  main .commit-item,
+  main .commit-item strong,
   main .note,
   main .service-intro p,
   main .service-intro strong,
@@ -619,18 +641,20 @@
 </head>
 <body>
 
-<!-- ===== 页眉 ===== -->
 <header class="site-header">
   <div class="wrap">
     <div class="header-body">
       
       <div class="header-left">
-        <div class="eyebrow">Environmental · Social · Governance</div>
+        <div class="eyebrow">
+          Environmental <span class="sep">·</span><br class="m-br">
+          Social <span class="sep">·</span><br class="m-br">
+          Governance
+        </div>
         <h1 class="hero-title">让每一度电、每一台设备，<br><span>都走向更长的生命周期</span></h1>
         <p class="hero-sub">建筑机电更新中的ESG实践——<br>不做宏大叙事，只做可测量、可验证的改变。</p>
       </div>
 
-      <!-- 标签矩阵 -->
       <div class="header-right">
         <div class="tabs-container" role="tablist" aria-label="ESG 主题">
           <div class="tab-row">
@@ -775,11 +799,11 @@
   <!-- 政策窗口 -->
   <section class="panel" id="panel-policy" role="tabpanel" aria-labelledby="tab-policy">
     <div class="sec-head">
-      <h2>2026：<br class="m-br">机电更新的ESG与商业逻辑正在合流</h2>
+      <h2>2026：机电更新的ESG与商业逻辑</h2>
     </div>
 
     <div class="policy-box">
-      <h4>补贴不再只是“省钱”，它开始看“效果”</h4>
+      <h4>补贴不再只是“省钱”，<br class="m-br">它开始看“效果”</h4>
       <p>2026年用于设备更新的<strong>2000亿</strong>超长期特别国债专项资金已全部拨付，覆盖22个领域约1.1万个项目。中小企业补贴比例最高可在一般基础之上再上浮<strong>5个百分点，达到20%</strong>；商业设施首次被明确纳入补贴范围。一个200万元的机电改造项目，补贴规模可达30—40万元。</p>
       <p>更值得关注的变化在于资金监管逻辑：<strong>“设备能效高”不再自动等于“能拿到补贴”，只有实际运行中实现可验证的节能量与碳减排，才能通过审核</strong>。这对小微企业的启示很直接：<strong>ESG能力——尤其是数据记录与效果验证能力——正在从“宣传需要”变成“拿得到政策资源的前提”。</strong>把改造前后的能耗数据留好，把运行效果说清楚，本身就是治理能力的一部分。</p>
     </div>
@@ -868,7 +892,7 @@
       </div>
 
       <div class="case-card">
-        <h4>某星级酒店：水泵变频+余热回收升级</h4>
+        <h4>某星级酒店：<br class="m-br">水泵变频+余热回收升级</h4>
         <div class="case-meta">酒店建筑 · 舒适度与能耗双赢</div>
         <p><strong>改造前痛点：</strong>生活热水与空调冷冻水系统水泵全部定频运行，不仅能耗高，且因负荷波动大，夜间客房末端噪音明显。</p>
         <p><strong>我们的方案：</strong>对水泵进行变频控制改造，加装减振垫，并接入酒店现有BA系统；在冷冻机房新增板式换热器，回收冷凝热用于预热生活热水。</p>
@@ -906,7 +930,7 @@
   <!-- 我们的服务 -->
   <section class="panel" id="panel-service" role="tabpanel" aria-labelledby="tab-service">
     <div class="sec-head">
-      <h2>从认知到交付：评估 · 方案 · 设计</h2>
+      <h2>从认知到交付：<br class="m-br">评估 · 方案 · 设计</h2>
     </div>
 
     <div class="service-intro">
@@ -990,7 +1014,6 @@
 
     </div>
 
-    <!-- 对应关系表 -->
     <div class="sec-head" style="margin-top:44px;">
       <h2>三个环节，回扣前面模块</h2>
     </div>
@@ -1044,19 +1067,22 @@
     </div>
     <p class="lead">中小企业的ESG不必追求“大而全”，更可行的路径是在关键环节做“小而实”的突破：环境端把运行能效和隐含碳一起纳入更新决策，社会端把安全合规落成可执行的制度，治理端做到数据真实、记录可查、不夸大单次项目的效果。建筑机电更新恰好落在环境端最具操作性的位置——它直接作用于建筑的能耗入口，效果可以用电表、燃气表和运行记录来检验；同时，它也触及隐含碳和循环经济，让“修还是换”成为一个值得认真回答的ESG问题。</p>
     <div class="commit-box">
-      <p>每做一个项目，让被更新的那套系统，<strong>比原来更高效一点</strong>；<br>让经手的每一台旧设备，<strong>尽可能不被当作废物丢掉</strong>；<br>让参与项目的每一个人，<strong>安全地完成工作</strong>；<br>让给出的每一个数字，<strong>都能在运行记录里找到依据</strong>。</p>
+      <div class="commit-grid">
+        <div class="commit-item">每做一个项目，让被更新的那套系统，<strong>比原来更高效一点</strong>；</div>
+        <div class="commit-item">让经手的每一台旧设备，<strong>尽可能不被当作废物丢掉</strong>；</div>
+        <div class="commit-item">让参与项目的每一个人，<strong>安全地完成工作</strong>；</div>
+        <div class="commit-item">让给出的每一个数字，<strong>都能在运行记录里找到依据</strong>。</div>
+      </div>
     </div>
   </section>
 
 </main>
 
-<!-- ===== 页脚 ===== -->
 <footer class="site-footer">
   <div class="wrap footer-inner">
     <span>© 2026 &nbsp; XJ MEP 小匠机电</span>
     <span class="footer-link"><a href="http://www.xjmep.com" target="_blank">www.xjmep.com</a></span>
     <span class="footer-link">email：dxj@xjmep.com</span>
-    <span>运营主体：四川未来知见工程设计有限公司</span>
   </div>
 </footer>
 
