@@ -668,27 +668,45 @@
       -webkit-backdrop-filter:none;
     }
 
+    /* ===== 页眉：品牌居中 + 3×2 导航网格，整体加高 ===== */
     .nav-inner{
       flex-direction:column;
       justify-content:center;
-      gap:6px;
+      gap:8px;
       height:auto;
       min-height:0;
-      padding:8px 0;
+      padding:10px 0 8px;
+    }
+
+    .brand{
+      justify-content:center;
+      width:100%;
     }
 
     .nav-links{
       display:grid;
       grid-template-columns:repeat(3, 1fr);
       width:100%;
-      justify-items:center;
-      align-items:center;
-      gap:4px 8px;
-      font-size:.78rem;
+      justify-items:stretch;
+      align-items:stretch;
+      gap:2px 6px;
+      font-size:.94rem;          /* ← 由 .78rem 增大两个字号 */
+      line-height:1.5;
+      border-top:1px solid rgba(255,255,255,.07);
+      padding-top:6px;
     }
     .nav-links a{
-      padding:4px 0;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:5px 2px;
       text-align:center;
+      border-radius:8px;
+      transition:color .2s ease, background .2s ease;
+    }
+    .nav-links a:active{
+      color:var(--accent-bright);
+      background:rgba(255,255,255,.07);
     }
 
     .hero-diagram{
@@ -750,12 +768,15 @@
     .brand-text strong{font-size:.98rem;}
     .brand-text small{font-size:.78rem;}
 
-    .nav-inner{gap:4px;padding:6px 0;}
+    /* ===== 小屏页眉：进一步压缩间距、保持 3 列大字 ===== */
+    .nav-inner{gap:6px;padding:8px 0 6px;}
     .nav-links{
       gap:2px 4px;
-      font-size:.72rem;
+      font-size:.90rem;          /* ← 由 .72rem 增大两个字号 */
+      line-height:1.45;
+      padding-top:5px;
     }
-    .nav-links a{padding:3px 0;}
+    .nav-links a{padding:4px 1px;}
 
     .eyebrow-split{
       flex-direction:column;
@@ -820,6 +841,14 @@
   }
 
   @media (max-width:400px){
+    /* 极窄屏：给页眉让出更多横向空间，确保 3 列不挤 */
+    .nav .wrap{width:calc(100% - 24px);}
+    .nav-links{
+      font-size:.88rem;          /* 仍比原始 .72rem 大约两个字号 */
+      gap:2px 2px;
+    }
+    .nav-links a{padding:4px 0;}
+
     .eyebrow-split{
       flex-direction:column;
       align-items:flex-start;
