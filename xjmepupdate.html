@@ -11,7 +11,7 @@
   <meta name="description" content="小匠机电更新专注既有建筑机电系统更新，覆盖给排水、暖通空调、供配电与照明、消防、电梯、智能化与智慧运维，提供评估、设计服务。" />
 
   <link rel="preconnect" href="https://fonts.loli.net" crossorigin />
-  <link href="https://fonts.loli.net/css2?family=Noto+Sans+SC:wght@400;500;700;900&family=Noto+Serif+SC:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.loli.net/css2?family=Noto+Sans+SC:wght@400;500;700;900&family=Noto+Serif+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 
   <script>document.documentElement.classList.add('js');</script>
 
@@ -1389,6 +1389,33 @@
     @media (prefers-reduced-motion: reduce) {
       .js .reveal { opacity: 1; transform: none; transition: none; }
       .btn, .service-card, .pain-item, .wechat-btn, .phone-btn, .about-btn, .email-btn { transition: none; }
+    }
+
+    /* ===== 1. 思源宋体正文文字使用细体，不加粗 ===== */
+    body,
+    p,
+    li,
+    input,
+    select,
+    textarea {
+      font-weight: 300;
+    }
+
+    /* 黑体说明性小字保持正常字重，避免过细 */
+    .hero-card p,
+    .hero-card li,
+    .hero-tags span,
+    .logo small.sub-justify,
+    .footer-bottom span,
+    .footer-bottom a {
+      font-weight: 400;
+    }
+
+    /* ===== 2. 文本输入光标不闪烁（隐藏插入符），鼠标指针正常显示 ===== */
+    input,
+    textarea,
+    [contenteditable] {
+      caret-color: transparent;
     }
   </style>
 </head>
