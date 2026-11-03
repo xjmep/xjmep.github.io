@@ -184,25 +184,21 @@
 
   .footer-org{color:#ffffff;}
 
+  /* 页脚邮箱：整段一行，无额外 gap，紧贴全角冒号 */
   .footer-mail{
     display:inline-flex;
     align-items:center;
-    gap:6px;
+    gap:0;
     color:#ffffff;
+    font-size:.84rem;
+    font-weight:600;
+    letter-spacing:.01em;
+    white-space:nowrap;
     transition:color .2s ease;
   }
   .footer-mail:hover{color:#ffffff;}
-  .footer-mail svg{
-    width:14px;
-    height:14px;
-    flex:0 0 auto;
-    display:block;
-    color:#ffffff;
-    stroke:currentColor;
-    position:relative;
-    top:1px;
-  }
-  .footer-mail-addr{
+  .footer-mail-text{
+    white-space:nowrap;
     letter-spacing:.01em;
   }
 
@@ -651,7 +647,7 @@
       gap:20px;
       font-size:.74rem;
     }
-    .footer-mail{font-size:.74rem;}
+    .footer-mail{font-size:.80rem;}
   }
 
   @media (max-width:960px){
@@ -754,6 +750,7 @@
       text-align:center;
     }
     .footer-item{white-space:normal;text-align:center;}
+    .footer-mail{white-space:nowrap;}   /* ← 覆盖 .footer-item 的 normal，邮箱保持一行 */
     .footer-center{letter-spacing:.1em;}
   }
 
@@ -830,8 +827,7 @@
     .page-footer-inner{gap:4px 14px;padding:8px 0;}
     .footer-item{font-size:.7rem;color:#ffffff;}
     .footer-center{font-size:.7rem;color:#ffffff;}
-    .footer-mail{font-size:.7rem;gap:5px;color:#ffffff;}
-    .footer-mail svg{width:12px;height:12px;color:#ffffff;}
+    .footer-mail{font-size:.78rem;gap:0;color:#ffffff;font-weight:600;white-space:nowrap;}
 
     .about-text p:not(.eyebrow){font-size:.94rem;}
     .lead{font-size:.96rem;}
@@ -1208,11 +1204,7 @@
     <span class="footer-item footer-center">以匠造之心·做专业之事</span>
     <span class="footer-item footer-org">运营主体：四川未来知见工程设计有限公司</span>
     <a class="footer-item footer-mail" href="mailto:dxj@xjmep.com">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
-        <rect x="2.5" y="5" width="19" height="14" rx="2.5"/>
-        <path d="M3.2 7.2 L12 13.2 L20.8 7.2"/>
-      </svg>
-      <span class="footer-mail-addr">dxj@xjmep.com</span>
+      <span class="footer-mail-text">email：dxj@xjmep.com</span>
     </a>
   </div>
 </footer>
