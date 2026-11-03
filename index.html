@@ -176,8 +176,8 @@
     font-size:.8em;font-weight:400;color:#8a5100;letter-spacing:.05em;margin-top:2px;
   }
 
-  /* ===== 底部社交图标行（5 个图标强制同行，兼容老 Safari） ===== */
-  .social-row{
+  /* ===== 底部图标栏（用中性类名，避免命中拦截器规则） ===== */
+  .icon-strip{
     display:flex;
     flex-wrap:nowrap;
     justify-content:center;
@@ -186,34 +186,40 @@
     max-width:100%;
     overflow:visible;
   }
-  .social-row a{
+  .icon-strip .ib{
+    appearance:none;
+    -webkit-appearance:none;
+    background:none;
+    border:none;
+    padding:0;
+    margin:0 15px;             /* 用 margin 替代 gap，兼容 Safari 14.1 以下 */
     display:block;
     line-height:0;
     flex:0 0 auto;
-    text-decoration:none;
+    cursor:pointer;
     -webkit-tap-highlight-color:transparent;
     transition:transform .22s;
-    margin:0 15px;              /* 用 margin 替代 gap，兼容 Safari 14.1 以下 */
   }
-  .social-row img{
+  .icon-strip .ib img{
     width:50px;
     height:50px;
     display:block;
+    pointer-events:none;       /* 点击落在 button 上 */
   }
   @media (hover:hover){
-    .social-row a:hover{transform:translateY(-3px);}
+    .icon-strip .ib:hover{transform:translateY(-3px);}
   }
   @media (max-width:480px){
-    .social-row a{margin:0 8px;}
-    .social-row img{width:44px;height:44px;}
+    .icon-strip .ib{margin:0 8px;}
+    .icon-strip .ib img{width:44px;height:44px;}
   }
   @media (max-width:380px){
-    .social-row a{margin:0 5px;}
-    .social-row img{width:38px;height:38px;}
+    .icon-strip .ib{margin:0 5px;}
+    .icon-strip .ib img{width:38px;height:38px;}
   }
   @media (max-width:330px){
-    .social-row a{margin:0 3px;}
-    .social-row img{width:34px;height:34px;}
+    .icon-strip .ib{margin:0 3px;}
+    .icon-strip .ib img{width:34px;height:34px;}
   }
 
   /* ===== 轻提示 Toast ===== */
@@ -366,50 +372,41 @@
 
 </div>
 
-<!--
-  ============================================================
-  底部 5 个社交图标全部使用 base64 内嵌，绕过 Safari 内容拦截器。
-  请把下面 5 个占位符替换为对应图片的真实 base64（不要保留占位符字样，整串不能换行）：
+<!-- 底部图标栏：用 button + data-href 结构，绕开拦截器对 a[href*=社交域名] 的识别 -->
+<div class="icon-strip">
 
-    __TB_BASE64__       <- tb.png
-    __XY_BASE64__       <- xy.png
-    __XHS_BASE64__      <- xhs.png
-    __DY_BASE64__       <- dy.png
-    __UPDATE_BASE64__   <- xjmepupdate.png
+  <button type="button" class="ib"
+          data-href="https://xjmep.taobao.com"
+          data-scheme="taobao://"
+          data-name="淘宝">
+    <img src="tb.png" alt="淘宝" width="50" height="50">
+  </button>
 
-  生成方式（在图片目录执行）：
-    base64 -w0 tb.png
-    base64 -w0 xy.png
-    base64 -w0 xhs.png
-    base64 -w0 dy.png
-    base64 -w0 xjmepupdate.png
-  ============================================================
--->
-<div class="social-row">
+  <button type="button" class="ib"
+          data-href="https://m.tb.cn/h.jZc0TBJ?tk=0QRsTJOmD6N%20CZ001"
+          data-scheme="xianyu://"
+          data-name="闲鱼">
+    <img src="xy.png" alt="闲鱼" width="50" height="50">
+  </button>
 
-  <a href="https://xjmep.taobao.com" target="_blank" rel="noopener noreferrer"
-     onclick="return openInApp('taobao://', 'https://xjmep.taobao.com', '淘宝')">
-    <img src="data:image/png;base64,__TB_BASE64__" alt="淘宝" width="50" height="50">
-  </a>
+  <button type="button" class="ib"
+          data-href="https://xhslink.cn/o/4xR7lu616uu"
+          data-scheme="xhsdiscover://"
+          data-name="小红书">
+    <img src="xhs.png" alt="小红书" width="50" height="50">
+  </button>
 
-  <a href="https://m.tb.cn/h.jZc0TBJ?tk=0QRsTJOmD6N%20CZ001" target="_blank" rel="noopener noreferrer"
-     onclick="return openInApp('xianyu://', 'https://m.tb.cn/h.jZc0TBJ?tk=0QRsTJOmD6N%20CZ001', '闲鱼')">
-    <img src="data:image/png;base64,__XY_BASE64__" alt="闲鱼" width="50" height="50">
-  </a>
+  <button type="button" class="ib"
+          data-href="https://v.douyin.com/3WKXVOz-JII/"
+          data-scheme="snssdk1128://"
+          data-name="抖音">
+    <img src="dy.png" alt="抖音" width="50" height="50">
+  </button>
 
-  <a href="https://xhslink.cn/o/4xR7lu616uu" target="_blank" rel="noopener noreferrer"
-     onclick="return openInApp('xhsdiscover://', 'https://xhslink.cn/o/4xR7lu616uu', '小红书')">
-    <img src="data:image/png;base64,__XHS_BASE64__" alt="小红书" width="50" height="50">
-  </a>
-
-  <a href="https://v.douyin.com/3WKXVOz-JII/" target="_blank" rel="noopener noreferrer"
-     onclick="return openInApp('snssdk1128://', 'https://v.douyin.com/3WKXVOz-JII/', '抖音')">
-    <img src="data:image/png;base64,__DY_BASE64__" alt="抖音" width="50" height="50">
-  </a>
-
-  <a href="xjmepupdate.html" target="_blank" rel="noopener noreferrer">
-    <img src="data:image/png;base64,__UPDATE_BASE64__" alt="XJ MEP 更新" width="50" height="50">
-  </a>
+  <button type="button" class="ib"
+          data-href="xjmepupdate.html">
+    <img src="xjmepupdate.png" alt="XJ MEP 更新" width="50" height="50">
+  </button>
 
 </div>
 
@@ -427,8 +424,7 @@
 </footer>
 
 <script>
-/* ============ APP 唤起 / 网页回退 ============ */
-
+/* ============ 轻提示 ============ */
 function showToast(msg){
   var t = document.getElementById('toast');
   if (!t) return;
@@ -438,6 +434,7 @@ function showToast(msg){
   showToast._timer = setTimeout(function(){ t.classList.remove('show'); }, 2200);
 }
 
+/* ============ 新标签页打开网页 ============ */
 function openUrl(url){
   try{
     var w = window.open(url, '_blank');
@@ -447,6 +444,7 @@ function openUrl(url){
   }
 }
 
+/* ============ 尝试唤起 APP，失败回退网页 ============ */
 function tryOpenScheme(scheme, webUrl){
   var appOpened = false;
   function onHide(){ if (document.hidden) appOpened = true; }
@@ -463,32 +461,39 @@ function tryOpenScheme(scheme, webUrl){
   }, 2000);
 }
 
-/**
- * 点击社交图标
- * @param {string} scheme  APP 协议头
- * @param {string} webUrl  无法唤起 APP 时的网页地址
- * @param {string} appName APP 名称（用于提示）
- */
+/* ============ 点击处理 ============ */
 function openInApp(scheme, webUrl, appName){
   var ua = navigator.userAgent;
   var isWechat = /MicroMessenger/i.test(ua);
   var isMobile = /Android|iPhone|iPad|iPod|Mobile/i.test(ua);
 
-  /* 电脑浏览器：使用 <a> 默认行为，新标签页打开 */
-  if (!scheme || !isMobile) { return true; }
+  /* 电脑浏览器：新标签页打开网页 */
+  if (!scheme || !isMobile) {
+    openUrl(webUrl);
+    return;
+  }
 
   /* 微信内置浏览器会拦截 scheme，直接打开网页 */
   if (isWechat){
     openUrl(webUrl);
-    return false;
+    return;
   }
 
-  /* 提示正在跳转 APP */
   if (appName){ showToast('正在打开' + appName + ' APP…'); }
-
   tryOpenScheme(scheme, webUrl);
-  return false;
 }
+
+/* ============ 绑定底部图标按钮 ============ */
+document.querySelectorAll('.icon-strip .ib').forEach(function(btn){
+  btn.addEventListener('click', function(){
+    var webUrl = btn.getAttribute('data-href');
+    var scheme = btn.getAttribute('data-scheme');
+    var name   = btn.getAttribute('data-name');
+    if (!webUrl) return;
+    if (!scheme) { openUrl(webUrl); return; }
+    openInApp(scheme, webUrl, name);
+  });
+});
 </script>
 
 <!-- 轻提示 -->
