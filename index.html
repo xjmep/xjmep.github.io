@@ -38,6 +38,7 @@
     min-height:100vh;
     display:flex;flex-direction:column;justify-content:center;align-items:center;
     text-align:center;padding:60px 20px;color:#000000;
+    line-height:1.9;                 /* 首屏文字行距加大一号 */
   }
   .hero-inner{
     width:100%;
@@ -45,24 +46,40 @@
     margin:0 auto;
     display:flex;flex-direction:column;justify-content:center;align-items:center;
     text-align:center;
+    gap:26px;                        /* 统一首屏各元素上下间距 */
   }
-  .hero-logo{width:min(320px,70vw);margin-bottom:26px;}
+
+  /* 首屏最上方标语：字号与“承接机电全专业 CAD 图纸”一致 */
+  .hero-topline{
+    font-family:var(--font-sans);
+    font-size:clamp(1.05rem,4vw,1.8rem);
+    font-weight:700;
+    letter-spacing:.12em;
+    text-indent:.12em;
+    color:#000000;
+    text-wrap:balance;
+  }
+
+  .hero-logo{width:min(320px,70vw);margin:0;}
   .hero h1{
     font-size:clamp(1.6rem,6vw,3.4rem);font-weight:900;letter-spacing:.08em;
     text-wrap:balance;
   }
-  .hero .sub{font-size:clamp(1.05rem,4vw,1.8rem);font-weight:700;margin-top:18px;text-wrap:balance;}
+  .hero .sub{font-size:clamp(1.05rem,4vw,1.8rem);font-weight:700;text-wrap:balance;}
 
   .sub-line{
-    margin-top:16px;font-size:clamp(.95rem,3.4vw,1.3rem);font-weight:800;color:#000000;
+    font-size:clamp(.95rem,3.4vw,1.3rem);font-weight:800;color:#000000;
     text-align:center;letter-spacing:.04em;
     font-family:var(--font-sans);
   }
   .sub-line .nw{display:inline-block;white-space:nowrap;margin:0 .12em;}
 
+  /* 两个按钮水平排列 */
   .cta-group{
-    display:flex;flex-direction:column;align-items:center;gap:16px;
-    margin-top:46px;
+    display:flex;flex-direction:row;flex-wrap:wrap;
+    justify-content:center;align-items:center;
+    gap:18px;
+    margin-top:0;
   }
   .cta{
     display:inline-block;
@@ -244,8 +261,9 @@
   @media(max-width:600px){
     section{padding:56px 16px;}
     .hero{padding:48px 16px;}
-    .cta-group{margin-top:38px;gap:14px;}
-    .cta{padding:13px 26px;letter-spacing:.18em;}
+    .hero-inner{gap:20px;}          /* 移动端保持统一间距 */
+    .cta-group{gap:12px;}
+    .cta{padding:12px 22px;font-size:1.02rem;letter-spacing:.14em;text-indent:.14em;}
     .step{flex-direction:column;gap:12px;align-items:center;}
     .step .num{flex:none;width:46px;height:46px;}
     .step p{padding-top:0;}
@@ -259,6 +277,10 @@
 <!-- 首屏 -->
 <header class="hero">
   <div class="hero-inner">
+
+    <!-- 首屏最上方标语 -->
+    <div class="hero-topline">机电图纸制作&nbsp;&nbsp;&nbsp;&nbsp;专业设计服务</div>
+
     <img class="hero-logo" src="logo.png" alt="XJ MEP">
     <h1>因为专注&nbsp;&nbsp;&nbsp;&nbsp;所以专业</h1>
     <div class="sub">承接机电全专业&nbsp;CAD 图纸</div>
