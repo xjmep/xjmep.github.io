@@ -176,15 +176,15 @@
     font-size:.8em;font-weight:400;color:#8a5100;letter-spacing:.05em;margin-top:2px;
   }
 
-  /* ===== 底部社交图标行（5 个图标强制同行） ===== */
+  /* ===== 底部社交图标行（5 个图标强制同行，兼容老 Safari） ===== */
   .social-row{
     display:flex;
-    flex-wrap:nowrap;              /* 永不换行 */
+    flex-wrap:nowrap;
     justify-content:center;
     align-items:center;
-    gap:clamp(8px,4.5vw,30px);     /* 屏幕越窄，间距自动收紧 */
     padding:26px 8px 46px;
     max-width:100%;
+    overflow:visible;
   }
   .social-row a{
     display:block;
@@ -193,14 +193,27 @@
     text-decoration:none;
     -webkit-tap-highlight-color:transparent;
     transition:transform .22s;
+    margin:0 15px;              /* 用 margin 替代 gap，兼容 Safari 14.1 以下 */
   }
   .social-row img{
-    width:clamp(36px,10.5vw,50px); /* 屏幕越窄，图标自动缩小 */
-    height:auto;
+    width:50px;
+    height:50px;
     display:block;
   }
   @media (hover:hover){
     .social-row a:hover{transform:translateY(-3px);}
+  }
+  @media (max-width:480px){
+    .social-row a{margin:0 8px;}
+    .social-row img{width:44px;height:44px;}
+  }
+  @media (max-width:380px){
+    .social-row a{margin:0 5px;}
+    .social-row img{width:38px;height:38px;}
+  }
+  @media (max-width:330px){
+    .social-row a{margin:0 3px;}
+    .social-row img{width:34px;height:34px;}
   }
 
   /* ===== 轻提示 Toast ===== */
@@ -353,31 +366,49 @@
 
 </div>
 
-<!-- 底部社交图标：淘宝 / 闲鱼 / 小红书 / 抖音 / 更新（始终同一行） -->
+<!--
+  ============================================================
+  底部 5 个社交图标全部使用 base64 内嵌，绕过 Safari 内容拦截器。
+  请把下面 5 个占位符替换为对应图片的真实 base64（不要保留占位符字样，整串不能换行）：
+
+    __TB_BASE64__       <- tb.png
+    __XY_BASE64__       <- xy.png
+    __XHS_BASE64__      <- xhs.png
+    __DY_BASE64__       <- dy.png
+    __UPDATE_BASE64__   <- xjmepupdate.png
+
+  生成方式（在图片目录执行）：
+    base64 -w0 tb.png
+    base64 -w0 xy.png
+    base64 -w0 xhs.png
+    base64 -w0 dy.png
+    base64 -w0 xjmepupdate.png
+  ============================================================
+-->
 <div class="social-row">
 
   <a href="https://xjmep.taobao.com" target="_blank" rel="noopener noreferrer"
      onclick="return openInApp('taobao://', 'https://xjmep.taobao.com', '淘宝')">
-    <img src="tb.png" alt="淘宝">
+    <img src="data:image/png;base64,__TB_BASE64__" alt="淘宝" width="50" height="50">
   </a>
 
   <a href="https://m.tb.cn/h.jZc0TBJ?tk=0QRsTJOmD6N%20CZ001" target="_blank" rel="noopener noreferrer"
      onclick="return openInApp('xianyu://', 'https://m.tb.cn/h.jZc0TBJ?tk=0QRsTJOmD6N%20CZ001', '闲鱼')">
-    <img src="xy.png" alt="闲鱼">
+    <img src="data:image/png;base64,__XY_BASE64__" alt="闲鱼" width="50" height="50">
   </a>
 
   <a href="https://xhslink.cn/o/4xR7lu616uu" target="_blank" rel="noopener noreferrer"
      onclick="return openInApp('xhsdiscover://', 'https://xhslink.cn/o/4xR7lu616uu', '小红书')">
-    <img src="xhs.png" alt="小红书">
+    <img src="data:image/png;base64,__XHS_BASE64__" alt="小红书" width="50" height="50">
   </a>
 
   <a href="https://v.douyin.com/3WKXVOz-JII/" target="_blank" rel="noopener noreferrer"
      onclick="return openInApp('snssdk1128://', 'https://v.douyin.com/3WKXVOz-JII/', '抖音')">
-    <img src="dy.png" alt="抖音">
+    <img src="data:image/png;base64,__DY_BASE64__" alt="抖音" width="50" height="50">
   </a>
 
   <a href="xjmepupdate.html" target="_blank" rel="noopener noreferrer">
-    <img src="xjmepupdate.png" alt="XJ MEP 更新">
+    <img src="data:image/png;base64,__UPDATE_BASE64__" alt="XJ MEP 更新" width="50" height="50">
   </a>
 
 </div>
