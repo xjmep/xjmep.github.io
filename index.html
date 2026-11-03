@@ -175,6 +175,47 @@
     display:block;font-family:var(--font-serif);
     font-size:.8em;font-weight:400;color:#8a5100;letter-spacing:.05em;margin-top:2px;
   }
+
+  /* ===== 底部社交图标行（5 个图标强制同行） ===== */
+  .social-row{
+    display:flex;
+    flex-wrap:nowrap;              /* 永不换行 */
+    justify-content:center;
+    align-items:center;
+    gap:clamp(8px,4.5vw,30px);     /* 屏幕越窄，间距自动收紧 */
+    padding:26px 8px 46px;
+    max-width:100%;
+  }
+  .social-row a{
+    display:block;
+    line-height:0;
+    flex:0 0 auto;
+    text-decoration:none;
+    -webkit-tap-highlight-color:transparent;
+    transition:transform .22s;
+  }
+  .social-row img{
+    width:clamp(36px,10.5vw,50px); /* 屏幕越窄，图标自动缩小 */
+    height:auto;
+    display:block;
+  }
+  @media (hover:hover){
+    .social-row a:hover{transform:translateY(-3px);}
+  }
+
+  /* ===== 轻提示 Toast ===== */
+  #toast{
+    position:fixed;left:50%;bottom:84px;
+    transform:translate(-50%,12px);
+    background:rgba(0,0,0,.84);color:#fff;
+    padding:10px 22px;border-radius:999px;
+    font-family:var(--font-sans);
+    font-size:.92rem;letter-spacing:.04em;
+    opacity:0;pointer-events:none;transition:.28s ease;
+    z-index:300;max-width:86vw;text-align:center;white-space:nowrap;
+  }
+  #toast.show{opacity:1;transform:translate(-50%,0);}
+
   @media(max-width:480px){
     .table-wrap{margin-top:30px;}
     table{min-width:0;}
@@ -295,41 +336,48 @@
   </div>
 </section>
 
-<!-- 二维码区域：微信 + 淘宝 并排居中 -->
+<!-- 二维码区域：添加微信 + 拨打电话 并排居中 -->
 <div style="display:flex; justify-content:center; align-items:flex-start; gap:40px; flex-wrap:wrap; padding:50px 10px; margin:0;">
 
   <div id="wechat-contact" style="text-align:center; padding:0; margin:0;">
-    <span class="sec-title" style="background:none;font-size:clamp(1.1rem,4vw,1.8rem);">联系我们</span>
+    <span class="sec-title" style="background:none;font-size:clamp(1.1rem,4vw,1.8rem);">添加微信</span>
     <br>
     <img class="note-qr" src="wechat.jpg" alt="微信二维码" style="width:150px; max-width:55vw; margin:14px auto 0; cursor:pointer;" onclick="document.getElementById('qr-modal').style.display='flex'">
   </div>
 
-  <div id="taobao-shop" style="text-align:center; padding:0; margin:0;">
-    <span class="sec-title" style="background:none;font-size:clamp(1.1rem,4vw,1.8rem);">淘宝店铺</span>
+  <div id="phone-contact" style="text-align:center; padding:0; margin:0;">
+    <span class="sec-title" style="background:none;font-size:clamp(1.1rem,4vw,1.8rem);">拨打电话</span>
     <br>
-    <a href="https://xjmep.taobao.com" target="_blank" rel="noopener noreferrer" onclick="return openInApp('taobao://', this.href)">
-      <img class="note-qr" src="taobao.png" alt="淘宝二维码" style="width:150px; max-width:55vw; margin:14px auto 0;">
-    </a>
+    <img class="note-qr" src="phone.png" alt="电话二维码" style="width:150px; max-width:55vw; margin:14px auto 0; cursor:pointer;" onclick="document.getElementById('phone-modal').style.display='flex'">
   </div>
 
 </div>
 
-<div style="display:flex; justify-content:center; align-items:center; gap:30px; flex-wrap:wrap;">
+<!-- 底部社交图标：淘宝 / 闲鱼 / 小红书 / 抖音 / 更新（始终同一行） -->
+<div class="social-row">
 
-  <a href="https://m.tb.cn/h.jZc0TBJ?tk=0QRsTJOmD6N CZ001" target="_blank" rel="noopener noreferrer" onclick="return openInApp('xianyu://', this.href)">
-    <img src="xy.png" alt="闲鱼" width="50">
- </a>
-
-  <a href="https://xhslink.cn/o/4xR7lu616uu" target="_blank" rel="noopener noreferrer" onclick="return openInApp('xhsdiscover://', this.href)">
-    <img src="xhs.png" alt="小红书" width="50">
+  <a href="https://xjmep.taobao.com" target="_blank" rel="noopener noreferrer"
+     onclick="return openInApp('taobao://', 'https://xjmep.taobao.com', '淘宝')">
+    <img src="tb.png" alt="淘宝">
   </a>
 
- <a href="https://v.douyin.com/3WKXVOz-JII/" target="_blank" rel="noopener noreferrer" onclick="return openInApp('snssdk1128://', this.href)">
-    <img src="dy.png" alt="抖音" width="50">
+  <a href="https://m.tb.cn/h.jZc0TBJ?tk=0QRsTJOmD6N%20CZ001" target="_blank" rel="noopener noreferrer"
+     onclick="return openInApp('xianyu://', 'https://m.tb.cn/h.jZc0TBJ?tk=0QRsTJOmD6N%20CZ001', '闲鱼')">
+    <img src="xy.png" alt="闲鱼">
+  </a>
+
+  <a href="https://xhslink.cn/o/4xR7lu616uu" target="_blank" rel="noopener noreferrer"
+     onclick="return openInApp('xhsdiscover://', 'https://xhslink.cn/o/4xR7lu616uu', '小红书')">
+    <img src="xhs.png" alt="小红书">
+  </a>
+
+  <a href="https://v.douyin.com/3WKXVOz-JII/" target="_blank" rel="noopener noreferrer"
+     onclick="return openInApp('snssdk1128://', 'https://v.douyin.com/3WKXVOz-JII/', '抖音')">
+    <img src="dy.png" alt="抖音">
   </a>
 
   <a href="xjmepupdate.html" target="_blank" rel="noopener noreferrer">
-    <img src="xjmepupdate.png" alt="XJ MEP 更新" width="50">
+    <img src="xjmepupdate.png" alt="XJ MEP 更新">
   </a>
 
 </div>
@@ -348,20 +396,24 @@
 </footer>
 
 <script>
-function openInApp(scheme, webUrl){
-  var ua = navigator.userAgent;
-  var isWechat = /MicroMessenger/i.test(ua);
-  var isAndroid = /Android/i.test(ua);
-  var isMobile = /Android|iPhone|iPad|iPod|Mobile/i.test(ua);
+/* ============ APP 唤起 / 网页回退 ============ */
 
-  if (isWechat && isAndroid){
-    window.location.href = webUrl;
-    return false;
+function showToast(msg){
+  var t = document.getElementById('toast');
+  if (!t) return;
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(showToast._timer);
+  showToast._timer = setTimeout(function(){ t.classList.remove('show'); }, 2200);
+}
+
+function openUrl(url){
+  try{
+    var w = window.open(url, '_blank');
+    if (!w) { window.location.href = url; }
+  }catch(e){
+    window.location.href = url;
   }
-  if (!isMobile || !scheme){ return true; }
-
-  tryOpenScheme(scheme, webUrl);
-  return false;
 }
 
 function tryOpenScheme(scheme, webUrl){
@@ -375,11 +427,41 @@ function tryOpenScheme(scheme, webUrl){
   setTimeout(function(){
     document.removeEventListener('visibilitychange', onHide);
     if (!appOpened && Date.now() - start < 2500){
-      window.location.href = webUrl;
+      openUrl(webUrl);
     }
   }, 2000);
 }
+
+/**
+ * 点击社交图标
+ * @param {string} scheme  APP 协议头
+ * @param {string} webUrl  无法唤起 APP 时的网页地址
+ * @param {string} appName APP 名称（用于提示）
+ */
+function openInApp(scheme, webUrl, appName){
+  var ua = navigator.userAgent;
+  var isWechat = /MicroMessenger/i.test(ua);
+  var isMobile = /Android|iPhone|iPad|iPod|Mobile/i.test(ua);
+
+  /* 电脑浏览器：使用 <a> 默认行为，新标签页打开 */
+  if (!scheme || !isMobile) { return true; }
+
+  /* 微信内置浏览器会拦截 scheme，直接打开网页 */
+  if (isWechat){
+    openUrl(webUrl);
+    return false;
+  }
+
+  /* 提示正在跳转 APP */
+  if (appName){ showToast('正在打开' + appName + ' APP…'); }
+
+  tryOpenScheme(scheme, webUrl);
+  return false;
+}
 </script>
+
+<!-- 轻提示 -->
+<div id="toast" role="status" aria-live="polite"></div>
 
 <!-- 微信二维码弹窗 -->
 <div id="qr-modal" onclick="if(event.target===this)this.style.display='none'">
