@@ -32,12 +32,9 @@
       --radius: 20px;
       --max: 1180px;
 
-      --font-sans: "Noto Sans SC", "Source Han Sans SC", "Source Han Sans CN",
-        "PingFang SC", "HarmonyOS Sans SC", "MiSans", "Microsoft YaHei",
-        "Alibaba PuHuiTi 3.0", "Alibaba PuHuiTi", "OPPO Sans", sans-serif;
-
-      --font-serif: "Noto Serif SC", "Source Han Serif SC", "Source Han Serif CN",
-        "Songti SC", "STSong", "SimSun", "Noto Serif CJK SC", serif;
+      /* 仅保留思源黑体/思源宋体及通用回退族 */
+      --font-sans: "Source Han Sans SC", "Source Han Sans CN", "Noto Sans SC", sans-serif;
+      --font-serif: "Source Han Serif SC", "Source Han Serif CN", "Noto Serif SC", serif;
     }
 
     * { box-sizing: border-box; }
@@ -1000,7 +997,6 @@
       box-shadow: 0 0 0 4px rgba(14, 143, 126, 0.12);
     }
 
-    /* 提交按钮不再通栏，宽度与页脚按钮一致 */
     .lead-form .btn {
       grid-column: 1 / -1;
       width: 100%;
@@ -1079,7 +1075,6 @@
       align-items: center;
       gap: 8px 20px;
       padding-top: 18px;
-      /* 统一字号：以“运营主体：四川未来知见工程设计有限公司”为基准 */
       font-size: 14px;
       color: rgba(255, 255, 255, 0.6);
       line-height: 1.7;
@@ -1099,7 +1094,6 @@
       transition: color 0.2s ease;
     }
 
-    /* 英文域名在相同字号下视觉偏小，单独补偿至与中文观感一致 */
     .footer-bottom a[href*="xjmep.com"] {
       font-size: 1.08em;
       letter-spacing: 0.01em;
@@ -1910,6 +1904,7 @@
           <a href="#cases" data-nav="cases">案例场景</a>
           <a href="#why" data-nav="why">推荐理由</a>
           <a href="#contact" data-nav="contact">您的需求</a>
+          <a href="esg.html" target="_blank" rel="noopener">ESG</a>
         </nav>
       </div>
     </header>

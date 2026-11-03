@@ -54,7 +54,7 @@
   
   .wrap { max-width: var(--max); margin:0 auto; padding:0 24px; width: 100%; }
 
-  /* ===== 手机端标题换行标记 ===== */
+  /* ===== 窄屏换行标记 ===== */
   .m-br { display: none; }
 
   /* ===== 固定页眉 ===== */
@@ -306,7 +306,7 @@
     font-weight: 600;
   }
 
-  /* ===== 承诺区：改为对称网格布局 ===== */
+  /* ===== 承诺区：对称网格布局 ===== */
   .commit-box {
     background: var(--green-light); border-radius: var(--radius);
     padding: 34px 30px; border: 1px solid #cfe1d6;
@@ -558,6 +558,10 @@
     
     .map-table th, .map-table td { padding: 12px 14px; font-size: 13px; }
 
+    /* 承诺区提前改单列，避免平板竖屏两列过窄导致折行位置不可控 */
+    .commit-grid { grid-template-columns: 1fr; gap: 16px; }
+    .commit-item { text-align: left; font-size: 15px; }
+
     .footer-inner {
       flex-direction: column;
       text-align: center;
@@ -582,16 +586,6 @@
     }
     .eyebrow .sep {
       display: none;
-    }
-
-    /* 承诺区手机端单列 */
-    .commit-grid {
-      grid-template-columns: 1fr;
-      gap: 16px;
-    }
-    .commit-item {
-      text-align: left;
-      font-size: 15px;
     }
   }
 
@@ -1068,10 +1062,10 @@
     <p class="lead">中小企业的ESG不必追求“大而全”，更可行的路径是在关键环节做“小而实”的突破：环境端把运行能效和隐含碳一起纳入更新决策，社会端把安全合规落成可执行的制度，治理端做到数据真实、记录可查、不夸大单次项目的效果。建筑机电更新恰好落在环境端最具操作性的位置——它直接作用于建筑的能耗入口，效果可以用电表、燃气表和运行记录来检验；同时，它也触及隐含碳和循环经济，让“修还是换”成为一个值得认真回答的ESG问题。</p>
     <div class="commit-box">
       <div class="commit-grid">
-        <div class="commit-item">每做一个项目，让被更新的那套系统，<strong>比原来更高效一点</strong>；</div>
-        <div class="commit-item">让经手的每一台旧设备，<strong>尽可能不被当作废物丢掉</strong>；</div>
-        <div class="commit-item">让参与项目的每一个人，<strong>安全地完成工作</strong>；</div>
-        <div class="commit-item">让给出的每一个数字，<strong>都能在运行记录里找到依据</strong>。</div>
+        <div class="commit-item">每做一个项目，让被更新的那套系统，<br class="m-br"><strong>比原来更高效一点</strong>；</div>
+        <div class="commit-item">让经手的每一台旧设备，<br class="m-br"><strong>尽可能不被当作废物丢掉</strong>；</div>
+        <div class="commit-item">让参与项目的每一个人，<br class="m-br"><strong>安全地完成工作</strong>；</div>
+        <div class="commit-item">让给出的每一个数字，<br class="m-br"><strong>都能在运行记录里找到依据</strong>。</div>
       </div>
     </div>
   </section>

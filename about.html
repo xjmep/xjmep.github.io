@@ -31,10 +31,10 @@
     --nav-h:68px;
     --footer-h:54px;
 
-    --font-sans:"Noto Sans SC","Source Han Sans SC","PingFang SC","Microsoft YaHei",sans-serif;
-    --font-serif:"Noto Serif SC","Source Han Serif SC","Songti SC","SimSun",serif;
-    --font-mark:"Rubik","Noto Sans SC",sans-serif;
-    --font-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Noto Sans SC",monospace;
+    --font-sans:"Noto Sans SC", sans-serif;
+    --font-serif:"Noto Serif SC", serif;
+    --font-mark:"Rubik", sans-serif;
+    --font-mono:"Rubik", sans-serif;
   }
 
   *,*::before,*::after{box-sizing:border-box;}
@@ -293,7 +293,7 @@
   }
   .hero h1 .hero-en{
     position:relative;
-    font-family:"Rubik",var(--font-sans);
+    font-family:var(--font-mark);
     font-style:italic;
     font-weight:500;
     letter-spacing:.01em;
@@ -460,7 +460,7 @@
     white-space:nowrap;
   }
 
-  /* ---------- 品牌理念（背景为默认黑） ---------- */
+  /* ---------- 品牌理念 ---------- */
   .philosophy{
     position:relative;color:#fff;overflow:hidden;
   }
@@ -517,7 +517,7 @@
     overflow-wrap: break-word;
   }
 
-  /* ---------- ESG 可持续发展（渐变背景） ---------- */
+  /* ---------- ESG ---------- */
   .esg-bg{
     position:relative;color:#fff;overflow:hidden;
     background:
@@ -526,7 +526,6 @@
   }
   .esg-bg .eyebrow{color:#c3cbd2;}
 
-  /* ESG 模块字体：标题用思源黑体，正文用思源宋体 */
   .esg-bg h2,
   .esg-bg h3,
   .esg-bg .esg-en,
@@ -565,35 +564,25 @@
   }
   .esg-card:hover::before{transform:scaleX(1);}
 
-  .esg-letter{
-    display:block;
-    font-family:var(--font-mark);
-    font-style:italic;
-    font-weight:500;
-    font-size:2.6rem;
-    line-height:1;
-    letter-spacing:-.02em;
-    color:var(--accent-bright);
-    margin-bottom:14px;
-  }
+  /* ESG 卡片标题：字号增大 2 号 */
   .esg-card h3{
-    font-size:1rem;
+    font-size:1.25rem;
     font-weight:700;
     letter-spacing:.04em;
     white-space:nowrap;
   }
   .esg-card .esg-en{
     display:block;
-    margin-top:3px;
-    font-size:.7rem;
-    letter-spacing:.16em;
+    margin-top:4px;
+    font-size:.86rem;
+    letter-spacing:.14em;
     text-transform:uppercase;
     color:var(--muted);
     font-weight:500;
     white-space:nowrap;
   }
   .esg-card .esg-desc{
-    margin-top:14px;
+    margin-top:16px;
     font-size:.86rem;
     color:rgba(255,255,255,.8);
     font-weight:500;
@@ -603,10 +592,10 @@
     overflow-wrap:break-word;
   }
 
-  /* ---------- ESG 专题按钮（居中） ---------- */
+  /* ---------- ESG 专题按钮 ---------- */
   .esg-cta{
     display:flex;
-    justify-content:center;   /* 居中布置 */
+    justify-content:center;
     margin-top:32px;
   }
   .btn-esg{
@@ -646,7 +635,7 @@
   .reveal{opacity:0;transform:translateY(16px);transition:opacity .65s ease, transform .65s ease;}
   .reveal.in{opacity:1;transform:none;}
 
-  /* ---------- 语义断行：窄屏下各占一行 ---------- */
+  /* ---------- 语义断行 ---------- */
   @media (max-width:720px){
     .ln{display:block;}
   }
@@ -666,10 +655,6 @@
   }
 
   @media (max-width:960px){
-    :root{
-      --nav-h:94px;
-    }
-
     html{scroll-snap-type:none;}
 
     .nav{
@@ -686,13 +671,12 @@
     .nav-inner{
       flex-direction:column;
       justify-content:center;
-      gap:8px;
+      gap:6px;
       height:auto;
-      min-height:var(--nav-h);
-      padding:10px 0;
+      min-height:0;
+      padding:8px 0;
     }
 
-    /* 手机 / 微信内置浏览器：导航 6 项按 3×2 布局 */
     .nav-links{
       display:grid;
       grid-template-columns:repeat(3, 1fr);
@@ -700,7 +684,7 @@
       justify-items:center;
       align-items:center;
       gap:4px 8px;
-      font-size:.82rem;
+      font-size:.78rem;
     }
     .nav-links a{
       padding:4px 0;
@@ -760,20 +744,16 @@
   }
 
   @media (max-width:560px){
-    :root{
-      --nav-h:88px;
-      --footer-h:100px;
-    }
     .wrap{width:calc(100% - 32px);}
 
     .brand-mark{font-size:.52rem;}
     .brand-text strong{font-size:.98rem;}
     .brand-text small{font-size:.78rem;}
 
-    .nav-inner{gap:6px;padding:8px 0;}
+    .nav-inner{gap:4px;padding:6px 0;}
     .nav-links{
       gap:2px 4px;
-      font-size:.74rem;
+      font-size:.72rem;
     }
     .nav-links a{padding:3px 0;}
 
@@ -804,10 +784,9 @@
     .value p{font-size:.82rem;}
 
     .esg-card{padding:20px 16px;}
-    .esg-letter{font-size:2.2rem;margin-bottom:10px;}
-    .esg-card h3{font-size:.96rem;}
-    .esg-card .esg-en{font-size:.64rem;letter-spacing:.12em;}
-    .esg-card .esg-desc{font-size:.84rem;}
+    .esg-card h3{font-size:1.15rem;}
+    .esg-card .esg-en{font-size:.8rem;letter-spacing:.12em;}
+    .esg-card .esg-desc{font-size:.84rem;margin-top:12px;}
 
     .esg-cta{justify-content:center;margin-top:24px;}
     .btn-esg{
@@ -1163,21 +1142,18 @@
 
     <div class="esg-grid">
       <article class="esg-card reveal">
-        <span class="esg-letter">E</span>
         <h3>环境</h3>
         <span class="esg-en">Environmental</span>
         <p class="esg-desc">关注系统能效与低碳运行，在方案策划与设计阶段引入节能策略，助力项目降低能耗、水耗与碳排放。</p>
       </article>
 
       <article class="esg-card reveal">
-        <span class="esg-letter">S</span>
         <h3>社会</h3>
         <span class="esg-en">Social</span>
         <p class="esg-desc">以安全、适用、健康的机电系统服务使用者，关注室内环境品质与运行可靠性，回应项目的社会责任。</p>
       </article>
 
       <article class="esg-card reveal">
-        <span class="esg-letter">G</span>
         <h3>治理</h3>
         <span class="esg-en">Governance</span>
         <p class="esg-desc">以规范的顾问方法与严谨的技术流程推进项目，注重过程透明、专业协同与全生命周期成本的可控。</p>
