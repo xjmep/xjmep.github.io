@@ -8,17 +8,17 @@
 <style>
 
   /* ===== 根字号：全页面 rem 的缩放基准 =====
-     手机竖屏：以 375px 设计稿为基准，字号随视口等比缩放（约 13px → 18px）
-     平板 / 电脑：480px 起切换为 1440px 设计稿基准，
-     平板与笔记本稳定在 17px 左右，大屏（1920+）平滑放大到 24~30px。
-     这样小屏字小、大屏字大，页面整体饱满协调。 */
+     · 手机竖屏：随视口宽度等比缩放 12px → 17px
+     · 平板 / 电脑：17px 起，随屏宽平滑放大到 26px
+     · 旧浏览器不支持 clamp 时回退到 16px        */
   html{
     -webkit-text-size-adjust:100%;
-    font-size:clamp(13px, 3.5vw + 1.4px, 18px);
+    font-size:16px;
   }
-  @media (min-width: 480px){
-    html{
-      font-size:clamp(17px, 1.25vw, 30px);
+  @supports (font-size:clamp(1px,1vw,2px)){
+    html{ font-size:clamp(12px, 4.2vw, 17px); }
+    @media (min-width:480px){
+      html{ font-size:clamp(17px, calc(11px + 0.55vw), 26px); }
     }
   }
 
@@ -50,20 +50,25 @@
   .hero{
     background:linear-gradient(160deg,var(--bg) 0%,var(--bg-dark) 100%);
     min-height:100vh;
-    display:flex;flex-direction:column;justify-content:center;align-items:center;
-    text-align:center;padding:3.75rem 1.25rem;color:#000000;
-    line-height:1.9;                 /* 首屏文字行距加大一号 */
+    min-height:100svh;
+    display:flex;flex-direction:column;
+    justify-content:center;
+    justify-content:safe center;
+    align-items:center;
+    text-align:center;
+    padding:4rem 1.25rem;                 /* 上下留白一致 */
+    color:#000000;
+    line-height:1.9;
   }
   .hero-inner{
     width:100%;
-    max-width:min(94vw, 60rem);      /* 随根字号缩放，大屏不再死板 */
+    max-width:min(88vw, 52rem);
     margin:0 auto;
     display:flex;flex-direction:column;justify-content:center;align-items:center;
     text-align:center;
-    gap:1.625rem;                    /* 统一首屏各元素上下间距 */
+    gap:1.625rem;
   }
 
-  /* 首屏最上方标语：字号与“承接机电全专业 CAD 图纸”一致 */
   .hero-topline{
     font-family:var(--font-sans);
     font-size:clamp(1.05rem,4vw,1.8rem);
@@ -88,7 +93,6 @@
   }
   .sub-line .nw{display:inline-block;white-space:nowrap;margin:0 .12em;}
 
-  /* 两个按钮水平排列 */
   .cta-group{
     display:flex;flex-direction:row;flex-wrap:wrap;
     justify-content:center;align-items:center;
@@ -108,8 +112,9 @@
   }
   .cta:hover{transform:translateY(-3px);box-shadow:0 10px 25px rgba(0,0,0,.3);}
 
+  /* 内容区：电脑端两侧留白加宽 */
   section{
-    max-width:min(94vw, 80rem);      /* 随根字号缩放，大屏内容区同步变宽 */
+    max-width:min(84vw, 56rem, 1150px);
     margin:0 auto;padding:4.375rem 1.25rem;
   }
   .sec-title{
@@ -210,7 +215,7 @@
     font-size:.8em;font-weight:400;color:#8a5100;letter-spacing:.05em;margin-top:2px;
   }
 
-  /* ===== 底部图标栏（用中性类名，避免命中拦截器规则） ===== */
+  /* ===== 底部图标栏 ===== */
   .icon-strip{
     display:flex;
     flex-wrap:nowrap;
@@ -226,7 +231,7 @@
     background:none;
     border:none;
     padding:0;
-    margin:0 15px;             /* 用 margin 替代 gap，兼容 Safari 14.1 以下 */
+    margin:0 15px;
     display:block;
     line-height:0;
     flex:0 0 auto;
@@ -238,7 +243,7 @@
     width:50px;
     height:50px;
     display:block;
-    pointer-events:none;       /* 点击落在 button 上 */
+    pointer-events:none;
   }
   @media (hover:hover){
     .icon-strip .ib:hover{transform:translateY(-3px);}
@@ -270,8 +275,8 @@
   #toast.show{opacity:1;transform:translate(-50%,0);}
 
   @media(max-width:600px){
-    section{padding:3.5rem 1rem;}
-    .hero{padding:3rem 1rem;}
+    section{padding:3.5rem 1rem;max-width:94vw;}   /* 手机端保持原边距 */
+    .hero{padding:2.75rem 1rem;}
     .hero-inner{gap:1.25rem;}
     .cta-group{gap:0.75rem;}
     .cta{padding:0.75rem 1.375rem;font-size:1.02rem;letter-spacing:.14em;text-indent:.14em;}
@@ -289,7 +294,6 @@
 <header class="hero">
   <div class="hero-inner">
 
-    <!-- 首屏最上方标语 -->
     <div class="hero-topline">机电图纸制作&nbsp;&nbsp;&nbsp;&nbsp;专业设计服务</div>
 
     <img class="hero-logo" src="logo.png" alt="XJ MEP">
@@ -388,7 +392,7 @@
   </div>
 </section>
 
-<!-- 二维码区域：添加微信 + 拨打电话 并排居中 -->
+<!-- 二维码区域 -->
 <div style="display:flex; justify-content:center; align-items:flex-start; gap:2.5rem; flex-wrap:wrap; padding:3.125rem 0.625rem; margin:0;">
 
   <div id="wechat-contact" style="text-align:center; padding:0; margin:0;">
@@ -405,7 +409,7 @@
 
 </div>
 
-<!-- 底部图标栏：用 button + data-href 结构，绕开拦截器对 a[href*=社交域名] 的识别 -->
+<!-- 底部图标栏 -->
 <div class="icon-strip">
 
   <button type="button" class="ib"
@@ -500,13 +504,11 @@ function openInApp(scheme, webUrl, appName){
   var isWechat = /MicroMessenger/i.test(ua);
   var isMobile = /Android|iPhone|iPad|iPod|Mobile/i.test(ua);
 
-  /* 电脑浏览器：新标签页打开网页 */
   if (!scheme || !isMobile) {
     openUrl(webUrl);
     return;
   }
 
-  /* 微信内置浏览器会拦截 scheme，直接打开网页 */
   if (isWechat){
     openUrl(webUrl);
     return;
