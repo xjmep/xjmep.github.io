@@ -54,7 +54,7 @@
   }
   .hero-logo{width:min(320px,70vw);margin:0;}
 
-  /* 顶部小标语：字号与“承接机电全专业 CAD 图纸”一致 */
+  /* 顶部小标语：电脑端字号与“承接机电全专业 CAD 图纸”一致 */
   .hero-topline{
     font-size:clamp(1.05rem,4vw,1.8rem);
     font-weight:700;
@@ -77,24 +77,25 @@
   }
   .sub-line .nw{display:inline-block;white-space:nowrap;margin:0 .12em;}
 
-  /* 两个按钮同一行 */
+  /* 两个按钮同一行，间距加大两号 */
   .cta-group{
     display:flex;
     flex-direction:row;
     flex-wrap:nowrap;
     justify-content:center;
     align-items:center;
-    gap:16px;
+    gap:24px;
     width:100%;
   }
   .cta{
     display:inline-block;
     flex:0 0 auto;
-    padding:14px clamp(18px,5vw,30px);
+    padding:10px clamp(14px,4vw,22px);     /* 背景框缩小一号 */
     background:var(--btn);color:var(--bg);
     font-family:var(--font-sans);
     font-size:clamp(.95rem,3.7vw,1.15rem);
-    font-weight:800;letter-spacing:.18em;text-indent:.18em;
+    font-weight:400;                       /* 取消加粗，减小字重，字体更清晰 */
+    letter-spacing:.18em;text-indent:.18em;
     text-align:center;text-decoration:none;
     border-radius:999px;border:none;cursor:pointer;
     -webkit-appearance:none;appearance:none;
@@ -158,7 +159,19 @@
   .detail-grid .card h3{font-size:1rem;}
   .detail-grid .card p{font-size:.88rem;}
 
-  .note-qr{display:block;width:180px;max-width:70vw;margin:16px auto 0;border-radius:10px;border:2px solid #000000;}
+  /* ===== 二维码外框：统一为正方形，尺寸以微信二维码为准 ===== */
+  .note-qr{
+    display:block;
+    width:min(150px,55vw);
+    height:auto;
+    aspect-ratio:1 / 1;        /* 强制 1:1 方形外框 */
+    object-fit:contain;        /* 图片在框内等比完整显示，不拉伸 */
+    background:#fff;
+    margin:16px auto 0;
+    border-radius:10px;
+    border:2px solid #000000;
+    box-sizing:border-box;
+  }
 
   #qr-modal,#phone-modal{
     display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:99;
@@ -269,8 +282,8 @@
   @media(max-width:600px){
     section{padding:56px 16px;}
     .hero{padding:40px 16px;}          /* 上下边距依然保持一致 */
-    .cta-group{gap:12px;}
-    .cta{padding:13px 20px;letter-spacing:.14em;text-indent:.14em;}
+    .cta-group{gap:20px;}              /* 移动端按钮间距同步加大两号 */
+    .cta{padding:9px 14px;letter-spacing:.14em;text-indent:.14em;}
     .step{flex-direction:column;gap:12px;align-items:center;}
     .step .num{flex:none;width:46px;height:46px;}
     .step p{padding-top:0;}
@@ -279,7 +292,16 @@
   }
 
   @media(max-width:360px){
-    .cta{padding:12px 16px;letter-spacing:.1em;text-indent:.1em;}
+    .cta-group{gap:16px;}
+    .cta{padding:8px 12px;letter-spacing:.1em;text-indent:.1em;}
+  }
+
+  /* ===== 手机浏览器 / 微信内置浏览器：首屏小标语字号与 h1 一致 ===== */
+  @media (max-width:640px), (hover:none) and (pointer:coarse){
+    .hero-topline{
+      font-size:clamp(1.6rem,6vw,3.4rem);
+      letter-spacing:.02em;
+    }
   }
 </style>
 </head>
@@ -393,13 +415,13 @@
   <div id="wechat-contact" style="text-align:center; padding:0; margin:0;">
     <span class="sec-title" style="background:none;font-size:clamp(1.1rem,4vw,1.8rem);">添加微信</span>
     <br>
-    <img class="note-qr" src="wechat.jpg" alt="微信二维码" style="width:150px; max-width:55vw; margin:14px auto 0; cursor:pointer;" onclick="document.getElementById('qr-modal').style.display='flex'">
+    <img class="note-qr" src="wechat.jpg" alt="微信二维码" style="cursor:pointer;" onclick="document.getElementById('qr-modal').style.display='flex'">
   </div>
 
   <div id="phone-contact" style="text-align:center; padding:0; margin:0;">
     <span class="sec-title" style="background:none;font-size:clamp(1.1rem,4vw,1.8rem);">拨打电话</span>
     <br>
-    <img class="note-qr" src="phone.png" alt="电话二维码" style="width:150px; max-width:55vw; margin:14px auto 0; cursor:pointer;" onclick="document.getElementById('phone-modal').style.display='flex'">
+    <img class="note-qr" src="phone.png" alt="电话二维码" style="cursor:pointer;" onclick="document.getElementById('phone-modal').style.display='flex'">
   </div>
 
 </div>
