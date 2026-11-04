@@ -59,8 +59,13 @@
     font-size:clamp(1.05rem,4vw,1.8rem);
     font-weight:700;
     letter-spacing:.04em;
-    text-wrap:balance;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:1em;
+    white-space:nowrap;
   }
+  .hero-topline span{white-space:nowrap;}
 
   .hero h1{
     font-size:clamp(1.6rem,6vw,3.4rem);font-weight:900;letter-spacing:.08em;
@@ -294,13 +299,15 @@
   @media(max-width:360px){
     .cta-group{gap:16px;}
     .cta{padding:8px 12px;letter-spacing:.1em;text-indent:.1em;}
+    .hero-topline{gap:2px;letter-spacing:-0.01em;}
   }
 
   /* ===== 手机浏览器 / 微信内置浏览器：首屏小标语字号与 h1 一致 ===== */
   @media (max-width:640px), (hover:none) and (pointer:coarse){
     .hero-topline{
       font-size:clamp(1.6rem,6vw,3.4rem);
-      letter-spacing:.02em;
+      letter-spacing:0;
+      gap:clamp(4px, 1.5vw, 12px);
     }
   }
 </style>
@@ -311,7 +318,7 @@
 <header class="hero">
   <div class="hero-inner">
 
-    <div class="hero-topline">机电图纸制作&nbsp;&nbsp;&nbsp;&nbsp;专业设计服务</div>
+    <div class="hero-topline"><span>机电图纸制作</span><span>专业设计服务</span></div>
 
     <img class="hero-logo" src="logo.png" alt="XJ MEP">
     <h1>因为专注&nbsp;&nbsp;&nbsp;&nbsp;所以专业</h1>
