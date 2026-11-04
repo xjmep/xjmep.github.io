@@ -13,7 +13,7 @@
     --ink:#000000;
     --paper:#FFFFFF;
     --ink-soft:#9A5B00;
-    --btn:#3A3A3A;              /* 按钮底色：比纯黑浅一档 */
+    --btn:#3A3A3A;
     --font-serif:"Source Han Serif SC","思源宋体","Source Han Serif CN",serif;
     --font-sans:"Source Han Sans SC","思源黑体","Source Han Sans CN",sans-serif;
   }
@@ -39,7 +39,6 @@
     min-height:100vh;
     display:flex;flex-direction:column;justify-content:center;align-items:center;
     text-align:center;
-    /* 上下内边距一致，均从背景框边缘起算 */
     padding:56px 20px;
     color:#000000;
   }
@@ -49,7 +48,6 @@
     margin:0 auto;
     display:flex;flex-direction:column;justify-content:center;align-items:center;
     text-align:center;
-    /* 首屏所有行（文字 / 图片 / 按钮组）统一间距 */
     gap:clamp(16px,2.2vw,24px);
   }
   .hero-logo{width:min(320px,70vw);margin:0;}
@@ -64,8 +62,13 @@
     align-items:center;
     gap:1em;
     white-space:nowrap;
+    width:100%;
+    max-width:100%;
   }
-  .hero-topline span{white-space:nowrap;}
+  .hero-topline span{
+    white-space:nowrap;
+    flex:0 0 auto;
+  }
 
   .hero h1{
     font-size:clamp(1.6rem,6vw,3.4rem);font-weight:900;letter-spacing:.08em;
@@ -82,7 +85,6 @@
   }
   .sub-line .nw{display:inline-block;white-space:nowrap;margin:0 .12em;}
 
-  /* 两个按钮同一行，间距加大两号 */
   .cta-group{
     display:flex;
     flex-direction:row;
@@ -95,11 +97,11 @@
   .cta{
     display:inline-block;
     flex:0 0 auto;
-    padding:10px clamp(14px,4vw,22px);     /* 背景框缩小一号 */
+    padding:10px clamp(14px,4vw,22px);
     background:var(--btn);color:var(--bg);
     font-family:var(--font-sans);
     font-size:clamp(.95rem,3.7vw,1.15rem);
-    font-weight:400;                       /* 取消加粗，减小字重，字体更清晰 */
+    font-weight:400;
     letter-spacing:.18em;text-indent:.18em;
     text-align:center;text-decoration:none;
     border-radius:999px;border:none;cursor:pointer;
@@ -169,8 +171,8 @@
     display:block;
     width:min(150px,55vw);
     height:auto;
-    aspect-ratio:1 / 1;        /* 强制 1:1 方形外框 */
-    object-fit:contain;        /* 图片在框内等比完整显示，不拉伸 */
+    aspect-ratio:1 / 1;
+    object-fit:contain;
     background:#fff;
     margin:16px auto 0;
     border-radius:10px;
@@ -286,8 +288,8 @@
 
   @media(max-width:600px){
     section{padding:56px 16px;}
-    .hero{padding:40px 16px;}          /* 上下边距依然保持一致 */
-    .cta-group{gap:20px;}              /* 移动端按钮间距同步加大两号 */
+    .hero{padding:40px 16px;}
+    .cta-group{gap:20px;}
     .cta{padding:9px 14px;letter-spacing:.14em;text-indent:.14em;}
     .step{flex-direction:column;gap:12px;align-items:center;}
     .step .num{flex:none;width:46px;height:46px;}
@@ -299,15 +301,22 @@
   @media(max-width:360px){
     .cta-group{gap:16px;}
     .cta{padding:8px 12px;letter-spacing:.1em;text-indent:.1em;}
-    .hero-topline{gap:2px;letter-spacing:-0.01em;}
   }
 
-  /* ===== 手机浏览器 / 微信内置浏览器：首屏小标语字号与 h1 一致 ===== */
+  /* ===== 手机浏览器 / 微信内置浏览器：首屏小标语字号与 h1 一致，并增大中间间距 ===== */
   @media (max-width:640px), (hover:none) and (pointer:coarse){
     .hero-topline{
       font-size:clamp(1.6rem,6vw,3.4rem);
       letter-spacing:0;
-      gap:clamp(4px, 1.5vw, 12px);
+      gap:clamp(12px,4.5vw,22px);
+    }
+  }
+
+  /* 极窄屏回退，避免间距过大导致横向溢出 */
+  @media (max-width:350px){
+    .hero-topline{
+      gap:8px;
+      letter-spacing:-0.02em;
     }
   }
 </style>
@@ -528,13 +537,11 @@ function openInApp(scheme, webUrl, appName){
   var isWechat = /MicroMessenger/i.test(ua);
   var isMobile = /Android|iPhone|iPad|iPod|Mobile/i.test(ua);
 
-  /* 电脑浏览器：新标签页打开网页 */
   if (!scheme || !isMobile) {
     openUrl(webUrl);
     return;
   }
 
-  /* 微信内置浏览器会拦截 scheme，直接打开网页 */
   if (isWechat){
     openUrl(webUrl);
     return;
