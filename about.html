@@ -513,6 +513,20 @@
     overflow-wrap: break-word;
   }
 
+  /* ---------- 价值主张文案：语义断行 ---------- */
+  /* 每个 .seg 为一段不可再拆分的文字，整体优先同行显示；
+     当整行放不下时，只在 .seg 之间的 .brk（零宽断点）处换行，
+     从而保证断句位置固定为逗号处。 */
+  .value p .seg{
+    white-space:nowrap;
+  }
+  .value p .brk{
+    font-size:0;
+    line-height:0;
+    letter-spacing:0;
+    display:inline;
+  }
+
   /* ---------- ESG ---------- */
   .esg-bg{
     position:relative;color:#fff;overflow:hidden;
@@ -1040,7 +1054,7 @@
           围绕工程领域机电顾问为核心业务，服务范围涵盖住宅、办公、商业、酒店、厂房、医院、学校、展馆、场馆、园区、市政、景观等多业态，为项目提供全周期技术支持。
         </p>
         <p>
-          我们关注技术细节与项目实际需求，凭借扎实的工程经验和严谨的顾问方法，帮助业主推动机电工程落地实施，让机电系统真正服务于建筑的使用目标。
+          我们关注技术细节与项目实际需求，凭借扎实的工程经验和严谨的顾问方法，帮助客户推动机电工程的落地实施，让机电系统真正服务于建筑的使用目标。
         </p>
       </div>
 
@@ -1135,22 +1149,22 @@
       <div class="value reveal">
         <span class="idx">01</span>
         <strong>安全性</strong>
-        <p>保障机电系统持续运行，为使用者提供稳定可靠的机电保障。</p>
+        <p><span class="seg">保障机电系统的持续运行，</span><span class="brk"> </span><span class="seg">为使用者提供稳定可靠的机电保障。</span></p>
       </div>
       <div class="value reveal">
         <span class="idx">02</span>
         <strong>适用性</strong>
-        <p>贴合项目实际使用需求，让机电系统配置与功能目标相匹配。</p>
+        <p><span class="seg">贴合项目的实际使用需求，</span><span class="brk"> </span><span class="seg">让机电系统配置与功能目标相匹配。</span></p>
       </div>
       <div class="value reveal">
         <span class="idx">03</span>
         <strong>经济性</strong>
-        <p>在投资与运行之间取得平衡，控制机电系统全生命周期成本。</p>
+        <p><span class="seg">在投资与运行之间取得平衡，</span><span class="brk"> </span><span class="seg">控制机电系统的全生命周期成本。</span></p>
       </div>
       <div class="value reveal">
         <span class="idx">04</span>
         <strong>低碳运行</strong>
-        <p>关注系统能效与运行表现，助力项目实现低碳、可持续运行。</p>
+        <p><span class="seg">关注系统的能效与运行表现，</span><span class="brk"> </span><span class="seg">助力项目实现低碳、可持续运行。</span></p>
       </div>
     </div>
   </div>
