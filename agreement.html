@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>网站协议</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@1,500&display=swap" rel="stylesheet">
+<style>
+    :root {
+        --ink: #000000;
+        --ink-soft: #000000;
+        --ink-faint: #000000;
+        --paper: #fafaf7;
+        --line: #dcd9d0;
+        --serif: "Source Han Serif SC", "Noto Serif CJK SC", serif;
+        --sans: "Source Han Sans SC", "Noto Sans CJK SC", sans-serif;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html {
+        -webkit-text-size-adjust: 100%;
+        text-size-adjust: 100%;
+    }
+
+    body {
+        font-family: var(--serif);
+        background: var(--paper);
+        color: var(--ink);
+        line-height: 2.05;
+        font-size: 15.5px;
+        font-size: clamp(14.5px, 1.6vw + 12px, 15.5px);
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        overflow-x: hidden;
+        -webkit-font-smoothing: antialiased;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    header.top {
+        border-bottom: 1px solid var(--line);
+        background: #fff;
+    }
+
+    .top-inner {
+        max-width: 860px;
+        margin: 0 auto;
+        padding: 18px 28px;
+        padding-left: max(28px, env(safe-area-inset-left));
+        padding-right: max(28px, env(safe-area-inset-right));
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        gap: 8px 16px;
+        font-family: var(--sans);
+    }
+
+    .top-tag {
+        font-family: "Rubik", var(--sans);
+        font-style: italic;
+        font-weight: 500;
+        font-size: 18px;
+        letter-spacing: 2px;
+        color: var(--ink-faint);
+    }
+
+    .top-company {
+        font-size: 15px;
+        font-weight: 700;
+        letter-spacing: 3px;
+        color: var(--ink);
+    }
+
+    .doc {
+        max-width: 860px;
+        margin: 0 auto;
+        padding: 44px 28px 72px;
+        padding-left: max(28px, env(safe-area-inset-left));
+        padding-right: max(28px, env(safe-area-inset-right));
+    }
+
+    .doc-title {
+        text-align: center;
+        margin-bottom: 0;
+    }
+
+    .doc-title h1 {
+        font-family: var(--sans);
+        font-size: 30px;
+        font-size: clamp(22px, 4.6vw, 32px);
+        font-weight: 700;
+        letter-spacing: clamp(5px, 1.4vw, 10px);
+        color: var(--ink);
+        line-height: 1.15;
+    }
+
+    .doc-rule {
+        width: 100%;
+        height: 1px;
+        background: var(--line);
+        margin: 16px 0 0;
+    }
+
+    .doc-preamble {
+        margin-top: 28px;
+        padding: 4px 0 4px 24px;
+        border-left: 2px solid var(--ink);
+        font-family: var(--sans);
+        font-size: 14px;
+        font-size: clamp(13.5px, 1.4vw + 11px, 14.5px);
+        line-height: 1.9;
+        letter-spacing: 0.5px;
+        color: var(--ink-soft);
+        text-align: justify;
+    }
+
+    .doc-preamble p { margin: 0; }
+    .doc-preamble p + p { margin-top: 4px; }
+
+    /* 更新日期 / 生效日期 */
+    .doc-preamble p.doc-dates {
+        margin-top: 8px;
+        font-size: 13px;
+        font-size: clamp(12.5px, 1.2vw + 10.5px, 13.5px);
+        letter-spacing: 1px;
+        line-height: 1.8;
+    }
+
+    section.clause {
+        margin-top: 44px;
+    }
+
+    .clause-head {
+        display: flex;
+        align-items: baseline;
+        border-bottom: 1px solid var(--line);
+        padding-bottom: 10px;
+        margin-bottom: 18px;
+    }
+
+    .clause-title {
+        font-family: var(--sans);
+        font-size: 20px;
+        font-size: clamp(17px, 2.2vw, 21px);
+        font-weight: 700;
+        letter-spacing: 3px;
+        color: var(--ink);
+        line-height: 1.3;
+    }
+
+    .clause-body p {
+        font-family: var(--sans);
+        font-weight: 400;
+        text-align: justify;
+        margin-bottom: 13px;
+        color: var(--ink-soft);
+        text-indent: 2em;
+        line-height: 1.95;
+    }
+
+    .clause-body p:last-child { margin-bottom: 0; }
+
+    footer {
+        border-top: 1px solid var(--line);
+        background: #fff;
+    }
+
+    .footer-inner {
+        max-width: 860px;
+        margin: 0 auto;
+        padding: 20px 28px;
+        padding-left: max(28px, env(safe-area-inset-left));
+        padding-right: max(28px, env(safe-area-inset-right));
+        padding-bottom: max(20px, env(safe-area-inset-bottom));
+        display: grid;
+        grid-template-columns: 1fr auto 1fr;
+        align-items: center;
+        font-size: 12.5px;
+        color: var(--ink-faint);
+        letter-spacing: 0;      /* 原 2px，改为 0 */
+        font-family: var(--sans);
+        line-height: 1.9;
+    }
+
+    .footer-inner .copyright { justify-self: start; letter-spacing: 0; }
+    .footer-inner .copyright .year { letter-spacing: 0; }
+    .footer-inner .site { justify-self: center; letter-spacing: 0; }
+    .footer-inner .mail { justify-self: end; letter-spacing: 0; }
+
+    /* 页脚链接（域名 / 邮箱）：去掉下划线，保持原色 */
+    .footer-inner a.site,
+    .footer-inner a.mail {
+        text-decoration: none;
+        color: inherit;
+    }
+
+    .footer-inner a.site:hover,
+    .footer-inner a.site:focus,
+    .footer-inner a.mail:hover,
+    .footer-inner a.mail:focus {
+        text-decoration: none;
+        color: inherit;
+    }
+
+    @media (max-width: 600px) {
+        body { line-height: 1.95; }
+
+        .doc {
+            padding-top: 30px;
+            padding-bottom: 48px;
+        }
+
+        .doc-title h1 {
+            font-size: 22px;
+            letter-spacing: 5px;
+            line-height: 1.1;
+        }
+
+        .doc-rule { margin-top: 14px; }
+
+        .doc-preamble {
+            margin-top: 24px;
+            padding-left: 16px;
+        }
+
+        .doc-preamble p.doc-dates {
+            margin-top: 6px;
+            letter-spacing: 0.5px;
+        }
+
+        section.clause { margin-top: 34px; }
+
+        .clause-head {
+            padding-bottom: 8px;
+            margin-bottom: 14px;
+        }
+
+        .clause-body p {
+            line-height: 1.95;
+            margin-bottom: 11px;
+        }
+
+        .top-inner {
+            flex-direction: column;
+            gap: 4px;
+            padding: 14px 20px;
+        }
+
+        .top-tag { font-size: 17px; }
+
+        .top-company {
+            font-size: 14px;
+            letter-spacing: 2px;
+        }
+
+        .footer-inner {
+            padding: 16px 20px;
+            grid-template-columns: 1fr;
+            gap: 6px;
+            justify-items: center;
+            font-size: 12px;
+            letter-spacing: 0;  /* 原 1px，改为 0 */
+        }
+
+        .footer-inner .copyright,
+        .footer-inner .site,
+        .footer-inner .mail {
+            justify-self: center;
+            letter-spacing: 0;
+        }
+    }
+
+    @media (max-width: 360px) {
+        .doc {
+            padding-top: 24px;
+            padding-bottom: 40px;
+        }
+
+        .doc-title h1 {
+            font-size: 20px;
+            letter-spacing: 4px;
+        }
+
+        .clause-title { font-size: 16px; }
+        body { font-size: 14.5px; }
+    }
+</style>
+</head>
+<body>
+
+<header class="top">
+    <div class="top-inner">
+        <div class="top-tag">XJ MEP</div>
+        <div class="top-company">四川电小匠工程设计有限公司</div>
+    </div>
+</header>
+
+<main class="doc">
+
+    <div class="doc-title">
+        <h1>网站协议</h1>
+    </div>
+    <div class="doc-rule"></div>
+
+    <div class="doc-preamble">
+        <p>本网站内容由四川电小匠工程设计有限公司（以下简称“电小匠”）提供，仅作一般参考用途。</p>
+        <p>使用前请务必审阅以下条款。</p>
+        <p class="doc-dates">更新日期：2026年11月<br>生效日期：2026年11月</p>
+    </div>
+
+    <section class="clause">
+        <div class="clause-head">
+            <span class="clause-title">访问条件</span>
+        </div>
+        <div class="clause-body">
+            <p>您在浏览、使用本网站或下载其资料前，请务必审阅以下条款。一旦您访问或使用本网站，即表示接受并遵守下述条款及其他页面所载条款。电小匠保留根据实际情况修订本协议中各条款的权利。所有前述条款和规则构成本协议不可分割的组成部分，与本协议正文具有同等法律效力。</p>
+        </div>
+    </section>
+
+    <section class="clause">
+        <div class="clause-head">
+            <span class="clause-title">知识产权</span>
+        </div>
+        <div class="clause-body">
+            <p>本网站全部内容，包括但不限于图形、文本、图像、徽标、图标、音频、视频等，均归电小匠或其关联公司、许可方所有，并受著作权法、商标法等法律保护。未经授权使用本网站的材料或信息，如拷贝、复制、修改、发布、上传、下载、张贴、传输、分发等行为，可能违反相关法律。</p>
+            <p>未经授权，请勿使用本网站展示的商标、服务标记、商号和徽标。</p>
+        </div>
+    </section>
+
+    <section class="clause">
+        <div class="clause-head">
+            <span class="clause-title">其他链接</span>
+        </div>
+        <div class="clause-body">
+            <p>本平台可能设置由第三方运营网站的入口。电小匠提供此类链接仅作便利之用，是否访问由您自主判断。电小匠不对链接所指向的第三方运营网站的真实性、完整性、充分性及可信度作出担保。</p>
+            <p>电小匠对该类网站无控制权，亦不对其内容承担任何责任。本网站包含该类网站入口，不构成电小匠对该类网站的背书，也不表明电小匠与该类网站运营者存在关联。电小匠对该类网站的隐私政策或内容不承担任何责任。</p>
+        </div>
+    </section>
+
+    <section class="clause">
+        <div class="clause-head">
+            <span class="clause-title">免责声明</span>
+        </div>
+        <div class="clause-body">
+            <p>本网站所含内容可能存在偏差或疏漏。所有资料均以“现有状态”提供，不附加任何明示或暗示保证，包括但不限于精确性、完整性、可销售性、无侵权行为、适用特定目的的承诺，亦不对网站展示或传播的各类建议、观点、表述或其他内容的可信度作出保证。基于上述建议、观点、陈述、备忘录或信息所产生的风险由您个人承担。电小匠保留自行修正网站任何部分错误或遗漏的权利。电小匠可随时调整网站及其中的材料、产品或信息，不再另行通知。</p>
+            <p>您因使用或无法使用本网站信息导致的任何损失（包括但不限于利润损失、业务中断、信息丢失），电小匠或其许可方不承担责任，即便电小匠或其许可方事先已知晓此类损失的可能性。电小匠不保证网站功能不会中断或无瑕疵，不保证缺陷将被修复，也不保证网站或服务器不存在病毒或其他有害组件。</p>
+            <p>自行决定下载、获取网站信息的相关风险由您承担，因下载信息导致的计算机系统损坏或数据丢失同样由您负责。除非电小匠在销售合同中另有书面约定，在法律允许范围内，电小匠不对本网站资料承担任何责任，无论责任原因。电小匠不对间接、附带、特殊或任何惩罚性赔偿承担责任，亦不对任何利润、收入、数据、数据使用的损失承担责任。</p>
+        </div>
+    </section>
+
+    <section class="clause">
+        <div class="clause-head">
+            <span class="clause-title">适用法律与争议解决</span>
+        </div>
+        <div class="clause-body">
+            <p>访问或使用本网站相关的所有事宜，均应依据中华人民共和国法律进行解释、适用及管辖。电小匠所在地有管辖权的法院优先拥有管辖权。</p>
+        </div>
+    </section>
+
+</main>
+
+<footer>
+    <div class="footer-inner">
+        <span class="copyright">© <span class="year">2016</span> 电小匠</span>
+        <a class="site" href="https://www.xjmep.com" target="_blank" rel="noopener noreferrer">www.xjmep.com</a>
+        <a class="mail" href="mailto:dxj@xjmep.com">dxj@xjmep.com</a>
+    </div>
+</footer>
+
+</body>
+</html>

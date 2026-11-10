@@ -174,12 +174,18 @@
     color:#ffffff;
   }
 
-  .footer-left{color:#ffffff;}
+  /* © / 年份 / 电小匠：三子项等间距 */
+  .footer-left{color:#ffffff;gap:.55em;}
   .footer-left .latin{color:#ffffff;}
 
   .footer-center{
     color:#ffffff;
-    letter-spacing:.14em;
+    letter-spacing:.01em;   /* 与邮箱字距一致 */
+    transition:color .2s ease;
+  }
+  .footer-center:hover{
+    color:var(--accent-bright);
+    text-decoration:none;   /* 无下划线 */
   }
 
   .footer-org{color:#ffffff;}
@@ -190,8 +196,8 @@
     align-items:center;
     gap:0;
     color:#ffffff;
-    font-size:.84rem;
-    font-weight:500;      /* ← 与同行页脚文字一致，不加粗 */
+    font-size:inherit;    /* 与 www.xjmep.com 等页脚文字一致 */
+    font-weight:500;      /* 与同行页脚文字一致，不加粗 */
     letter-spacing:.01em;
     white-space:nowrap;
     transition:color .2s ease;
@@ -328,6 +334,29 @@
     display:grid;grid-template-columns:1.15fr .85fr;gap:48px;align-items:center;
   }
   .about-text h2{font-size:clamp(1.45rem,2.6vw,1.9rem);margin-bottom:14px;}
+
+  /* 品牌简介标题：英文标识使用 Rubik Medium Italic */
+  .about-text h2 .brand-en{
+    font-family:var(--font-mark);
+    font-style:italic;
+    font-weight:500;
+    letter-spacing:.01em;
+    white-space:nowrap;
+  }
+
+  /* 注册商标标：右上角 R 标（已放大两号） */
+  .about-text h2 .reg-mark{
+    font-family:var(--font-sans);
+    font-style:normal;
+    font-weight:600;
+    font-size:.75em;
+    line-height:1;
+    vertical-align:super;
+    margin-left:.08em;
+    letter-spacing:0;
+    color:inherit;
+  }
+
   .about-text p:not(.eyebrow) + p:not(.eyebrow){margin-top:12px;color:var(--text-soft);}
   .about-text p:not(.eyebrow){
     font-family:var(--font-serif);font-size:.95rem;font-weight:500;
@@ -356,6 +385,7 @@
   .entity-card .entity-name{
     font-size:1.08rem;font-weight:700;letter-spacing:.02em;line-height:1.6;
     font-family:var(--font-sans);
+    white-space:nowrap;   /* 强制单行 */
   }
   .entity-card .entity-desc{
     margin-top:14px;padding-top:14px;border-top:1px solid rgba(255,255,255,.16);
@@ -514,9 +544,6 @@
   }
 
   /* ---------- 价值主张文案：语义断行 ---------- */
-  /* 每个 .seg 为一段不可再拆分的文字，整体优先同行显示；
-     当整行放不下时，只在 .seg 之间的 .brk（零宽断点）处换行，
-     从而保证断句位置固定为逗号处。 */
   .value p .seg{
     white-space:nowrap;
   }
@@ -574,7 +601,6 @@
   }
   .esg-card:hover::before{transform:scaleX(1);}
 
-  /* ESG 卡片标题：字号增大 2 号 */
   .esg-card h3{
     font-size:1.25rem;
     font-weight:700;
@@ -661,7 +687,7 @@
       gap:20px;
       font-size:.74rem;
     }
-    .footer-mail{font-size:.80rem;}
+    .footer-mail{font-size:inherit;}
   }
 
   @media (max-width:960px){
@@ -678,7 +704,6 @@
       -webkit-backdrop-filter:none;
     }
 
-    /* ===== 页眉：品牌居中 + 3×2 导航网格，整体加高 ===== */
     .nav-inner{
       flex-direction:column;
       justify-content:center;
@@ -700,7 +725,7 @@
       justify-items:stretch;
       align-items:stretch;
       gap:2px 6px;
-      font-size:.94rem;          /* ← 由 .78rem 增大两个字号 */
+      font-size:.94rem;
       line-height:1.5;
       border-top:1px solid rgba(255,255,255,.07);
       padding-top:6px;
@@ -764,8 +789,8 @@
       text-align:center;
     }
     .footer-item{white-space:normal;text-align:center;}
-    .footer-mail{white-space:nowrap;}   /* ← 覆盖 .footer-item 的 normal，邮箱保持一行 */
-    .footer-center{letter-spacing:.1em;}
+    .footer-mail{white-space:nowrap;}
+    .footer-center{letter-spacing:.01em;}
   }
 
   @media (max-width:860px){
@@ -779,11 +804,10 @@
     .brand-text strong{font-size:.98rem;}
     .brand-text small{font-size:.78rem;}
 
-    /* ===== 小屏页眉：进一步压缩间距、保持 3 列大字 ===== */
     .nav-inner{gap:6px;padding:8px 0 6px;}
     .nav-links{
       gap:2px 4px;
-      font-size:.90rem;          /* ← 由 .72rem 增大两个字号 */
+      font-size:.90rem;
       line-height:1.45;
       padding-top:5px;
     }
@@ -840,8 +864,8 @@
     .page-footer{font-size:.7rem;color:#ffffff;}
     .page-footer-inner{gap:4px 14px;padding:8px 0;}
     .footer-item{font-size:.7rem;color:#ffffff;}
-    .footer-center{font-size:.7rem;color:#ffffff;}
-    .footer-mail{font-size:.78rem;gap:0;color:#ffffff;font-weight:500;white-space:nowrap;}
+    .footer-center{font-size:.7rem;color:#ffffff;letter-spacing:.01em;}
+    .footer-mail{font-size:inherit;gap:0;color:#ffffff;font-weight:500;white-space:nowrap;}
 
     .about-text p:not(.eyebrow){font-size:.94rem;}
     .lead{font-size:.96rem;}
@@ -851,10 +875,9 @@
   }
 
   @media (max-width:400px){
-    /* 极窄屏：给页眉让出更多横向空间，确保 3 列不挤 */
     .nav .wrap{width:calc(100% - 24px);}
     .nav-links{
-      font-size:.88rem;          /* 仍比原始 .72rem 大约两个字号 */
+      font-size:.88rem;
       gap:2px 2px;
     }
     .nav-links a{padding:4px 0;}
@@ -1046,9 +1069,9 @@
     <div class="about-grid">
       <div class="about-text reveal">
         <p class="eyebrow">品牌简介 / About</p>
-        <h2>XJ MEP 小匠机电</h2>
+        <h2><span class="brand-en">XJ MEP<sup class="reg-mark">®</sup></span> 小匠机电</h2>
         <p class="about-lead">
-          <span class="latin">XJ MEP（Xiao Jiang Mechanical Electrical Plumbing）</span>，名称小匠机电，是四川未来知见工程设计有限公司运营的机电顾问品牌。
+          <span class="latin">XJ MEP（Xiao Jiang Mechanical Electrical Plumbing）</span>，中文名称：小匠机电，是四川电小匠工程设计有限公司运营的机电顾问品牌。
         </p>
         <p>
           围绕工程领域机电顾问为核心业务，服务范围涵盖住宅、办公、商业、酒店、厂房、医院、学校、展馆、场馆、园区、市政、景观等多业态，为项目提供全周期技术支持。
@@ -1060,7 +1083,7 @@
 
       <aside class="entity-card reveal">
         <p class="label">运营主体</p>
-        <p class="entity-name">四川未来知见<br>工程设计有限公司</p>
+        <p class="entity-name">四川电小匠工程设计有限公司</p>
         <p class="entity-desc">
           品牌定位：工程领域的机电顾问品牌<br>
           服务模式：机电工程全周期顾问服务
@@ -1214,9 +1237,9 @@
 <!-- ================= 固定页脚 ================= -->
 <footer class="page-footer">
   <div class="wrap page-footer-inner">
-    <span class="footer-item footer-left"><span class="latin">© <span id="year"></span>&nbsp;&nbsp;XJ MEP</span>&nbsp;小匠机电</span>
-    <span class="footer-item footer-center">以匠造之心·做专业之事</span>
-    <span class="footer-item footer-org">运营主体：四川未来知见工程设计有限公司</span>
+    <span class="footer-item footer-left"><span class="latin">©</span><span id="year"></span><span>电小匠</span></span>
+    <a class="footer-item footer-center" href="https://www.xjmep.com" target="_blank" rel="noopener noreferrer">www.xjmep.com</a>
+    <span class="footer-item footer-org">四川电小匠工程设计有限公司</span>
     <a class="footer-item footer-mail" href="mailto:dxj@xjmep.com">
       <span class="footer-mail-text">email：dxj@xjmep.com</span>
     </a>

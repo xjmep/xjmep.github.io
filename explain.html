@@ -6,8 +6,8 @@
     <title>相关说明</title>
     <!--
       字体授权说明：
-      本页面使用的思源宋体（Source Han Serif）与思源黑体（Source Han Sans）
-      均采用 SIL Open Font License 1.1（OFL 1.1）授权。
+      本页面使用的思源黑体（Source Han Sans）
+      采用 SIL Open Font License 1.1（OFL 1.1）授权。
       OFL 允许免费商业使用、修改、嵌入与再分发。
       条件：不得单独售卖字体文件；修改后不得使用 “Source” 等保留字体名称；
       再分发时需保留版权声明与 OFL 许可证文本。
@@ -17,8 +17,10 @@
         /* 基本重置与全局样式，优先适配移动端和微信浏览器 */
         html, body {
             background-color: #ffffff;
-            /* 正文使用思源宋体（仅保留思源宋体名称，不再混入 Noto 等别名） */
-            font-family: "Source Han Serif SC", "Source Han Serif", "思源宋体", serif;
+            /* 全文统一使用思源黑体（仅保留思源黑体名称，不混入 Noto 等别名） */
+            font-family: "Source Han Sans SC", "Source Han Sans", "思源黑体", sans-serif;
+            /* 正文 Regular(400)，比标题 Bold(700) 小两个字重档位 */
+            font-weight: 400;
             color: #333333;
             line-height: 1.8;
             margin: 0;
@@ -29,11 +31,12 @@
             -webkit-text-size-adjust: 100%; /* 防止微信字体缩放 */
         }
 
-        /* 标题类统一使用思源黑体（仅保留思源黑体名称，不再混入 Noto 等别名） */
+        /* 标题类统一使用思源黑体，字重 Bold(700) */
         h1,
         .slogan,
         .section-title {
             font-family: "Source Han Sans SC", "Source Han Sans", "思源黑体", sans-serif;
+            font-weight: 700;
         }
 
         /* 主容器 */
@@ -53,7 +56,7 @@
 
         .header-title h1 {
             font-size: 28px;
-            font-weight: bold;
+            font-weight: 700;
             margin: 0;
             letter-spacing: 2px;
         }
@@ -62,18 +65,19 @@
         .slogan {
             text-align: center;
             font-size: 20px;
-            font-weight: bold;
+            font-weight: 700;
             color: #333333;
             margin-bottom: 40px;
             line-height: 1.6;
         }
 
-        /* 通用段落 */
+        /* 通用段落：正文 Regular(400) */
         p {
             margin-top: 0;
             margin-bottom: 20px;
             text-align: justify;
             color: #4a4a4a;
+            font-weight: 400;
         }
 
         /* 章节卡片样式 */
@@ -85,7 +89,7 @@
             display: flex;
             align-items: center;
             font-size: 17px;
-            font-weight: bold;
+            font-weight: 700;
             margin-bottom: 18px;
             padding: 10px 15px;
             background-color: #f8f9fa;
@@ -104,18 +108,19 @@
             border-radius: 50%;
             color: #FF9800;
             font-size: 13px;
-            font-weight: bold;
+            font-weight: 700;
             margin-right: 10px;
             box-shadow: 0 1px 3px rgba(0,0,0,0.1);
             flex-shrink: 0;
         }
 
-        /* 列表样式 */
+        /* 列表样式：正文 Regular(400) */
         ol {
             padding-left: 20px;
             margin-top: 0;
             margin-bottom: 20px;
             color: #4a4a4a;
+            font-weight: 400;
         }
 
         ol li {
@@ -129,6 +134,7 @@
             color: #4a4a4a;
             text-align: justify;
             padding-left: 2px;
+            font-weight: 400;
         }
 
         /* 底部邮箱区域 */
@@ -147,6 +153,7 @@
             color: #666666;
             text-decoration: none;
             font-size: 14px;
+            font-weight: 400;
             gap: 8px; /* 图标与文字的间距 */
         }
 
