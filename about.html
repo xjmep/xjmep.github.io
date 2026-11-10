@@ -180,12 +180,12 @@
 
   .footer-center{
     color:#ffffff;
-    letter-spacing:.01em;   /* 与邮箱字距一致 */
+    letter-spacing:.01em;
     transition:color .2s ease;
   }
   .footer-center:hover{
-    color:var(--accent-bright);
-    text-decoration:none;   /* 无下划线 */
+    color:#ffffff;
+    text-decoration:none;
   }
 
   .footer-org{color:#ffffff;}
@@ -196,8 +196,8 @@
     align-items:center;
     gap:0;
     color:#ffffff;
-    font-size:inherit;    /* 与 www.xjmep.com 等页脚文字一致 */
-    font-weight:500;      /* 与同行页脚文字一致，不加粗 */
+    font-size:inherit;
+    font-weight:500;
     letter-spacing:.01em;
     white-space:nowrap;
     transition:color .2s ease;
@@ -335,7 +335,6 @@
   }
   .about-text h2{font-size:clamp(1.45rem,2.6vw,1.9rem);margin-bottom:14px;}
 
-  /* 品牌简介标题：英文标识使用 Rubik Medium Italic */
   .about-text h2 .brand-en{
     font-family:var(--font-mark);
     font-style:italic;
@@ -344,7 +343,6 @@
     white-space:nowrap;
   }
 
-  /* 注册商标标：右上角 R 标（已放大两号） */
   .about-text h2 .reg-mark{
     font-family:var(--font-sans);
     font-style:normal;
@@ -385,7 +383,7 @@
   .entity-card .entity-name{
     font-size:1.08rem;font-weight:700;letter-spacing:.02em;line-height:1.6;
     font-family:var(--font-sans);
-    white-space:nowrap;   /* 强制单行 */
+    white-space:nowrap;
   }
   .entity-card .entity-desc{
     margin-top:14px;padding-top:14px;border-top:1px solid rgba(255,255,255,.16);
@@ -543,7 +541,6 @@
     overflow-wrap: break-word;
   }
 
-  /* ---------- 价值主张文案：语义断行 ---------- */
   .value p .seg{
     white-space:nowrap;
   }
@@ -781,14 +778,22 @@
       letter-spacing:normal !important;
     }
 
+    /* 页脚四项：手机 / 微信内置浏览器自动两行 */
     .page-footer-inner{
-      flex-wrap:wrap;
+      display:grid;
+      grid-template-columns:repeat(2, minmax(0, 1fr));
       justify-content:center;
+      justify-items:center;
+      align-items:center;
       gap:6px 22px;
       padding:8px 0;
       text-align:center;
     }
-    .footer-item{white-space:normal;text-align:center;}
+    .footer-item{
+      white-space:normal;
+      text-align:center;
+      min-width:0;
+    }
     .footer-mail{white-space:nowrap;}
     .footer-center{letter-spacing:.01em;}
   }
@@ -1238,8 +1243,8 @@
 <footer class="page-footer">
   <div class="wrap page-footer-inner">
     <span class="footer-item footer-left"><span class="latin">©</span><span id="year"></span><span>电小匠</span></span>
-    <a class="footer-item footer-center" href="https://www.xjmep.com" target="_blank" rel="noopener noreferrer">www.xjmep.com</a>
     <span class="footer-item footer-org">四川电小匠工程设计有限公司</span>
+    <a class="footer-item footer-center" href="https://www.xjmep.com" target="_blank" rel="noopener noreferrer">www.xjmep.com</a>
     <a class="footer-item footer-mail" href="mailto:dxj@xjmep.com">
       <span class="footer-mail-text">email：dxj@xjmep.com</span>
     </a>
