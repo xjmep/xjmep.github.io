@@ -7,7 +7,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&amp;family=Noto+Serif+SC:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
 
 <style>
   :root {
@@ -23,9 +23,8 @@
     --radius: 10px;
     --max: 1040px;
 
-    /* 仅保留思源黑体、思源宋体，移除 system-ui 等其他字体名称 */
+    /* 统一使用思源黑体 */
     --font-sans: "Noto Sans SC", "Source Han Sans SC", "Source Han Sans CN", sans-serif;
-    --font-serif: "Noto Serif SC", "Source Han Serif SC", "Source Han Serif CN", serif;
   }
   
   * { 
@@ -41,10 +40,11 @@
   }
   
   body {
-    font-family: var(--font-serif);
+    font-family: var(--font-sans);
     background: var(--paper);
     color: var(--ink);
     line-height: 1.75;
+    font-weight: 400;
     -webkit-font-smoothing: antialiased;
     display: flex;
     flex-direction: column;
@@ -85,7 +85,7 @@
     background: rgba(255, 255, 255, 0.15);
     border: 1px solid rgba(255, 255, 255, 0.3);
     padding: 6px 14px; border-radius: 100px; margin-bottom: 20px;
-    font-weight: 500;
+    font-weight: 400;
   }
   .eyebrow .sep { display: inline; }
 
@@ -102,7 +102,7 @@
   .hero-sub {
     font-size: clamp(14px, 1.5vw, 16px);
     color: rgba(255,255,255,0.95);
-    font-weight: 500;
+    font-weight: 400;
     line-height: 1.8;
     text-shadow: 0 1px 3px rgba(0,0,0,0.25);
   }
@@ -138,6 +138,7 @@
     transition: all 0.22s ease;
     white-space: nowrap;
     backdrop-filter: blur(4px);
+    font-weight: 400;
   }
   .tab:hover {
     background: rgba(255, 255, 255, 0.18);
@@ -172,7 +173,7 @@
     font-size: clamp(21px, 2.6vw, 28px); font-weight: 600; line-height: 1.38;
     letter-spacing: -0.01em;
   }
-  .lead { font-size: 16px; color: var(--ink-soft); max-width: 790px; margin-bottom: 24px; }
+  .lead { font-size: 16px; color: var(--ink-soft); max-width: 790px; margin-bottom: 24px; font-weight: 400; }
   .lead:last-child { margin-bottom: 0; }
   .lead strong { color: var(--ink); font-weight: 600; }
 
@@ -201,7 +202,7 @@
     font-family: var(--font-sans);
     font-size: 20px; font-weight: 600; margin-bottom: 16px; line-height: 1.45;
   }
-  .esg-card p { font-size: 14.5px; color: var(--ink-soft); line-height: 1.85; margin-bottom: 12px; }
+  .esg-card p { font-size: 14.5px; color: var(--ink-soft); line-height: 1.85; margin-bottom: 12px; font-weight: 400; }
   .esg-card p:last-child { margin-bottom: 0; }
   .esg-card strong { color: var(--ink); font-weight: 600; }
 
@@ -213,7 +214,7 @@
     font-family: var(--font-sans);
     font-size: 14px; font-weight: 600; margin-bottom: 8px; line-height: 1.5;
   }
-  .sub-item p { font-size: 13px; color: var(--ink-soft); line-height: 1.75; margin-bottom: 0; }
+  .sub-item p { font-size: 13px; color: var(--ink-soft); line-height: 1.75; margin-bottom: 0; font-weight: 400; }
   .sub-item .num {
     font-family: var(--font-sans);
     display: inline-block; font-size: 20px; font-weight: 700; color: var(--green);
@@ -226,7 +227,7 @@
     border-radius: 0 8px 8px 0;
     padding: 18px 20px;
     margin-top: 20px;
-    font-size: 14px; color: #1e3d2d; line-height: 1.85;
+    font-size: 14px; color: #1e3d2d; line-height: 1.85; font-weight: 400;
   }
   .callout strong { font-weight: 600; }
 
@@ -241,7 +242,7 @@
     line-height: 1.15; letter-spacing: -0.02em;
   }
   .data-item .big small { font-size: 14px; font-weight: 500; }
-  .data-item .desc { font-size: 12.5px; color: var(--ink-soft); margin-top: 8px; line-height: 1.65; }
+  .data-item .desc { font-size: 12.5px; color: var(--ink-soft); margin-top: 8px; line-height: 1.65; font-weight: 400; }
 
   .policy-box {
     background: #fff; border: 1px solid var(--line); border-radius: var(--radius);
@@ -251,7 +252,7 @@
     font-family: var(--font-sans);
     font-size: 16px; font-weight: 600; margin-bottom: 12px;
   }
-  .policy-box p { font-size: 14.5px; color: var(--ink-soft); line-height: 1.85; margin-bottom: 12px; }
+  .policy-box p { font-size: 14.5px; color: var(--ink-soft); line-height: 1.85; margin-bottom: 12px; font-weight: 400; }
   .policy-box p:last-child { margin-bottom: 0; }
   .policy-box strong { color: var(--ink); font-weight: 600; }
 
@@ -300,6 +301,7 @@
     color: var(--ink-soft);
     line-height: 1.8;
     margin-bottom: 0;
+    font-weight: 400;
   }
   .action-body p strong {
     color: var(--ink);
@@ -321,12 +323,14 @@
     color: #1e3d2d;
     line-height: 1.9;
     text-align: center;
+    font-weight: 400;
   }
   .commit-item strong { font-weight: 600; }
 
   .note {
     font-size: 12px; color: #7a8e87; line-height: 1.7; margin-top: 20px;
     padding-top: 16px; border-top: 1px solid var(--line);
+    font-weight: 400;
   }
 
   /* ===== 服务流程 ===== */
@@ -334,7 +338,7 @@
     background: #fff; border: 1px solid var(--line); border-radius: var(--radius);
     padding: 28px 26px; margin-bottom: 28px;
   }
-  .service-intro p { font-size: 15px; color: var(--ink-soft); line-height: 1.9; margin-bottom: 10px; }
+  .service-intro p { font-size: 15px; color: var(--ink-soft); line-height: 1.9; margin-bottom: 10px; font-weight: 400; }
   .service-intro p:last-child { margin-bottom: 0; }
   .service-intro strong { color: var(--ink); font-weight: 600; }
 
@@ -363,19 +367,21 @@
   .flow-step > p {
     font-size: 14.5px; color: var(--ink-soft); line-height: 1.85;
     margin: 10px 0 16px;
+    font-weight: 400;
   }
   .flow-step > p strong { color: var(--ink); font-weight: 600; }
 
   .flow-cols { display: grid; grid-template-columns: 1.15fr 1fr; gap: 18px; }
   .flow-col h4 {
     font-family: var(--font-sans);
-    font-size: 12px; letter-spacing: 0.1em; font-weight: 700;
+    font-size: 12px; letter-spacing: 0.1em; font-weight: 600;
     color: #7a8e87; margin-bottom: 8px;
   }
   .flow-col ul { list-style: none; }
   .flow-col ul li {
     font-size: 13.5px; color: var(--ink-soft); line-height: 1.75;
     padding-left: 16px; position: relative; margin-bottom: 6px;
+    font-weight: 400;
   }
   .flow-col ul li::before {
     content: ""; position: absolute; left: 0; top: 9px;
@@ -386,6 +392,7 @@
   .flow-deliver {
     background: #f9fbfa; border: 1px solid var(--line); border-radius: 8px;
     padding: 14px 16px; font-size: 13.5px; color: var(--ink-soft); line-height: 1.8;
+    font-weight: 400;
   }
   .flow-deliver strong {
     font-family: var(--font-sans);
@@ -396,6 +403,7 @@
   .flow-link {
     margin-top: 16px; padding-top: 14px; border-top: 1px dashed var(--line);
     font-size: 13px; color: #5d726a; line-height: 1.8;
+    font-weight: 400;
   }
   .flow-link strong { color: var(--green); font-weight: 600; }
 
@@ -414,8 +422,9 @@
   .case-card .case-meta {
     font-size: 13px; color: var(--green); margin-bottom: 14px;
     background: var(--green-light); display: inline-block; padding: 4px 10px; border-radius: 4px;
+    font-weight: 400;
   }
-  .case-card p { font-size: 14.5px; color: var(--ink-soft); line-height: 1.85; margin-bottom: 8px; }
+  .case-card p { font-size: 14.5px; color: var(--ink-soft); line-height: 1.85; margin-bottom: 8px; font-weight: 400; }
   .case-card p:last-child { margin-bottom: 0; }
 
   .faq-item {
@@ -431,6 +440,7 @@
   }
   .faq-item p {
     font-size: 14px; color: var(--ink-soft); line-height: 1.8;
+    font-weight: 400;
   }
   .faq-item p::before {
     content: "A "; color: var(--accent); font-weight: 700;
@@ -459,7 +469,7 @@
     background: #f0f5f2; font-weight: 600; color: var(--ink);
     font-size: 13px; letter-spacing: 0.04em;
   }
-  .map-table td { color: var(--ink-soft); line-height: 1.75; }
+  .map-table td { color: var(--ink-soft); line-height: 1.75; font-weight: 400; }
   .map-table tr:last-child td { border-bottom: none; }
   .map-table td strong { color: var(--ink); font-weight: 600; }
   .map-table .mod {
@@ -479,6 +489,7 @@
     font-size: 13.5px;
     border-top: 1px solid rgba(255,255,255,0.1);
     margin-top: auto;
+    font-weight: 400;
   }
   .footer-inner {
     display: flex;
@@ -597,7 +608,7 @@
     }
   }
 
-  /* main 内思源宋体文字颜色统一为黑色 */
+  /* main 内文字颜色统一为黑色 */
   main .lead,
   main .lead strong,
   main .esg-card p,

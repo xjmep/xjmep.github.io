@@ -14,23 +14,23 @@
     --paper:#FFFFFF;
     --ink-soft:#9A5B00;
     --btn:#3A3A3A;
-    --font-serif:"Source Han Serif SC","思源宋体","Source Han Serif CN",serif;
-    --font-sans:"Source Han Sans SC","思源黑体","Source Han Sans CN",sans-serif;
+
+    /* ===== 全站统一使用思源黑体 ===== */
+    --font-sans:"Source Han Sans SC","思源黑体","Source Han Sans CN","Noto Sans SC",sans-serif;
+
+    /* ===== 字重规范：标题 700，正文比标题小两号（400） ===== */
+    --fw-title:700;
+    --fw-body:400;
   }
   *{margin:0;padding:0;box-sizing:border-box;}
   html{-webkit-text-size-adjust:100%;}
   body{
-    font-family:var(--font-serif);
+    font-family:var(--font-sans);
+    font-weight:var(--fw-body);
     background:var(--paper);
     color:var(--ink);
     line-height:1.7;
     overflow-x:hidden;
-  }
-
-  h1,h2,h3,h4,
-  .hero h1,.hero .sub,.hero-topline,.sub-line,
-  .sec-title,.cta,.step .num,th,footer,footer small,footer a,footer small a{
-    font-family:var(--font-sans);
   }
 
   /* ===== Hero 首屏 ===== */
@@ -55,7 +55,7 @@
   /* 顶部小标语：电脑端字号与“承接机电全专业 CAD 图纸”一致 */
   .hero-topline{
     font-size:clamp(1.05rem,4vw,1.8rem);
-    font-weight:700;
+    font-weight:var(--fw-title);
     letter-spacing:.04em;
     display:flex;
     justify-content:center;
@@ -71,17 +71,16 @@
   }
 
   .hero h1{
-    font-size:clamp(1.6rem,6vw,3.4rem);font-weight:900;letter-spacing:.08em;
+    font-size:clamp(1.6rem,6vw,3.4rem);font-weight:var(--fw-title);letter-spacing:.08em;
     text-wrap:balance;
   }
   .hero .sub{
-    font-size:clamp(1.05rem,4vw,1.8rem);font-weight:700;text-wrap:balance;
+    font-size:clamp(1.05rem,4vw,1.8rem);font-weight:var(--fw-title);text-wrap:balance;
   }
 
   .sub-line{
-    font-size:clamp(.95rem,3.4vw,1.3rem);font-weight:800;color:#000000;
+    font-size:clamp(.95rem,3.4vw,1.3rem);font-weight:var(--fw-title);color:#000000;
     text-align:center;letter-spacing:.04em;
-    font-family:var(--font-sans);
   }
   .sub-line .nw{display:inline-block;white-space:nowrap;margin:0 .12em;}
 
@@ -101,7 +100,7 @@
     background:var(--btn);color:var(--bg);
     font-family:var(--font-sans);
     font-size:clamp(.95rem,3.7vw,1.15rem);
-    font-weight:400;
+    font-weight:var(--fw-body);
     letter-spacing:.18em;text-indent:.18em;
     text-align:center;text-decoration:none;
     border-radius:999px;border:none;cursor:pointer;
@@ -112,10 +111,9 @@
 
   section{max-width:1080px;margin:0 auto;padding:70px 20px;}
   .sec-title{
-    display:inline-block;background:var(--bg);color:#000000;font-weight:900;
+    display:inline-block;background:var(--bg);color:#000000;font-weight:var(--fw-title);
     font-size:clamp(1.25rem,4.5vw,2.2rem);padding:6px 24px;letter-spacing:.08em;
     max-width:100%;border-radius:14px;
-    font-family:var(--font-sans);
   }
   .sec-sub{margin-top:14px;color:#000000;font-size:.98rem;}
 
@@ -125,7 +123,7 @@
     transition:.25s;
   }
   .card:hover{transform:translateY(-5px);box-shadow:0 12px 28px rgba(243,156,18,.35);}
-  .card h3{font-size:1.1rem;font-weight:800;color:var(--ink-soft);font-family:var(--font-sans);}
+  .card h3{font-size:1.1rem;font-weight:var(--fw-title);color:var(--ink-soft);}
   .card p{margin-top:10px;color:#000000;font-size:.95rem;}
 
   .steps{margin-top:40px;}
@@ -135,17 +133,16 @@
   }
   .step .num{
     flex:0 0 46px;height:46px;border-radius:50%;background:var(--bg);color:#000000;
-    display:flex;align-items:center;justify-content:center;font-weight:900;font-size:1.15rem;
-    font-family:var(--font-sans);
+    display:flex;align-items:center;justify-content:center;font-weight:var(--fw-title);font-size:1.15rem;
   }
   .step p{padding-top:8px;color:#000000;font-size:.98rem;min-width:0;}
 
   .table-wrap{overflow-x:auto;margin-top:40px;-webkit-overflow-scrolling:touch;}
   table{width:100%;border-collapse:collapse;background:#FFFFFF;border-radius:14px;overflow:hidden;min-width:480px;}
   th,td{padding:16px;text-align:center;border-bottom:1px solid #f0e3c8;font-size:.95rem;white-space:nowrap;}
-  th{background:var(--bg);color:#000000;font-weight:800;font-family:var(--font-sans);}
-  td.yes{color:#1e9e4a;font-weight:800;}
-  td.no{color:#c0392b;font-weight:800;}
+  th{background:var(--bg);color:#000000;font-weight:var(--fw-title);}
+  td.yes{color:#1e9e4a;font-weight:var(--fw-title);}
+  td.no{color:#c0392b;font-weight:var(--fw-title);}
 
   .rules{
     background:#FFFFFF;border:2px dashed var(--bg);border-radius:16px;
@@ -156,10 +153,9 @@
 
   footer{
     background:#000000;color:var(--bg);text-align:center;padding:46px 20px;
-    font-weight:800;letter-spacing:.1em;font-size:1.05rem;
-    font-family:var(--font-sans);
+    font-weight:var(--fw-title);letter-spacing:.1em;font-size:1.05rem;
   }
-  footer small{display:block;margin-top:10px;color:#FFFFFF;font-weight:400;letter-spacing:.05em;font-size:.85rem;}
+  footer small{display:block;margin-top:10px;color:#FFFFFF;font-weight:var(--fw-body);letter-spacing:.05em;font-size:.85rem;}
 
   .detail-grid{grid-template-columns:repeat(auto-fit,minmax(220px,1fr));}
   .detail-grid .card{padding:20px 18px;}
@@ -189,7 +185,7 @@
     max-width:90vw;
   }
   #qr-modal img,#phone-modal img{width:min(280px,70vw);border-radius:10px;display:block;margin:0 auto;}
-  #qr-modal p,#phone-modal p{margin-top:14px;font-weight:800;color:#000000;font-size:1.05rem;}
+  #qr-modal p,#phone-modal p{margin-top:14px;font-weight:var(--fw-title);color:#000000;font-size:1.05rem;}
   #qr-modal .close,#phone-modal .close{
     position:absolute;top:8px;right:16px;font-size:1.6rem;cursor:pointer;color:#000000;
     background:none;border:none;line-height:1;
@@ -197,9 +193,9 @@
 
   #phone-modal .tel{
     display:block;
-    font-family:var(--font-serif);
+    font-family:var(--font-sans);
     font-size:clamp(1.18rem,4.5vw,1.38rem);
-    font-weight:800;
+    font-weight:var(--fw-title);
     letter-spacing:.04em;color:#000000;margin-top:16px;
     text-decoration:none;
     cursor:pointer;
@@ -209,16 +205,16 @@
   #phone-modal .tel:hover,
   #phone-modal .tel:active{color:#000000;text-decoration:none;}
   #phone-modal .tel-sub{
-    font-family:var(--font-serif);
+    font-family:var(--font-sans);
     font-size:clamp(.98rem,3.9vw,1.12rem);
-    font-weight:800;
+    font-weight:var(--fw-title);
     letter-spacing:.06em;color:#000000;margin-top:6px;
   }
 
   .card-link{display:block;text-decoration:none;color:inherit;}
   .preview-hint{
-    display:block;font-family:var(--font-serif);
-    font-size:.8em;font-weight:400;color:#8a5100;letter-spacing:.05em;margin-top:2px;
+    display:block;font-family:var(--font-sans);
+    font-size:.8em;font-weight:var(--fw-body);color:#8a5100;letter-spacing:.05em;margin-top:2px;
   }
 
   /* ===== 底部图标栏 ===== */

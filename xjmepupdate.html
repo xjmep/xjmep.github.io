@@ -11,7 +11,7 @@
   <meta name="description" content="小匠机电更新专注既有建筑机电系统更新，覆盖给排水、暖通空调、供配电与照明、消防、电梯、智能化与智慧运维，提供评估、设计服务。" />
 
   <link rel="preconnect" href="https://fonts.loli.net" crossorigin />
-  <link href="https://fonts.loli.net/css2?family=Noto+Sans+SC:wght@400;500;700;900&family=Noto+Serif+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.loli.net/css2?family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet" />
 
   <script>document.documentElement.classList.add('js');</script>
 
@@ -32,9 +32,8 @@
       --radius: 20px;
       --max: 1180px;
 
-      /* 仅保留思源黑体/思源宋体及通用回退族 */
+      /* 全站统一使用思源黑体及通用回退族 */
       --font-sans: "Source Han Sans SC", "Source Han Sans CN", "Noto Sans SC", sans-serif;
-      --font-serif: "Source Han Serif SC", "Source Han Serif CN", "Noto Serif SC", serif;
     }
 
     * { box-sizing: border-box; }
@@ -55,7 +54,7 @@
       min-height: 100%;
       width: 100%;
       overflow: visible;
-      font-family: var(--font-serif);
+      font-family: var(--font-sans);
       color: #000000;
       background: var(--bg);
       line-height: 1.7;
@@ -967,7 +966,7 @@
       border: 1px solid var(--line);
       border-radius: 12px;
       padding: 12px 14px;
-      font-family: var(--font-serif);
+      font-family: var(--font-sans);
       font-size: 15px;
       color: #000000;
       background: #fbfdfe;
@@ -1393,24 +1392,18 @@
       .btn, .service-card, .pain-item, .wechat-btn, .phone-btn, .about-btn, .email-btn { transition: none; }
     }
 
-    /* ===== 1. 思源宋体正文文字使用细体，不加粗 ===== */
+    /* ===== 1. 全站使用思源黑体：标题加粗，正文比标题小两号 ===== */
+    h1, h2, h3, h4, h5, h6 {
+      font-weight: 700;
+    }
+
     body,
     p,
     li,
     input,
     select,
     textarea {
-      font-weight: 300;
-    }
-
-    /* 黑体说明性小字保持正常字重，避免过细 */
-    .hero-card p,
-    .hero-card li,
-    .hero-tags span,
-    .logo small.sub-justify,
-    .footer-bottom span,
-    .footer-bottom a {
-      font-weight: 400;
+      font-weight: 500;
     }
 
     /* ===== 2. 文本输入光标不闪烁（隐藏插入符），鼠标指针正常显示 ===== */
