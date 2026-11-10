@@ -21,7 +21,7 @@
             font-family: "Source Han Sans SC", "Source Han Sans", "思源黑体", sans-serif;
             /* 正文 Regular(400)，比标题 Bold(700) 小两个字重档位 */
             font-weight: 400;
-            color: #333333;
+            color: #000000;
             line-height: 1.8;
             margin: 0;
             padding: 0;
@@ -37,6 +37,7 @@
         .section-title {
             font-family: "Source Han Sans SC", "Source Han Sans", "思源黑体", sans-serif;
             font-weight: 700;
+            color: #000000;
         }
 
         /* 主容器 */
@@ -57,6 +58,7 @@
         .header-title h1 {
             font-size: 28px;
             font-weight: 700;
+            color: #000000;
             margin: 0;
             letter-spacing: 2px;
         }
@@ -66,7 +68,7 @@
             text-align: center;
             font-size: 20px;
             font-weight: 700;
-            color: #333333;
+            color: #000000;
             margin-bottom: 40px;
             line-height: 1.6;
         }
@@ -76,7 +78,7 @@
             margin-top: 0;
             margin-bottom: 20px;
             text-align: justify;
-            color: #4a4a4a;
+            color: #000000;
             font-weight: 400;
         }
 
@@ -90,6 +92,7 @@
             align-items: center;
             font-size: 17px;
             font-weight: 700;
+            color: #000000;
             margin-bottom: 18px;
             padding: 10px 15px;
             background-color: #f8f9fa;
@@ -119,19 +122,20 @@
             padding-left: 20px;
             margin-top: 0;
             margin-bottom: 20px;
-            color: #4a4a4a;
+            color: #000000;
             font-weight: 400;
         }
 
         ol li {
             margin-bottom: 12px;
             text-align: justify;
+            color: #000000;
         }
 
         /* 合作流程特殊样式 */
         .workflow {
             margin-bottom: 30px;
-            color: #4a4a4a;
+            color: #000000;
             text-align: justify;
             padding-left: 2px;
             font-weight: 400;
@@ -144,24 +148,20 @@
             align-items: center;
             margin-top: 45px;
             margin-bottom: 10px;
+            font-size: 14px;
+            font-weight: 400;
+            color: #000000;
+            gap: 2px;
         }
 
         /* 邮箱链接样式 */
         .footer-email a {
             display: inline-flex;
             align-items: center;
-            color: #666666;
+            color: #000000;
             text-decoration: none;
             font-size: 14px;
             font-weight: 400;
-            gap: 8px; /* 图标与文字的间距 */
-        }
-
-        /* 邮箱 SVG 图标样式 */
-        .footer-email svg {
-            width: 18px;
-            height: 18px;
-            flex-shrink: 0;
         }
 
         /* 适配极小屏幕的手机 */
@@ -281,15 +281,10 @@
         </ol>
     </div>
 
-    <!-- 底部服务邮箱（带有邮箱图标，点击唤起邮箱应用） -->
+    <!-- 底部联系邮箱（点击邮箱地址唤起邮箱应用） -->
     <div class="footer-email">
-        <a href="mailto:dxj@xjmep.com">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-                <polyline points="22,6 12,13 2,6"></polyline>
-            </svg>
-            <span>dxj@xjmep.com</span>
-        </a>
+        <span>联系邮箱：</span>
+        <a href="mailto:dxj@xjmep.com">dxj@xjmep.com</a>
     </div>
 
 </div>

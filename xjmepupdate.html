@@ -1153,7 +1153,7 @@
       margin: 0;
       font-family: var(--font-sans);
       font-size: 17px;
-      font-weight: 600;
+      font-weight: 400;
       color: #000;
       line-height: 1.6;
     }
@@ -1392,7 +1392,7 @@
       .btn, .service-card, .pain-item, .wechat-btn, .phone-btn, .about-btn, .email-btn { transition: none; }
     }
 
-    /* ===== 1. 全站使用思源黑体：标题加粗，正文比标题小两号 ===== */
+    /* ===== 1. 全站使用思源黑体：标题加粗，正文不加粗 ===== */
     h1, h2, h3, h4, h5, h6 {
       font-weight: 700;
     }
@@ -1403,7 +1403,24 @@
     input,
     select,
     textarea {
-      font-weight: 500;
+      font-weight: 400;
+    }
+
+    /* 方框内正文统一不加粗 */
+    .pain-item p,
+    .service-card p,
+    .goal-card p,
+    .advantage-card p,
+    .step p,
+    .case-card p,
+    .case-body li,
+    .check-list li,
+    .section-head p,
+    .cta-inner p,
+    .hero-desc,
+    .stat p,
+    .modal-tip {
+      font-weight: 400;
     }
 
     /* ===== 2. 文本输入光标不闪烁（隐藏插入符），鼠标指针正常显示 ===== */
