@@ -316,6 +316,9 @@
       justify-content:center;
       align-items:center;
       padding:clamp(14px,3.2vh,30px) 20px;
+      /* Safari 顶部背景延伸：用向上的投影填满地址栏区域，颜色与首屏背景一致 */
+      box-shadow: 0 -100vh 0 0 var(--bg);
+      background-color: var(--bg);      /* 兜底，防止渐变加载时白底 */
     }
     .hero-inner{
       flex:1 1 auto;                    /* 撑满首屏可用高度 */
@@ -327,8 +330,16 @@
     .hero-inner > *{flex:0 0 auto;}     /* 内容过多时不被压扁，改为自然撑高 */
     .hero-topline{line-height:1.5;}
     .hero h1{line-height:1.5;}
-    .hero .sub{line-height:1.5;}
-    .sub-line{line-height:1.6;}
+    .hero .sub{
+      line-height:1.5;
+      /* 手机端字号增大两号 */
+      font-size:clamp(1.3rem,4.8vw,2.0rem);
+    }
+    .sub-line{
+      line-height:1.6;
+      /* 手机端字号增大两号 */
+      font-size:clamp(1.15rem,4.2vw,1.55rem);
+    }
   }
 
   /* 极窄屏回退，避免间距过大导致横向溢出 */
