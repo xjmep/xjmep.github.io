@@ -88,6 +88,9 @@
   .sub-line{
     font-size:clamp(.95rem,3.4vw,1.3rem);font-weight:var(--fw-title);color:#000000;
     text-align:center;letter-spacing:.04em;
+    width: 100%;
+    max-width: 100%;
+    /* 默认展示为块级元素以支持居中，遇到脚本处理时会强制单行 */
   }
   .sub-line .nw{display:inline-block;white-space:nowrap;margin:0 .12em;}
 
@@ -366,6 +369,8 @@
     .sub-line{
       line-height:1.6;
       font-size:clamp(1.15rem,4.2vw,1.55rem); /* 增大两号 */
+      /* 强制单行处理交由 JS 动态接管以保证自动缩放 */
+      display: block;
     }
   }
 
@@ -392,7 +397,9 @@
     <img class="hero-logo" src="logo.png" alt="XJ MEP">
     <h1>因为专注&nbsp;&nbsp;&nbsp;&nbsp;所以专业</h1>
     <div class="sub">承接机电全专业&nbsp;CAD 图纸</div>
-    <div class="sub-line"><span class="nw">一对一服务&nbsp;｜</span><span class="nw">非中介&nbsp;·</span><span class="nw">不分包&nbsp;·</span><span class="nw">不转包</span></div>
+    <div class="sub-line">
+      <span class="nw">一对一服务&nbsp;｜</span><span class="nw">非中介&nbsp;·</span><span class="nw">不分包&nbsp;·</span><span class="nw">不转包</span>
+    </div>
 
     <div class="cta-group">
       <button class="cta" type="button" onclick="document.getElementById('qr-modal').style.display='flex'">微信咨询</button>
@@ -560,6 +567,50 @@
 </div>
 
 <script>
+/* ============ 自动缩放“一对一服务…”行 ============ */
+function fitSubLine() {
+  var el = document.querySelector('.sub-line');
+  if (!el) return;
+  
+  // 电脑端不进行任何调整
+  if (window.innerWidth > 640) {
+    el.style.whiteSpace = '';
+    el.style.fontSize = '';
+    el.style.letterSpacing = '';
+    return;
+  }
+
+  // 手机端强制单行不换行
+  el.style.whiteSpace = 'nowrap';
+  
+  // 清除内联样式，以便按照 CSS 默认规则进行精准测量
+  el.style.fontSize = '';
+  el.style.letterSpacing = '';
+  
+  // 获取容器可用宽度（父级宽度）和文本的实际内容宽度
+  var parentWidth = el.parentNode.clientWidth;
+  var contentWidth = el.scrollWidth;
+  
+  // 如果内容宽度超出父级宽度，说明会折行，按比例缩小字号与字间距
+  if (contentWidth > parentWidth) {
+    var scale = parentWidth / contentWidth;
+    var style = window.getComputedStyle(el);
+    var fontSize = parseFloat(style.fontSize);
+    var letterSpacing = parseFloat(style.letterSpacing) || 0;
+    
+    // 减去 0.98 的系数，避免因为四舍五入带来 1px 的溢出
+    el.style.fontSize = (fontSize * scale * 0.98) + 'px';
+    if (letterSpacing > 0) {
+      el.style.letterSpacing = (letterSpacing * scale) + 'px';
+    }
+  }
+}
+
+// 在窗口加载、大小改变时触发自适应调整
+document.addEventListener('DOMContentLoaded', fitSubLine);
+window.addEventListener('load', fitSubLine);
+window.addEventListener('resize', fitSubLine);
+
 /* ============ 轻提示 ============ */
 function showToast(msg){
   var t = document.getElementById('toast');
