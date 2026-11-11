@@ -2,8 +2,7 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="theme-color" content="#F79F19">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="机电设计 · 专业设计 · 机电 CAD 图纸设计 · 水电 CAD 图纸设计 · 施工图设计">
 <title>小匠机电图纸设计</title>
 <style>
@@ -34,11 +33,11 @@
     overflow-x:hidden;
   }
 
-  /* ===== Hero 首屏（电脑端默认样式） ===== */
+  /* ===== Hero 首屏 ===== */
   .hero{
     background:linear-gradient(160deg,var(--bg) 0%,var(--bg-dark) 100%);
     min-height:100vh;
-    display:flex;flex-direction:column;
+    display:flex;flex-direction:column;justify-content:center;align-items:center;
     text-align:center;
     padding:56px 20px;
     color:#000000;
@@ -50,7 +49,6 @@
     display:flex;flex-direction:column;justify-content:center;align-items:center;
     text-align:center;
     gap:clamp(16px,2.2vw,24px);
-    flex: 1 1 auto;
   }
   .hero-logo{width:min(320px,70vw);margin:0;}
 
@@ -83,8 +81,6 @@
   .sub-line{
     font-size:clamp(.95rem,3.4vw,1.3rem);font-weight:var(--fw-title);color:#000000;
     text-align:center;letter-spacing:.04em;
-    width: 100%;
-    max-width: 100%;
   }
   .sub-line .nw{display:inline-block;white-space:nowrap;margin:0 .12em;}
 
@@ -158,7 +154,6 @@
   footer{
     background:#000000;color:var(--bg);text-align:center;padding:46px 20px;
     font-weight:var(--fw-title);letter-spacing:.1em;font-size:1.05rem;
-    padding-bottom: calc(46px + env(safe-area-inset-bottom));
   }
   footer small{display:block;margin-top:10px;color:#FFFFFF;font-weight:var(--fw-body);letter-spacing:.05em;font-size:.85rem;}
 
@@ -289,6 +284,7 @@
 
   @media(max-width:600px){
     section{padding:56px 16px;}
+    .hero{padding:40px 16px;}
     .cta-group{gap:20px;}
     .cta{padding:9px 14px;letter-spacing:.14em;text-indent:.14em;}
     .step{flex-direction:column;gap:12px;align-items:center;}
@@ -303,66 +299,48 @@
     .cta{padding:8px 12px;letter-spacing:.1em;text-indent:.1em;}
   }
 
-  /* ===== 手机 / 微信内置浏览器：全屏铺满及文字防折行处理 ===== */
+  /* ===== 手机浏览器 / 微信内置浏览器：首屏小标语字号与 h1 一致，并增大中间间距 ===== */
   @media (max-width:640px), (hover:none) and (pointer:coarse){
-    
-    /* 1. 整站底层底色纯白，确保滑到底部或回弹时露出的都是白色 */
-    html, body {
-      background-color: var(--paper) !important; 
-    }
-    
-    /* 2. 首屏承载黄色渐变背景，并随文档流正常滑动 */
-    .hero {
-      background: linear-gradient(160deg,var(--bg) 0%,var(--bg-dark) 100%) !important; 
-      min-height: 100vh;
-      min-height: 100lvh; 
-      padding: 0;
-      position: relative;
-      z-index: 1;
-      /* 核心：向上投影 100vh 的纯色，填补 Safari 顶部下拉回弹的空白区域 */
-      box-shadow: 0 -100vh 0 0 var(--bg);
-    }
-
-    /* 3. 内容容器接管安全区避让与排版 */
-    .hero-inner {
-      min-height: 100vh;
-      min-height: 100lvh;
-      box-sizing: border-box;
-      padding: calc(env(safe-area-inset-top) + 16px) 20px calc(env(safe-area-inset-bottom) + 16px); 
-      justify-content: space-evenly;
-      gap: clamp(4px,1vh,10px);
-      flex: none;
-    }
-
-    /* 4. 下方主体内容用白底包裹，避免任何颜色溢出影响下方页面 */
-    .page-content {
-      background-color: var(--paper);
-      position: relative;
-      z-index: 2;
-    }
-
-    /* 5. 手机端字号放大与防折行智能缩放 */
     .hero-topline{
       font-size:clamp(1.6rem,6vw,3.4rem);
       letter-spacing:0;
       gap:clamp(12px,4.5vw,22px);
-      line-height:1.5;
     }
+  }
+
+  /* ===== 手机 / 微信内置浏览器：首屏内容在整屏内均匀分布，避免上下大片留白 ===== */
+  @media (max-width:640px), (hover:none) and (pointer:coarse){
+    .hero{
+      min-height:100vh;
+      min-height:100svh;               /* 现代移动浏览器：跟随可视区高度，避免地址栏导致的抖动 */
+      justify-content:center;
+      align-items:center;
+      padding:clamp(14px,3.2vh,30px) 20px;
+      /* Safari 顶部背景延伸：用向上的投影填满地址栏区域，颜色与首屏背景一致 */
+      box-shadow: 0 -100vh 0 0 var(--bg);
+      background-color: var(--bg);      /* 兜底，防止渐变加载时白底 */
+    }
+    .hero-inner{
+      flex:1 1 auto;                    /* 撑满首屏可用高度 */
+      justify-content:space-evenly;     /* 各元素之间、元素与上下边距之间等距分布 */
+      gap:clamp(4px,1vh,10px);          /* 保证元素之间最小间距，避免拥挤 */
+      padding:clamp(8px,2.2vh,22px) 0;
+      line-height:1.8;
+    }
+    .hero-inner > *{flex:0 0 auto;}     /* 内容过多时不被压扁，改为自然撑高 */
+    .hero-topline{line-height:1.5;}
     .hero h1{line-height:1.5;}
+
+    /* ★ 手机端字号增大两号（相对于电脑端） */
     .hero .sub{
       line-height:1.5;
-      font-size:clamp(1.3rem,4.8vw,2.0rem); 
+      font-size:clamp(1.5rem,5.5vw,2.4rem);
     }
-    
     .sub-line{
       line-height:1.6;
-      font-size:clamp(1.05rem, 4.2vw, 1.5rem); 
-      white-space: nowrap; 
-      letter-spacing: 0; 
-      margin: 0 -10px; 
-    }
-    .sub-line .nw {
-      margin: 0 .08em; 
+      font-size:clamp(1.35rem,5vw,1.9rem);
+      /* 行内文字整体不换行，放不下时由脚本自动收紧 letter-spacing */
+      white-space:nowrap;
     }
   }
 
@@ -371,9 +349,6 @@
     .hero-topline{
       gap:8px;
       letter-spacing:-0.02em;
-    }
-    .sub-line {
-      font-size: 0.95rem; 
     }
   }
 </style>
@@ -389,9 +364,7 @@
     <img class="hero-logo" src="logo.png" alt="XJ MEP">
     <h1>因为专注&nbsp;&nbsp;&nbsp;&nbsp;所以专业</h1>
     <div class="sub">承接机电全专业&nbsp;CAD 图纸</div>
-    <div class="sub-line">
-      <span class="nw">一对一服务&nbsp;｜</span><span class="nw">非中介&nbsp;·</span><span class="nw">不分包&nbsp;·</span><span class="nw">不转包</span>
-    </div>
+    <div class="sub-line"><span class="nw">一对一服务&nbsp;｜</span><span class="nw">非中介&nbsp;·</span><span class="nw">不分包&nbsp;·</span><span class="nw">不转包</span></div>
 
     <div class="cta-group">
       <button class="cta" type="button" onclick="document.getElementById('qr-modal').style.display='flex'">微信咨询</button>
@@ -400,163 +373,158 @@
   </div>
 </header>
 
-<!-- 页面主体内容：包裹在 page-content 中，使下方内容保持白色背景 -->
-<div class="page-content">
+<!-- 服务项目 -->
+<section id="detail">
+  <span class="sec-title">服务项目</span>
+  <p class="sec-sub"><span style="display:inline-block;white-space:nowrap;">工程设计｜机电顾问</span><br><span style="display:inline-block;white-space:nowrap;">图纸设计&nbsp;＋&nbsp;专项方案&nbsp;＋&nbsp;深化设计＋&nbsp;图纸修改</span></p>
+  <div class="grid detail-grid">
+    <a href="https://www.kdocs.cn/l/cs2gzN604BpU" target="_blank" rel="noopener noreferrer" class="card card-link"><h3>电气施工图<span class="preview-hint">点击预览实例</span></h3><p>供电、配电、照明等电气专业施工图</p></a>
+    <a href="https://www.kdocs.cn/l/cn32xDg41AC6" target="_blank" rel="noopener noreferrer" class="card card-link"><h3>给排水施工图<span class="preview-hint">点击预览实例</span></h3><p>给水、排水、雨水等给排水专业施工图</p></a>
+    <a href="https://www.kdocs.cn/l/ccp68gbwaG09" target="_blank" rel="noopener noreferrer" class="card card-link"><h3>暖通施工图<span class="preview-hint">点击预览实例</span></h3><p>空调、通风、采暖等暖通专业施工图</p></a>
+    <a href="https://www.kdocs.cn/l/cgAz6gL32xbb" target="_blank" rel="noopener noreferrer" class="card card-link"><h3>景观水电施工图<span class="preview-hint">点击预览实例</span></h3><p>照明、光彩、水景等景观配套水电施工图</p></a>
+    <a href="https://www.kdocs.cn/l/ci7LKcnLQF0J" target="_blank" rel="noopener noreferrer" class="card card-link"><h3>装饰机电施工图<span class="preview-hint">点击预览实例</span></h3><p>精装修项目机电工程、综合管线等施工图</p></a>
+    <a href="https://www.kdocs.cn/l/cp5ksgYIaE8m" target="_blank" rel="noopener noreferrer" class="card card-link"><h3>弱电施工图<span class="preview-hint">点击预览实例</span></h3><p>综合布线、安防监控、智能化等弱电施工图</p></a>
+    <a href="https://www.kdocs.cn/l/crjqfm6egRna" target="_blank" rel="noopener noreferrer" class="card card-link"><h3>消防施工图<span class="preview-hint">点击预览实例</span></h3><p>消防水、消防强弱电、防排烟等机电施工图</p></a>
+    <a href="https://www.kdocs.cn/l/ctR5xOvne3gi" target="_blank" rel="noopener noreferrer" class="card card-link"><h3>室外综合管网<span class="preview-hint">点击预览实例</span></h3><p>室外给排水、电力、通信等管网设计</p></a>
+    <a href="https://www.kdocs.cn/l/chQpQNnxdaD0" target="_blank" rel="noopener noreferrer" class="card card-link"><h3>海绵城市专项方案<span class="preview-hint">点击预览实例</span></h3><p>雨水控制与利用、海绵设施等设计与计算</p></a>
+    <a href="https://www.kdocs.cn/l/cfQJEyyYFDWR" target="_blank" rel="noopener noreferrer" class="card card-link"><h3>电气专项方案<span class="preview-hint">点击预览实例</span></h3><p>电气系统方案编制，回路规划、负荷计算等</p></a>
+    <a href="https://www.kdocs.cn/l/cpowmNVLzbDS" target="_blank" rel="noopener noreferrer" class="card card-link"><h3>给排水专项方案<span class="preview-hint">点击预览实例</span></h3><p>给排水系统方案编制，水量、管径计算等</p></a>
+    <a href="https://www.kdocs.cn/l/clx7yxg5Vucx" target="_blank" rel="noopener noreferrer" class="card card-link"><h3>暖通专项方案<span class="preview-hint">点击预览实例</span></h3><p>暖通系统方案编制，负荷、风量计算等</p></a>
+    <a href="https://www.kdocs.cn/l/cbfCJ2UGdxXf" target="_blank" rel="noopener noreferrer" class="card card-link"><h3>抗震支吊架深化<span class="preview-hint">点击预览实例</span></h3><p>机电管线抗震支吊架布置的深化设计</p></a>
+    <a href="https://www.kdocs.cn/l/cleQDpre5tfc" target="_blank" rel="noopener noreferrer" class="card card-link"><h3>施工图审图修改<span class="preview-hint">点击预览实例</span></h3><p>各专业施工图审图答疑、意见修改与回复等</p></a>
+    <a href="https://www.kdocs.cn/l/cq8Woo3vujyu" target="_blank" rel="noopener noreferrer" class="card card-link"><h3>光伏专项设计<span class="preview-hint">点击预览实例</span></h3><p>电气光伏方案编制，初设图、施工图设计等</p></a>
+    <a href="https://www.kdocs.cn/l/cfDqdE8UYP1b" target="_blank" rel="noopener noreferrer" class="card card-link"><h3>各类竣工图<span class="preview-hint">点击预览实例</span></h3><p>按施工情况、业主要求等绘制各专业竣工图</p></a>
+  </div>
+</section>
 
-  <!-- 服务项目 -->
-  <section id="detail">
-    <span class="sec-title">服务项目</span>
-    <p class="sec-sub"><span style="display:inline-block;white-space:nowrap;">工程设计｜机电顾问</span><br><span style="display:inline-block;white-space:nowrap;">图纸设计&nbsp;＋&nbsp;专项方案&nbsp;＋&nbsp;深化设计＋&nbsp;图纸修改</span></p>
-    <div class="grid detail-grid">
-      <a href="https://www.kdocs.cn/l/cs2gzN604BpU" target="_blank" rel="noopener noreferrer" class="card card-link"><h3>电气施工图<span class="preview-hint">点击预览实例</span></h3><p>供电、配电、照明等电气专业施工图</p></a>
-      <a href="https://www.kdocs.cn/l/cn32xDg41AC6" target="_blank" rel="noopener noreferrer" class="card card-link"><h3>给排水施工图<span class="preview-hint">点击预览实例</span></h3><p>给水、排水、雨水等给排水专业施工图</p></a>
-      <a href="https://www.kdocs.cn/l/ccp68gbwaG09" target="_blank" rel="noopener noreferrer" class="card card-link"><h3>暖通施工图<span class="preview-hint">点击预览实例</span></h3><p>空调、通风、采暖等暖通专业施工图</p></a>
-      <a href="https://www.kdocs.cn/l/cgAz6gL32xbb" target="_blank" rel="noopener noreferrer" class="card card-link"><h3>景观水电施工图<span class="preview-hint">点击预览实例</span></h3><p>照明、光彩、水景等景观配套水电施工图</p></a>
-      <a href="https://www.kdocs.cn/l/ci7LKcnLQF0J" target="_blank" rel="noopener noreferrer" class="card card-link"><h3>装饰机电施工图<span class="preview-hint">点击预览实例</span></h3><p>精装修项目机电工程、综合管线等施工图</p></a>
-      <a href="https://www.kdocs.cn/l/cp5ksgYIaE8m" target="_blank" rel="noopener noreferrer" class="card card-link"><h3>弱电施工图<span class="preview-hint">点击预览实例</span></h3><p>综合布线、安防监控、智能化等弱电施工图</p></a>
-      <a href="https://www.kdocs.cn/l/crjqfm6egRna" target="_blank" rel="noopener noreferrer" class="card card-link"><h3>消防施工图<span class="preview-hint">点击预览实例</span></h3><p>消防水、消防强弱电、防排烟等机电施工图</p></a>
-      <a href="https://www.kdocs.cn/l/ctR5xOvne3gi" target="_blank" rel="noopener noreferrer" class="card card-link"><h3>室外综合管网<span class="preview-hint">点击预览实例</span></h3><p>室外给排水、电力、通信等管网设计</p></a>
-      <a href="https://www.kdocs.cn/l/chQpQNnxdaD0" target="_blank" rel="noopener noreferrer" class="card card-link"><h3>海绵城市专项方案<span class="preview-hint">点击预览实例</span></h3><p>雨水控制与利用、海绵设施等设计与计算</p></a>
-      <a href="https://www.kdocs.cn/l/cfQJEyyYFDWR" target="_blank" rel="noopener noreferrer" class="card card-link"><h3>电气专项方案<span class="preview-hint">点击预览实例</span></h3><p>电气系统方案编制，回路规划、负荷计算等</p></a>
-      <a href="https://www.kdocs.cn/l/cpowmNVLzbDS" target="_blank" rel="noopener noreferrer" class="card card-link"><h3>给排水专项方案<span class="preview-hint">点击预览实例</span></h3><p>给排水系统方案编制，水量、管径计算等</p></a>
-      <a href="https://www.kdocs.cn/l/clx7yxg5Vucx" target="_blank" rel="noopener noreferrer" class="card card-link"><h3>暖通专项方案<span class="preview-hint">点击预览实例</span></h3><p>暖通系统方案编制，负荷、风量计算等</p></a>
-      <a href="https://www.kdocs.cn/l/cbfCJ2UGdxXf" target="_blank" rel="noopener noreferrer" class="card card-link"><h3>抗震支吊架深化<span class="preview-hint">点击预览实例</span></h3><p>机电管线抗震支吊架布置的深化设计</p></a>
-      <a href="https://www.kdocs.cn/l/cleQDpre5tfc" target="_blank" rel="noopener noreferrer" class="card card-link"><h3>施工图审图修改<span class="preview-hint">点击预览实例</span></h3><p>各专业施工图审图答疑、意见修改与回复等</p></a>
-      <a href="https://www.kdocs.cn/l/cq8Woo3vujyu" target="_blank" rel="noopener noreferrer" class="card card-link"><h3>光伏专项设计<span class="preview-hint">点击预览实例</span></h3><p>电气光伏方案编制，初设图、施工图设计等</p></a>
-      <a href="https://www.kdocs.cn/l/cfDqdE8UYP1b" target="_blank" rel="noopener noreferrer" class="card card-link"><h3>各类竣工图<span class="preview-hint">点击预览实例</span></h3><p>按施工情况、业主要求等绘制各专业竣工图</p></a>
-    </div>
-  </section>
+<!-- 服务范围 -->
+<section id="services">
+  <span class="sec-title">服务范围</span>
+  <p class="sec-sub"><span style="display:inline-block;white-space:nowrap;">专业设计｜多线合作</span><br><span style="display:inline-block;white-space:nowrap;">民用&nbsp;＋&nbsp;工业&nbsp;＋&nbsp;装饰&nbsp;＋&nbsp;景观&nbsp;＋&nbsp;市政</span></p>
+  <div class="grid">
+    <div class="card"><h3>机电顾问</h3><p>民用、工业、装饰、景观、市政等多领域机电系统顾问服务</p></div>
+    <div class="card"><h3>图纸制作</h3><p>方案图、初设图、施工图、竣工图等图纸设计、绘制与整理</p></div>
+    <div class="card"><h3>过程服务</h3><p>含现状评估、方案编制、图纸审核、造价咨询、施工配合等</p></div>
+    <div class="card"><h3>多线合作</h3><p>可线上、线下接单，异地项目同样高效对接，合作流程透明</p></div>
+  </div>
+</section>
 
-  <!-- 服务范围 -->
-  <section id="services">
-    <span class="sec-title">服务范围</span>
-    <p class="sec-sub"><span style="display:inline-block;white-space:nowrap;">专业设计｜多线合作</span><br><span style="display:inline-block;white-space:nowrap;">民用&nbsp;＋&nbsp;工业&nbsp;＋&nbsp;装饰&nbsp;＋&nbsp;景观&nbsp;＋&nbsp;市政</span></p>
-    <div class="grid">
-      <div class="card"><h3>机电顾问</h3><p>民用、工业、装饰、景观、市政等多领域机电系统顾问服务</p></div>
-      <div class="card"><h3>图纸制作</h3><p>方案图、初设图、施工图、竣工图等图纸设计、绘制与整理</p></div>
-      <div class="card"><h3>过程服务</h3><p>含现状评估、方案编制、图纸审核、造价咨询、施工配合等</p></div>
-      <div class="card"><h3>多线合作</h3><p>可线上、线下接单，异地项目同样高效对接，合作流程透明</p></div>
-    </div>
-  </section>
-
-  <!-- 服务优势 -->
-  <section id="advantages">
-    <span class="sec-title">我们的优势</span>
-    <div class="grid">
-      <div class="card"><h3>☑ 专业</h3><p>机电全专业知识储备，熟悉各专业设计规范与制图标准</p></div>
-      <div class="card"><h3>☑ 高效</h3><p>全程高效快速响应，设计周期短，支持急单的加急处理</p></div>
-      <div class="card"><h3>☑ 实用</h3><p>图纸设计贴合施工实际，配合各类审图通过，落地性强</p></div>
-      <div class="card"><h3>☑ 省心</h3><p>一对一服务，后续修改无忧，非中介，不分包、不转包</p></div>
-    </div>
-
-    <div class="table-wrap">
-      <table>
-        <thead><tr><th></th><th>我们</th><th>中介 / 分包模式</th></tr></thead>
-        <tbody>
-          <tr><td>设计能力</td><td class="yes">✔ 精通机电全专业</td><td class="no">✘ 水平参差不齐</td></tr>
-          <tr><td>快速响应</td><td class="yes">✔ 一对一直接联系</td><td class="no">✘ 多级多层转达</td></tr>
-          <tr><td>图纸质量</td><td class="yes">✔ 以匠心态度出图</td><td class="no">✘ 难以保证品质</td></tr>
-          <tr><td>后续服务</td><td class="yes">✔ 至少一个月售后</td><td class="no">✘ 交付后就失联</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </section>
-
-  <!-- 合作流程 -->
-  <section id="process">
-    <span class="sec-title">合作流程</span>
-    <div class="steps">
-      <div class="step"><div class="num">1</div><p><b>沟通需求</b>：线上接单，一对一沟通；如需现场服务，另行沟通细则</p></div>
-      <div class="step"><div class="num">2</div><p><b>确定合约</b>：合约（口头、书面）确定后，委托方预付50%合约款</p></div>
-      <div class="step"><div class="num">3</div><p><b>过程审核</b>：服务期内提交不可编辑的电子版成果，由委托方予以审核</p></div>
-      <div class="step"><div class="num">4</div><p><b>尾款交付</b>：委托方支付剩余50%合约款后，交付可编辑电子版成果</p></div>
-      <div class="step"><div class="num">5</div><p><b>售后无忧</b>：就委托内容，提供至少一个月的售后服务</p></div>
-    </div>
-  </section>
-
-  <!-- 图纸制作要点 -->
-  <section id="notes">
-    <span class="sec-title">图纸制作需要什么</span>
-    <div class="rules">
-      <ul>
-        <li><b>专业知识</b>：覆盖建筑、结构、机电、景观、装饰等全专业</li>
-        <li><b>行业经验</b>：多年实战经验，熟悉各类项目的制图深度与报审要求</li>
-        <li><b>绘制时间</b>：快速响应，加急订单可协商排期</li>
-        <li><b>制作要求</b>：不同项目，不同要求，按需制作</li>
-      </ul>
-    </div>
-  </section>
-
-  <!-- 二维码区域：添加微信 + 拨打电话 并排居中 -->
-  <div style="display:flex; justify-content:center; align-items:flex-start; gap:40px; flex-wrap:wrap; padding:50px 10px; margin:0;">
-
-    <div id="wechat-contact" style="text-align:center; padding:0; margin:0;">
-      <span class="sec-title" style="background:none;font-size:clamp(1.1rem,4vw,1.8rem);">添加微信</span>
-      <br>
-      <img class="note-qr" src="wechat.jpg" alt="微信二维码" style="cursor:pointer;" onclick="document.getElementById('qr-modal').style.display='flex'">
-    </div>
-
-    <div id="phone-contact" style="text-align:center; padding:0; margin:0;">
-      <span class="sec-title" style="background:none;font-size:clamp(1.1rem,4vw,1.8rem);">拨打电话</span>
-      <br>
-      <img class="note-qr" src="phone.png" alt="电话二维码" style="cursor:pointer;" onclick="document.getElementById('phone-modal').style.display='flex'">
-    </div>
-
+<!-- 服务优势 -->
+<section id="advantages">
+  <span class="sec-title">我们的优势</span>
+  <div class="grid">
+    <div class="card"><h3>☑ 专业</h3><p>机电全专业知识储备，熟悉各专业设计规范与制图标准</p></div>
+    <div class="card"><h3>☑ 高效</h3><p>全程高效快速响应，设计周期短，支持急单的加急处理</p></div>
+    <div class="card"><h3>☑ 实用</h3><p>图纸设计贴合施工实际，配合各类审图通过，落地性强</p></div>
+    <div class="card"><h3>☑ 省心</h3><p>一对一服务，后续修改无忧，非中介，不分包、不转包</p></div>
   </div>
 
-  <!-- 底部图标栏：用 button + data-href 结构，绕开拦截器对 a[href*=社交域名] 的识别 -->
-  <div class="icon-strip">
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th></th><th>我们</th><th>中介 / 分包模式</th></tr></thead>
+      <tbody>
+        <tr><td>设计能力</td><td class="yes">✔ 精通机电全专业</td><td class="no">✘ 水平参差不齐</td></tr>
+        <tr><td>快速响应</td><td class="yes">✔ 一对一直接联系</td><td class="no">✘ 多级多层转达</td></tr>
+        <tr><td>图纸质量</td><td class="yes">✔ 以匠心态度出图</td><td class="no">✘ 难以保证品质</td></tr>
+        <tr><td>后续服务</td><td class="yes">✔ 至少一个月售后</td><td class="no">✘ 交付后就失联</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
 
-    <button type="button" class="ib"
-            data-href="https://xjmep.taobao.com"
-            data-scheme="taobao://"
-            data-name="淘宝">
-      <img src="tb.png" alt="淘宝" width="50" height="50">
-    </button>
+<!-- 合作流程 -->
+<section id="process">
+  <span class="sec-title">合作流程</span>
+  <div class="steps">
+    <div class="step"><div class="num">1</div><p><b>沟通需求</b>：线上接单，一对一沟通；如需现场服务，另行沟通细则</p></div>
+    <div class="step"><div class="num">2</div><p><b>确定合约</b>：合约（口头、书面）确定后，委托方预付50%合约款</p></div>
+    <div class="step"><div class="num">3</div><p><b>过程审核</b>：服务期内提交不可编辑的电子版成果，由委托方予以审核</p></div>
+    <div class="step"><div class="num">4</div><p><b>尾款交付</b>：委托方支付剩余50%合约款后，交付可编辑电子版成果</p></div>
+    <div class="step"><div class="num">5</div><p><b>售后无忧</b>：就委托内容，提供至少一个月的售后服务</p></div>
+  </div>
+</section>
 
-    <button type="button" class="ib"
-            data-href="https://m.tb.cn/h.jjUVHO1?tk=DIip62OVrU2"
-            data-scheme="xianyu://"
-            data-name="闲鱼">
-      <img src="xy.png" alt="闲鱼" width="50" height="50">
-    </button>
+<!-- 图纸制作要点 -->
+<section id="notes">
+  <span class="sec-title">图纸制作需要什么</span>
+  <div class="rules">
+    <ul>
+      <li><b>专业知识</b>：覆盖建筑、结构、机电、景观、装饰等全专业</li>
+      <li><b>行业经验</b>：多年实战经验，熟悉各类项目的制图深度与报审要求</li>
+      <li><b>绘制时间</b>：快速响应，加急订单可协商排期</li>
+      <li><b>制作要求</b>：不同项目，不同要求，按需制作</li>
+    </ul>
+  </div>
+</section>
 
-    <button type="button" class="ib"
-            data-href="https://xhslink.cn/o/4xR7lu616uu"
-            data-scheme="xhsdiscover://"
-            data-name="小红书">
-      <img src="xhs.png" alt="小红书" width="50" height="50">
-    </button>
+<!-- 二维码区域：添加微信 + 拨打电话 并排居中 -->
+<div style="display:flex; justify-content:center; align-items:flex-start; gap:40px; flex-wrap:wrap; padding:50px 10px; margin:0;">
 
-    <button type="button" class="ib"
-            data-href="https://v.douyin.com/3WKXVOz-JII/"
-            data-scheme="snssdk1128://"
-            data-name="抖音">
-      <img src="dy.png" alt="抖音" width="50" height="50">
-    </button>
-
-    <button type="button" class="ib"
-            data-href="xjmepupdate.html">
-      <img src="xjmepupdate.png" alt="XJ MEP 更新" width="50" height="50">
-    </button>
-
+  <div id="wechat-contact" style="text-align:center; padding:0; margin:0;">
+    <span class="sec-title" style="background:none;font-size:clamp(1.1rem,4vw,1.8rem);">添加微信</span>
+    <br>
+    <img class="note-qr" src="wechat.jpg" alt="微信二维码" style="cursor:pointer;" onclick="document.getElementById('qr-modal').style.display='flex'">
   </div>
 
-  <footer id="contact">
-    <div style="margin-top:6px;">
-      <a href="agreement.html" target="_blank" rel="noopener noreferrer"
-         style="display:inline-block;color:#FFFFFF;font-weight:400;letter-spacing:.05em;font-size:1rem;font-family:var(--font-sans);text-decoration:none;margin:0 14px;">网站协议</a>
-      <a href="explain.html" target="_blank" rel="noopener noreferrer"
-         style="display:inline-block;color:#FFFFFF;font-weight:400;letter-spacing:.05em;font-size:1rem;font-family:var(--font-sans);text-decoration:none;margin:0 14px;">相关说明</a>
-      <a href="about.html" target="_blank" rel="noopener noreferrer"
-         style="display:inline-block;color:#FFFFFF;font-weight:400;letter-spacing:.05em;font-size:1rem;font-family:var(--font-sans);text-decoration:none;margin:0 14px;">关于我们</a>
-    </div>
-    <small style="margin-top:6px;">Designed by xjmep.design</small>
-    <small style="margin-top:6px;">Email：dxj@xjmep.com</small>
-    <small style="margin-top:2px;">Copyright © 2026 电小匠</small>
-  </footer>
+  <div id="phone-contact" style="text-align:center; padding:0; margin:0;">
+    <span class="sec-title" style="background:none;font-size:clamp(1.1rem,4vw,1.8rem);">拨打电话</span>
+    <br>
+    <img class="note-qr" src="phone.png" alt="电话二维码" style="cursor:pointer;" onclick="document.getElementById('phone-modal').style.display='flex'">
+  </div>
 
 </div>
+
+<!-- 底部图标栏：用 button + data-href 结构，绕开拦截器对 a[href*=社交域名] 的识别 -->
+<div class="icon-strip">
+
+  <button type="button" class="ib"
+          data-href="https://xjmep.taobao.com"
+          data-scheme="taobao://"
+          data-name="淘宝">
+    <img src="tb.png" alt="淘宝" width="50" height="50">
+  </button>
+
+  <button type="button" class="ib"
+          data-href="https://m.tb.cn/h.jjUVHO1?tk=DIip62OVrU2"
+          data-scheme="xianyu://"
+          data-name="闲鱼">
+    <img src="xy.png" alt="闲鱼" width="50" height="50">
+  </button>
+
+  <button type="button" class="ib"
+          data-href="https://xhslink.cn/o/4xR7lu616uu"
+          data-scheme="xhsdiscover://"
+          data-name="小红书">
+    <img src="xhs.png" alt="小红书" width="50" height="50">
+  </button>
+
+  <button type="button" class="ib"
+          data-href="https://v.douyin.com/3WKXVOz-JII/"
+          data-scheme="snssdk1128://"
+          data-name="抖音">
+    <img src="dy.png" alt="抖音" width="50" height="50">
+  </button>
+
+  <button type="button" class="ib"
+          data-href="xjmepupdate.html">
+    <img src="xjmepupdate.png" alt="XJ MEP 更新" width="50" height="50">
+  </button>
+
+</div>
+
+<footer id="contact">
+  <div style="margin-top:6px;">
+    <a href="agreement.html" target="_blank" rel="noopener noreferrer"
+       style="display:inline-block;color:#FFFFFF;font-weight:400;letter-spacing:.05em;font-size:1rem;font-family:var(--font-sans);text-decoration:none;margin:0 14px;">网站协议</a>
+    <a href="explain.html" target="_blank" rel="noopener noreferrer"
+       style="display:inline-block;color:#FFFFFF;font-weight:400;letter-spacing:.05em;font-size:1rem;font-family:var(--font-sans);text-decoration:none;margin:0 14px;">相关说明</a>
+    <a href="about.html" target="_blank" rel="noopener noreferrer"
+       style="display:inline-block;color:#FFFFFF;font-weight:400;letter-spacing:.05em;font-size:1rem;font-family:var(--font-sans);text-decoration:none;margin:0 14px;">关于我们</a>
+  </div>
+  <small style="margin-top:6px;">Designed by xjmep.design</small>
+  <small style="margin-top:6px;">Email：dxj@xjmep.com</small>
+  <small style="margin-top:2px;">Copyright © 2026 电小匠</small>
+</footer>
 
 <script>
 /* ============ 轻提示 ============ */
@@ -627,6 +595,73 @@ document.querySelectorAll('.icon-strip .ib').forEach(function(btn){
     openInApp(scheme, webUrl, name);
   });
 });
+
+/* ============ 首屏标语：手机端一行放不下时自动收紧字间距 ============ */
+(function(){
+  var el = document.querySelector('.sub-line');
+  if (!el) return;
+
+  var MQ = '(max-width:640px), (hover:none) and (pointer:coarse)';
+  var mq = window.matchMedia ? window.matchMedia(MQ) : null;
+
+  function isMobile(){
+    var ua = navigator.userAgent;
+    if (/MicroMessenger/i.test(ua)) return true;  // 微信内置浏览器直接视为手机端
+    return mq ? mq.matches : window.innerWidth <= 640;
+  }
+
+  function fit(){
+    /* 每次先还原为 CSS 设定的原始字间距，避免叠加 */
+    el.style.letterSpacing = '';
+
+    if (!isMobile()) return;              // 电脑端不处理
+
+    var avail = el.clientWidth;           // 可用内容宽度
+    var need  = el.scrollWidth;           // 不换行时的实际内容宽度
+    if (!avail) return;
+    if (need <= avail + 0.5) return;      // 一行能放下，保持原样
+
+    var cs     = window.getComputedStyle(el);
+    var baseLS = parseFloat(cs.letterSpacing);
+    if (isNaN(baseLS)) baseLS = 0;
+
+    var fs    = parseFloat(cs.fontSize) || 16;
+    var count = el.textContent.length;
+    if (count < 2) return;
+
+    /* 每个字符需要收紧的间距（+0.5px 余量，防止像素舍入后仍换行） */
+    var shrink = (need - avail + 0.5) / count;
+    var newLS  = baseLS - shrink;
+
+    /* 下限：避免文字挤成一团（可根据需要微调 -0.08 ~ -0.12） */
+    var minLS = -0.08 * fs;
+    if (newLS < minLS) newLS = minLS;
+
+    el.style.letterSpacing = newLS.toFixed(3) + 'px';
+  }
+
+  /* 立即执行一次，减少闪动；字体加载完成后再校正一次 */
+  fit();
+  if (document.fonts && document.fonts.ready){
+    document.fonts.ready.then(fit).catch(function(){});
+  }
+  window.addEventListener('load', fit);
+  window.addEventListener('orientationchange', function(){ setTimeout(fit, 250); });
+
+  var timer;
+  window.addEventListener('resize', function(){
+    clearTimeout(timer);
+    timer = setTimeout(fit, 120);
+  });
+
+  /* 屏幕旋转 / 微信内置浏览器尺寸变化 */
+  if (window.visualViewport){
+    window.visualViewport.addEventListener('resize', function(){
+      clearTimeout(timer);
+      timer = setTimeout(fit, 120);
+    });
+  }
+})();
 </script>
 
 <!-- 轻提示 -->
