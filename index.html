@@ -2,7 +2,8 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#F79F19">
 <meta name="description" content="机电设计 · 专业设计 · 机电 CAD 图纸设计 · 水电 CAD 图纸设计 · 施工图设计">
 <title>小匠机电图纸设计</title>
 <style>
@@ -154,6 +155,7 @@
   footer{
     background:#000000;color:var(--bg);text-align:center;padding:46px 20px;
     font-weight:var(--fw-title);letter-spacing:.1em;font-size:1.05rem;
+    padding-bottom: calc(46px + env(safe-area-inset-bottom));
   }
   footer small{display:block;margin-top:10px;color:#FFFFFF;font-weight:var(--fw-body);letter-spacing:.05em;font-size:.85rem;}
 
@@ -308,37 +310,37 @@
     }
   }
 
-  /* ===== 手机 / 微信内置浏览器：首屏内容在整屏内均匀分布，避免上下大片留白 ===== */
+  /* ===== 手机 / 微信内置浏览器：首屏内容在整屏内均匀分布，修复Safari顶部露白 ===== */
   @media (max-width:640px), (hover:none) and (pointer:coarse){
+    html {
+      background-color: var(--bg); /* 防止顶部过度滚动时露白 */
+    }
     .hero{
       min-height:100vh;
-      min-height:100svh;               /* 现代移动浏览器：跟随可视区高度，避免地址栏导致的抖动 */
+      min-height:100svh;
       justify-content:center;
       align-items:center;
-      padding:clamp(14px,3.2vh,30px) 20px;
-      /* Safari 顶部背景延伸：用向上的投影填满地址栏区域，颜色与首屏背景一致 */
-      box-shadow: 0 -100vh 0 0 var(--bg);
-      background-color: var(--bg);      /* 兜底，防止渐变加载时白底 */
+      /* 包含安全区，防止内容被顶部工具栏挡住，并自适应余量 */
+      padding: calc(env(safe-area-inset-top) + clamp(14px,3.2vh,30px)) 20px clamp(14px,3.2vh,30px) 20px;
+      background-color: var(--bg);
     }
     .hero-inner{
-      flex:1 1 auto;                    /* 撑满首屏可用高度 */
-      justify-content:space-evenly;     /* 各元素之间、元素与上下边距之间等距分布 */
-      gap:clamp(4px,1vh,10px);          /* 保证元素之间最小间距，避免拥挤 */
+      flex:1 1 auto;
+      justify-content:space-evenly;
+      gap:clamp(4px,1vh,10px);
       padding:clamp(8px,2.2vh,22px) 0;
       line-height:1.8;
     }
-    .hero-inner > *{flex:0 0 auto;}     /* 内容过多时不被压扁，改为自然撑高 */
+    .hero-inner > *{flex:0 0 auto;}
     .hero-topline{line-height:1.5;}
     .hero h1{line-height:1.5;}
     .hero .sub{
       line-height:1.5;
-      /* 手机端字号增大两号 */
-      font-size:clamp(1.3rem,4.8vw,2.0rem);
+      font-size:clamp(1.3rem,4.8vw,2.0rem); /* 手机端字号增大两号 */
     }
     .sub-line{
       line-height:1.6;
-      /* 手机端字号增大两号 */
-      font-size:clamp(1.15rem,4.2vw,1.55rem);
+      font-size:clamp(1.15rem,4.2vw,1.55rem); /* 手机端字号增大两号 */
     }
   }
 
