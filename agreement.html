@@ -4,10 +4,16 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>网站协议</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@1,500&display=swap" rel="stylesheet">
 <style>
+    /* 自托管字体：Rubik Medium Italic（文件位于本页面同级 fonts 目录） */
+    @font-face {
+        font-family: "Rubik";
+        src: url("fonts/Rubik-MediumItalic.ttf") format("truetype");
+        font-weight: 500;
+        font-style: italic;
+        font-display: swap;
+    }
+
     :root {
         --ink: #000000;
         --ink-soft: #000000;
@@ -16,6 +22,7 @@
         --line: #dcd9d0;
         --serif: "Source Han Serif SC", "Noto Serif CJK SC", serif;
         --sans: "Source Han Sans SC", "Noto Sans CJK SC", sans-serif;
+        --rubik: "Rubik", var(--sans);
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -58,7 +65,7 @@
     }
 
     .top-tag {
-        font-family: "Rubik", var(--sans);
+        font-family: var(--rubik);
         font-style: italic;
         font-weight: 500;
         font-size: 18px;
@@ -177,7 +184,7 @@
         display: grid;
         grid-template-columns: 1fr auto 1fr;
         align-items: center;
-        font-size: 13.5px;      /* 原 12.5px，放大一号 */
+        font-size: 13.5px;
         color: var(--ink-faint);
         letter-spacing: 0;
         font-family: var(--sans);
@@ -260,7 +267,7 @@
             grid-template-columns: 1fr;
             gap: 6px;
             justify-items: center;
-            font-size: 13px;    /* 原 12px，放大一号 */
+            font-size: 13px;
             letter-spacing: 0;
         }
 
