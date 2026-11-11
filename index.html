@@ -303,7 +303,7 @@
 
   /* ===== 手机 / 微信内置浏览器：综合适配（背景平铺、安全区、字号放大） ===== */
   @media (max-width:640px), (hover:none) and (pointer:coarse){
-    /* 核心修复：让底层、回弹背景彻底变黄，杜绝 Safari 顶部与底部的白边 */
+    /* 核心修复：让底层、回弹背景彻底变黄，杜绝 Safari 底部与顶部的白边 */
     html, body {
       background-color: var(--bg) !important; 
     }
@@ -311,22 +311,24 @@
     /* 网页下方内容依然保持白色背景 */
     .page-content {
       background-color: var(--paper);
+      position: relative;
+      z-index: 10;
     }
 
-    /* 首屏去除内边距，让橙色背景从屏幕最顶端（含状态栏区域）就开始渲染 */
+    /* 首屏去除内边距，让橙色背景从屏幕最顶端和最底端开始渲染 */
     .hero {
       min-height: 100vh;
-      min-height: 100svh;
+      min-height: 100dvh; /* 使用 dvh 动态高度，确保工具栏收缩/展开时都能铺满 */
       padding: 0; 
     }
 
     /* 内容居中容器接管安全区避让与排版 */
     .hero-inner {
       min-height: 100vh;
-      min-height: 100svh;
+      min-height: 100dvh;
       box-sizing: border-box;
-      /* 顶部留出刘海/状态栏的安全高度，底部留出小间距，背景依然是橙色 */
-      padding: calc(env(safe-area-inset-top) + 16px) 20px 16px; 
+      /* 顶部避让状态栏/刘海，底部避让手势条，背景依然是橙色 */
+      padding: calc(env(safe-area-inset-top) + 16px) 20px calc(env(safe-area-inset-bottom) + 16px); 
       justify-content: space-evenly;
       gap: clamp(4px,1vh,10px);
       flex: none;
