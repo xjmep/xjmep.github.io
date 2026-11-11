@@ -90,7 +90,6 @@
     text-align:center;letter-spacing:.04em;
     width: 100%;
     max-width: 100%;
-    /* 默认展示为块级元素以支持居中，遇到脚本处理时会强制单行 */
   }
   .sub-line .nw{display:inline-block;white-space:nowrap;margin:0 .12em;}
 
@@ -309,7 +308,7 @@
     .cta{padding:8px 12px;letter-spacing:.1em;text-indent:.1em;}
   }
 
-  /* ===== 手机 / 微信内置浏览器：全屏铺满终极方案 ===== */
+  /* ===== 手机 / 微信内置浏览器：全屏铺满及文字防折行处理 ===== */
   @media (max-width:640px), (hover:none) and (pointer:coarse){
     
     /* 1. 底色兜底 */
@@ -317,11 +316,13 @@
       background-color: var(--bg) !important; 
     }
     
-    /* 2. 独立的底层固定视口背景，无视浏览器工具栏如何缩放 */
+    /* 2. 底层固定视口背景，使用最大高度 100lvh 防止底部露白 */
     .mobile-bg {
       display: block;
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
+      height: 100vh;
+      height: 100lvh; /* 覆盖最大高度 */
       background: linear-gradient(160deg,var(--bg) 0%,var(--bg-dark) 100%);
       z-index: 0;
     }
@@ -330,7 +331,7 @@
     .hero {
       background: transparent !important; 
       min-height: 100vh;
-      min-height: 100dvh; /* 撑满动态视口 */
+      min-height: 100lvh; 
       padding: 0;
       position: relative;
       z-index: 1;
@@ -339,7 +340,7 @@
     /* 4. 内容容器接管安全区避让与排版 */
     .hero-inner {
       min-height: 100vh;
-      min-height: 100dvh;
+      min-height: 100lvh;
       box-sizing: border-box;
       padding: calc(env(safe-area-inset-top) + 16px) 20px calc(env(safe-area-inset-bottom) + 16px); 
       justify-content: space-evenly;
@@ -347,14 +348,15 @@
       flex: none;
     }
 
-    /* 5. 下方主体内容用白底包裹并提升层级，盖住底层渐变 */
+    /* 5. 下方主体内容用白底包裹，并增加底部安全区适配 */
     .page-content {
       background-color: var(--paper);
       position: relative;
       z-index: 2;
+      padding-bottom: env(safe-area-inset-bottom);
     }
 
-    /* 6. 手机端字号放大 */
+    /* 6. 手机端字号放大与防折行智能缩放 */
     .hero-topline{
       font-size:clamp(1.6rem,6vw,3.4rem);
       letter-spacing:0;
@@ -364,13 +366,19 @@
     .hero h1{line-height:1.5;}
     .hero .sub{
       line-height:1.5;
-      font-size:clamp(1.3rem,4.8vw,2.0rem); /* 增大两号 */
+      font-size:clamp(1.3rem,4.8vw,2.0rem); 
     }
+    
     .sub-line{
       line-height:1.6;
-      font-size:clamp(1.15rem,4.2vw,1.55rem); /* 增大两号 */
-      /* 强制单行处理交由 JS 动态接管以保证自动缩放 */
-      display: block;
+      /* 使用纯 CSS 视口缩放，并强制单行，避免 JS 计算在微信中引发的排版变形 */
+      font-size:clamp(1.05rem, 4.2vw, 1.5rem); 
+      white-space: nowrap; 
+      letter-spacing: 0; 
+      margin: 0 -10px; /* 左右略微延伸，防止在极小屏上因为 padding 导致挤压 */
+    }
+    .sub-line .nw {
+      margin: 0 .08em; /* 稍微收窄内部间距，给长文案留足空间 */
     }
   }
 
@@ -379,6 +387,9 @@
     .hero-topline{
       gap:8px;
       letter-spacing:-0.02em;
+    }
+    .sub-line {
+      font-size: 0.95rem; /* 极小屏兜底 */
     }
   }
 </style>
@@ -567,50 +578,6 @@
 </div>
 
 <script>
-/* ============ 自动缩放“一对一服务…”行 ============ */
-function fitSubLine() {
-  var el = document.querySelector('.sub-line');
-  if (!el) return;
-  
-  // 电脑端不进行任何调整
-  if (window.innerWidth > 640) {
-    el.style.whiteSpace = '';
-    el.style.fontSize = '';
-    el.style.letterSpacing = '';
-    return;
-  }
-
-  // 手机端强制单行不换行
-  el.style.whiteSpace = 'nowrap';
-  
-  // 清除内联样式，以便按照 CSS 默认规则进行精准测量
-  el.style.fontSize = '';
-  el.style.letterSpacing = '';
-  
-  // 获取容器可用宽度（父级宽度）和文本的实际内容宽度
-  var parentWidth = el.parentNode.clientWidth;
-  var contentWidth = el.scrollWidth;
-  
-  // 如果内容宽度超出父级宽度，说明会折行，按比例缩小字号与字间距
-  if (contentWidth > parentWidth) {
-    var scale = parentWidth / contentWidth;
-    var style = window.getComputedStyle(el);
-    var fontSize = parseFloat(style.fontSize);
-    var letterSpacing = parseFloat(style.letterSpacing) || 0;
-    
-    // 减去 0.98 的系数，避免因为四舍五入带来 1px 的溢出
-    el.style.fontSize = (fontSize * scale * 0.98) + 'px';
-    if (letterSpacing > 0) {
-      el.style.letterSpacing = (letterSpacing * scale) + 'px';
-    }
-  }
-}
-
-// 在窗口加载、大小改变时触发自适应调整
-document.addEventListener('DOMContentLoaded', fitSubLine);
-window.addEventListener('load', fitSubLine);
-window.addEventListener('resize', fitSubLine);
-
 /* ============ 轻提示 ============ */
 function showToast(msg){
   var t = document.getElementById('toast');
