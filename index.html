@@ -34,12 +34,7 @@
     overflow-x:hidden;
   }
 
-  /* ===== 移动端固定背景层（电脑端隐藏） ===== */
-  .mobile-bg {
-    display: none;
-  }
-
-  /* ===== Hero 首屏 ===== */
+  /* ===== Hero 首屏（电脑端默认样式） ===== */
   .hero{
     background:linear-gradient(160deg,var(--bg) 0%,var(--bg-dark) 100%);
     min-height:100vh;
@@ -311,33 +306,31 @@
   /* ===== 手机 / 微信内置浏览器：全屏铺满及文字防折行处理 ===== */
   @media (max-width:640px), (hover:none) and (pointer:coarse){
     
-    /* 1. 底色兜底 */
+    /* 1. 整站底色改为白色，彻底杜绝底部露出黄色 */
     html, body {
-      background-color: var(--bg) !important; 
+      background-color: var(--paper) !important; 
     }
     
-    /* 2. 底层固定视口背景，使用最大高度 100lvh 防止底部露白 */
-    .mobile-bg {
-      display: block;
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      height: 100vh;
-      height: 100lvh; /* 覆盖最大高度 */
-      background: linear-gradient(160deg,var(--bg) 0%,var(--bg-dark) 100%);
-      z-index: 0;
-    }
-
-    /* 3. 首屏透明化，使用底层 fixed 背景 */
+    /* 2. 首屏透明化，使用专属伪元素做底层固定背景 */
     .hero {
       background: transparent !important; 
       min-height: 100vh;
       min-height: 100lvh; 
       padding: 0;
       position: relative;
-      z-index: 1;
+      z-index: 1; /* 确保首屏在内容层 */
+    }
+    
+    /* 首屏专属固定背景，解决 Safari 顶部露白，且滚动后会被后续白底内容盖住 */
+    .hero::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: linear-gradient(160deg,var(--bg) 0%,var(--bg-dark) 100%);
+      z-index: -1;
     }
 
-    /* 4. 内容容器接管安全区避让与排版 */
+    /* 3. 内容容器接管安全区避让与排版 */
     .hero-inner {
       min-height: 100vh;
       min-height: 100lvh;
@@ -348,15 +341,14 @@
       flex: none;
     }
 
-    /* 5. 下方主体内容用白底包裹，并增加底部安全区适配 */
+    /* 4. 下方主体内容用白底包裹，层级高于首屏，遮挡黄底 */
     .page-content {
       background-color: var(--paper);
       position: relative;
       z-index: 2;
-      padding-bottom: env(safe-area-inset-bottom);
     }
 
-    /* 6. 手机端字号放大与防折行智能缩放 */
+    /* 5. 手机端字号放大与防折行智能缩放 */
     .hero-topline{
       font-size:clamp(1.6rem,6vw,3.4rem);
       letter-spacing:0;
@@ -371,14 +363,13 @@
     
     .sub-line{
       line-height:1.6;
-      /* 使用纯 CSS 视口缩放，并强制单行，避免 JS 计算在微信中引发的排版变形 */
       font-size:clamp(1.05rem, 4.2vw, 1.5rem); 
       white-space: nowrap; 
       letter-spacing: 0; 
-      margin: 0 -10px; /* 左右略微延伸，防止在极小屏上因为 padding 导致挤压 */
+      margin: 0 -10px; 
     }
     .sub-line .nw {
-      margin: 0 .08em; /* 稍微收窄内部间距，给长文案留足空间 */
+      margin: 0 .08em; 
     }
   }
 
@@ -389,15 +380,12 @@
       letter-spacing:-0.02em;
     }
     .sub-line {
-      font-size: 0.95rem; /* 极小屏兜底 */
+      font-size: 0.95rem; 
     }
   }
 </style>
 </head>
 <body>
-
-<!-- 手机端专属底层固定背景（电脑端隐藏） -->
-<div class="mobile-bg"></div>
 
 <!-- 首屏 -->
 <header class="hero">
