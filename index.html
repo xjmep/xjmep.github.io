@@ -303,45 +303,62 @@
     .cta{padding:8px 12px;letter-spacing:.1em;text-indent:.1em;}
   }
 
-  /* ===== 手机 / 微信内置浏览器：全屏铺满及文字防折行处理 ===== */
+  /* ===== 手机 / 微信内置浏览器：背景随动与防折行处理 ===== */
   @media (max-width:640px), (hover:none) and (pointer:coarse){
     
-    /* 1. 整站底色改为白色，彻底杜绝底部露出黄色 */
+    /* 1. 全局底色纯白，确保滚到最底部或回弹时，漏出的永远是白色 */
     html, body {
       background-color: var(--paper) !important; 
     }
     
-    /* 2. 首屏透明化，使用专属伪元素做底层固定背景 */
+    /* 2. 首屏相对定位，透明化并接管层级 */
     .hero {
       background: transparent !important; 
       min-height: 100vh;
-      min-height: 100lvh; 
+      min-height: 100dvh; 
       padding: 0;
       position: relative;
-      z-index: 1; /* 确保首屏在内容层 */
+      z-index: 1;
     }
     
-    /* 首屏专属固定背景，解决 Safari 顶部露白，且滚动后会被后续白底内容盖住 */
+    /* 向上延伸背景，彻底填满 Safari 顶部下拉回弹区域，但不固定 */
     .hero::before {
       content: "";
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
+      position: absolute;
+      bottom: 100%;
+      left: 0;
+      width: 100%;
+      height: 200vh;
       background: linear-gradient(160deg,var(--bg) 0%,var(--bg-dark) 100%);
-      z-index: -1;
+      pointer-events: none;
+    }
+
+    /* 向下微延伸，盖住部分浏览器底栏收起时产生的接缝，随后会被正常的白色页面盖住 */
+    .hero::after {
+      content: "";
+      position: absolute;
+      top: 100%;
+      left: 0;
+      width: 100%;
+      height: 100px;
+      background: linear-gradient(160deg,var(--bg) 0%,var(--bg-dark) 100%);
+      pointer-events: none;
     }
 
     /* 3. 内容容器接管安全区避让与排版 */
     .hero-inner {
       min-height: 100vh;
-      min-height: 100lvh;
+      min-height: 100dvh;
       box-sizing: border-box;
       padding: calc(env(safe-area-inset-top) + 16px) 20px calc(env(safe-area-inset-bottom) + 16px); 
       justify-content: space-evenly;
       gap: clamp(4px,1vh,10px);
       flex: none;
+      position: relative;
+      z-index: 2;
     }
 
-    /* 4. 下方主体内容用白底包裹，层级高于首屏，遮挡黄底 */
+    /* 4. 下方主体内容用白底包裹，层级高于首屏（盖住向下延伸的部分） */
     .page-content {
       background-color: var(--paper);
       position: relative;
