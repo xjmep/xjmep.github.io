@@ -105,8 +105,8 @@
   .brand{display:flex;align-items:center;gap:12px;font-family:var(--font-sans);}
 
   .brand-mark{
-    width:40px;
-    height:40px;
+    width:42px;
+    height:42px;
     border-radius:11px;
     display:grid;
     place-items:center;
@@ -116,7 +116,7 @@
     font-family:var(--font-mark);
     font-style:italic;
     font-weight:500;
-    font-size:.62rem;          /* 原 .55rem，加大一号 */
+    font-size:.64rem;          /* 原 .70rem，小一号 */
     letter-spacing:0;
     line-height:1;
     white-space:nowrap;
@@ -315,7 +315,7 @@
     font-style:italic;
     font-weight:500;
     letter-spacing:.01em;
-    font-size:1.1em;           /* 加大一号（相对 h1 字号） */
+    font-size:1.2em;
   }
   .hero h1 .hero-en .reg-mark{
     font-family:var(--font-sans);
@@ -358,16 +358,16 @@
     font-weight:500;
     letter-spacing:.01em;
     white-space:nowrap;
-    font-size:1.1em;           /* 加大一号（相对 h2 字号） */
+    font-size:1.2em;
   }
 
   .about-text h2 .reg-mark{
     font-family:var(--font-sans);
     font-style:normal;
     font-weight:600;
-    font-size:.75em;
+    font-size:.68em;           /* 与首屏 R 标比例一致 */
     line-height:1;
-    vertical-align:super;
+    vertical-align:super;     /* 与首屏一致，回到右上角 */
     margin-left:.08em;
     letter-spacing:0;
     color:inherit;
@@ -829,7 +829,7 @@
   @media (max-width:560px){
     .wrap{width:calc(100% - 32px);}
 
-    .brand-mark{font-size:.58rem;}   /* 原 .52rem，同步加大一号 */
+    .brand-mark{font-size:.60rem;}   /* 原 .66rem，小一号 */
     .brand-text strong{font-size:.98rem;}
     .brand-text small{font-size:.78rem;}
 
