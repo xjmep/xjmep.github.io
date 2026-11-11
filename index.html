@@ -308,6 +308,29 @@
     }
   }
 
+  /* ===== 手机 / 微信内置浏览器：首屏内容在整屏内均匀分布，避免上下大片留白 ===== */
+  @media (max-width:640px), (hover:none) and (pointer:coarse){
+    .hero{
+      min-height:100vh;
+      min-height:100svh;               /* 现代移动浏览器：跟随可视区高度，避免地址栏导致的抖动 */
+      justify-content:center;
+      align-items:center;
+      padding:clamp(14px,3.2vh,30px) 20px;
+    }
+    .hero-inner{
+      flex:1 1 auto;                    /* 撑满首屏可用高度 */
+      justify-content:space-evenly;     /* 各元素之间、元素与上下边距之间等距分布 */
+      gap:clamp(4px,1vh,10px);          /* 保证元素之间最小间距，避免拥挤 */
+      padding:clamp(8px,2.2vh,22px) 0;
+      line-height:1.8;
+    }
+    .hero-inner > *{flex:0 0 auto;}     /* 内容过多时不被压扁，改为自然撑高 */
+    .hero-topline{line-height:1.5;}
+    .hero h1{line-height:1.5;}
+    .hero .sub{line-height:1.5;}
+    .sub-line{line-height:1.6;}
+  }
+
   /* 极窄屏回退，避免间距过大导致横向溢出 */
   @media (max-width:350px){
     .hero-topline{
