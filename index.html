@@ -34,7 +34,12 @@
     overflow-x:hidden;
   }
 
-  /* ===== Hero 首屏（电脑端默认样式） ===== */
+  /* ===== 移动端固定背景层（电脑端隐藏） ===== */
+  .mobile-bg {
+    display: none;
+  }
+
+  /* ===== Hero 首屏 ===== */
   .hero{
     background:linear-gradient(160deg,var(--bg) 0%,var(--bg-dark) 100%);
     min-height:100vh;
@@ -301,53 +306,52 @@
     .cta{padding:8px 12px;letter-spacing:.1em;text-indent:.1em;}
   }
 
-  /* ===== 手机 / 微信内置浏览器：彻底铺满全屏（包括底部安全区） ===== */
+  /* ===== 手机 / 微信内置浏览器：全屏铺满终极方案 ===== */
   @media (max-width:640px), (hover:none) and (pointer:coarse){
-    /* 底层强制为橙色，防回弹露白 */
+    
+    /* 1. 底色兜底 */
     html, body {
       background-color: var(--bg) !important; 
     }
     
-    /* 首屏背景采用底层固定定位（fixed），无论 Safari 工具栏怎么缩放，都能铺满到物理屏幕最底端 */
-    .hero {
-      background: transparent; 
-      min-height: 100vh;
-      min-height: 100dvh;
-      padding: 0;
-      position: relative;
-    }
-    
-    .hero::before {
-      content: "";
+    /* 2. 独立的底层固定视口背景，无视浏览器工具栏如何缩放 */
+    .mobile-bg {
+      display: block;
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+      top: 0; left: 0; right: 0; bottom: 0;
       background: linear-gradient(160deg,var(--bg) 0%,var(--bg-dark) 100%);
-      z-index: -1;
+      z-index: 0;
     }
 
-    /* 内容容器避让顶部/底部安全区，完美居中 */
+    /* 3. 首屏透明化，使用底层 fixed 背景 */
+    .hero {
+      background: transparent !important; 
+      min-height: 100vh;
+      min-height: 100dvh; /* 撑满动态视口 */
+      padding: 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* 4. 内容容器接管安全区避让与排版 */
     .hero-inner {
       min-height: 100vh;
       min-height: 100dvh;
       box-sizing: border-box;
-      padding-top: calc(env(safe-area-inset-top) + 16px); 
-      padding-bottom: calc(env(safe-area-inset-bottom) + 20px);
+      padding: calc(env(safe-area-inset-top) + 16px) 20px calc(env(safe-area-inset-bottom) + 16px); 
       justify-content: space-evenly;
       gap: clamp(4px,1vh,10px);
       flex: none;
     }
 
-    /* 下方的主体内容区域用白底包裹并提高层级，保证滚动时正常覆盖黄色背景 */
+    /* 5. 下方主体内容用白底包裹并提升层级，盖住底层渐变 */
     .page-content {
       background-color: var(--paper);
       position: relative;
-      z-index: 10;
+      z-index: 2;
     }
 
-    /* 手机端字号放大 */
+    /* 6. 手机端字号放大 */
     .hero-topline{
       font-size:clamp(1.6rem,6vw,3.4rem);
       letter-spacing:0;
@@ -357,11 +361,11 @@
     .hero h1{line-height:1.5;}
     .hero .sub{
       line-height:1.5;
-      font-size:clamp(1.3rem,4.8vw,2.0rem); 
+      font-size:clamp(1.3rem,4.8vw,2.0rem); /* 增大两号 */
     }
     .sub-line{
       line-height:1.6;
-      font-size:clamp(1.15rem,4.2vw,1.55rem); 
+      font-size:clamp(1.15rem,4.2vw,1.55rem); /* 增大两号 */
     }
   }
 
@@ -375,6 +379,9 @@
 </style>
 </head>
 <body>
+
+<!-- 手机端专属底层固定背景（电脑端隐藏） -->
+<div class="mobile-bg"></div>
 
 <!-- 首屏 -->
 <header class="hero">
@@ -394,7 +401,7 @@
   </div>
 </header>
 
-<!-- 页面主体内容：增加 page-content 包裹层，使下方内容保持白色背景 -->
+<!-- 页面主体内容：包裹在 page-content 中，使下方内容保持白色背景 -->
 <div class="page-content">
 
   <!-- 服务项目 -->
