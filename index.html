@@ -79,10 +79,22 @@
   }
 
   .sub-line{
-    font-size:clamp(.95rem,3.4vw,1.3rem);font-weight:var(--fw-title);color:#000000;
-    text-align:center;letter-spacing:.04em;
+    font-size:clamp(.95rem,3.4vw,1.3rem);
+    font-weight:var(--fw-title);
+    color:#000000;
+    text-align:center;
+    /* 字距由 JS 按需收紧（只动字距，不动字号） */
+    letter-spacing:var(--sl-ls,.04em);
   }
-  .sub-line .nw{display:inline-block;white-space:nowrap;margin:0 .12em;}
+  .sub-line-inner{
+    display:inline-block;
+    white-space:nowrap;
+  }
+  .sub-line .nw{
+    display:inline-block;
+    white-space:nowrap;
+    margin:0 var(--nw-margin,.12em);
+  }
 
   .cta-group{
     display:flex;
@@ -299,48 +311,42 @@
     .cta{padding:8px 12px;letter-spacing:.1em;text-indent:.1em;}
   }
 
-  /* ===== 手机浏览器 / 微信内置浏览器：首屏小标语字号与 h1 一致，并增大中间间距 ===== */
+  /* ==========================================================================
+     手机浏览器 / 微信内置浏览器 专项适配
+     1) 首屏改用动态视口高度，收紧行距与内边距，让内容与上下页边距协调
+     2) “承接机电全专业 CAD 图纸”“一对一服务｜非中介·不分包·不转包”字号加大两号
+     3) 小标语一行显示：放不下时由 JS 自动收紧字距（不改字号）
+     ========================================================================== */
   @media (max-width:640px), (hover:none) and (pointer:coarse){
+
+    /* ---- 1. 首屏垂直节奏 ---- */
+    .hero{
+      min-height:100vh;
+      min-height:100dvh;          /* 跟随可视区域，避免上下出现大片空白 */
+      justify-content:center;
+      padding:clamp(18px,3.6vh,42px) 16px;
+    }
+    .hero-inner{
+      gap:clamp(14px,2.8vh,26px);
+    }
     .hero-topline{
       font-size:clamp(1.6rem,6vw,3.4rem);
       letter-spacing:0;
       gap:clamp(12px,4.5vw,22px);
+      line-height:1.35;
     }
-  }
+    .hero h1{
+      line-height:1.32;
+    }
 
-  /* ===== 手机 / 微信内置浏览器：首屏内容在整屏内均匀分布，避免上下大片留白 ===== */
-  @media (max-width:640px), (hover:none) and (pointer:coarse){
-    .hero{
-      min-height:100vh;
-      min-height:100svh;               /* 现代移动浏览器：跟随可视区高度，避免地址栏导致的抖动 */
-      justify-content:center;
-      align-items:center;
-      padding:clamp(14px,3.2vh,30px) 20px;
-      /* Safari 顶部背景延伸：用向上的投影填满地址栏区域，颜色与首屏背景一致 */
-      box-shadow: 0 -100vh 0 0 var(--bg);
-      background-color: var(--bg);      /* 兜底，防止渐变加载时白底 */
-    }
-    .hero-inner{
-      flex:1 1 auto;                    /* 撑满首屏可用高度 */
-      justify-content:space-evenly;     /* 各元素之间、元素与上下边距之间等距分布 */
-      gap:clamp(4px,1vh,10px);          /* 保证元素之间最小间距，避免拥挤 */
-      padding:clamp(8px,2.2vh,22px) 0;
-      line-height:1.8;
-    }
-    .hero-inner > *{flex:0 0 auto;}     /* 内容过多时不被压扁，改为自然撑高 */
-    .hero-topline{line-height:1.5;}
-    .hero h1{line-height:1.5;}
-
-    /* ★ 手机端字号增大两号（相对于电脑端） */
+    /* ---- 2. 两行正文字号加大两号 ---- */
     .hero .sub{
-      line-height:1.5;
-      font-size:clamp(1.5rem,5.5vw,2.4rem);
+      font-size:clamp(1.28rem,5.2vw,2.1rem);
+      line-height:1.45;
     }
-    .sub-line{
-      line-height:1.6;
-      font-size:clamp(1.35rem,5vw,1.9rem);
-      /* 行内文字整体不换行，放不下时由脚本自动收紧 letter-spacing */
-      white-space:nowrap;
+    .hero .sub-line{
+      font-size:clamp(1.18rem,4.8vw,1.7rem);
+      line-height:1.5;
     }
   }
 
@@ -364,7 +370,7 @@
     <img class="hero-logo" src="logo.png" alt="XJ MEP">
     <h1>因为专注&nbsp;&nbsp;&nbsp;&nbsp;所以专业</h1>
     <div class="sub">承接机电全专业&nbsp;CAD 图纸</div>
-    <div class="sub-line"><span class="nw">一对一服务&nbsp;｜</span><span class="nw">非中介&nbsp;·</span><span class="nw">不分包&nbsp;·</span><span class="nw">不转包</span></div>
+    <div class="sub-line" id="subLine"><span class="sub-line-inner"><span class="nw">一对一服务&nbsp;｜</span><span class="nw">非中介&nbsp;·</span><span class="nw">不分包&nbsp;·</span><span class="nw">不转包</span></span></div>
 
     <div class="cta-group">
       <button class="cta" type="button" onclick="document.getElementById('qr-modal').style.display='flex'">微信咨询</button>
@@ -596,71 +602,86 @@ document.querySelectorAll('.icon-strip .ib').forEach(function(btn){
   });
 });
 
-/* ============ 首屏标语：手机端一行放不下时自动收紧字间距 ============ */
+/* ==========================================================================
+   首屏小标语：一行显示自适应
+   —— 仅在“一行放不下”时，自动逐级收紧字距（letter-spacing）与词间距，
+      绝不改变文字大小；能一行放下时不做任何调整。
+   ========================================================================== */
 (function(){
-  var el = document.querySelector('.sub-line');
-  if (!el) return;
 
-  var MQ = '(max-width:640px), (hover:none) and (pointer:coarse)';
-  var mq = window.matchMedia ? window.matchMedia(MQ) : null;
+  var line = null, inner = null;
 
-  function isMobile(){
-    var ua = navigator.userAgent;
-    if (/MicroMessenger/i.test(ua)) return true;  // 微信内置浏览器直接视为手机端
-    return mq ? mq.matches : window.innerWidth <= 640;
+  /* 测量“当前字距下”这句话的真实宽度（不影响页面布局） */
+  function measureWidth(){
+    if (!line || !inner) return 0;
+    var probe = inner.cloneNode(true);
+    probe.style.position = 'absolute';
+    probe.style.left = '0';
+    probe.style.top = '0';
+    probe.style.display = 'block';
+    probe.style.width = 'max-content';
+    probe.style.whiteSpace = 'nowrap';
+    probe.style.visibility = 'hidden';
+    probe.style.pointerEvents = 'none';
+    line.appendChild(probe);
+    var w = probe.getBoundingClientRect().width;
+    line.removeChild(probe);
+    return w;
   }
 
-  function fit(){
-    /* 每次先还原为 CSS 设定的原始字间距，避免叠加 */
-    el.style.letterSpacing = '';
+  function fitSubLine(){
+    line  = document.getElementById('subLine');
+    if (!line) return;
+    inner = line.querySelector('.sub-line-inner');
+    if (!inner) return;
 
-    if (!isMobile()) return;              // 电脑端不处理
+    /* 先恢复默认字距 / 词间距 */
+    line.style.removeProperty('--sl-ls');
+    line.style.removeProperty('--nw-margin');
+    void line.offsetWidth; /* 强制重排 */
 
-    var avail = el.clientWidth;           // 可用内容宽度
-    var need  = el.scrollWidth;           // 不换行时的实际内容宽度
+    var avail = line.clientWidth;      /* 可用宽度 */
     if (!avail) return;
-    if (need <= avail + 0.5) return;      // 一行能放下，保持原样
 
-    var cs     = window.getComputedStyle(el);
-    var baseLS = parseFloat(cs.letterSpacing);
-    if (isNaN(baseLS)) baseLS = 0;
+    if (measureWidth() <= avail + 0.5) return;   /* 一行放得下 → 不调整 */
 
-    var fs    = parseFloat(cs.fontSize) || 16;
-    var count = el.textContent.length;
-    if (count < 2) return;
+    /* 一行放不下 → 逐级收紧字距，再收紧词间距 */
+    var ls = 0.04;      /* 默认字距 0.04em */
+    var nm = 0.12;      /* 默认词间距 0.12em */
+    var guard = 0;
 
-    /* 每个字符需要收紧的间距（+0.5px 余量，防止像素舍入后仍换行） */
-    var shrink = (need - avail + 0.5) / count;
-    var newLS  = baseLS - shrink;
+    while (guard++ < 40){
+      if (measureWidth() <= avail + 0.5) break;
 
-    /* 下限：避免文字挤成一团（可根据需要微调 -0.08 ~ -0.12） */
-    var minLS = -0.08 * fs;
-    if (newLS < minLS) newLS = minLS;
-
-    el.style.letterSpacing = newLS.toFixed(3) + 'px';
+      if (ls > -0.08){
+        ls = Math.round((ls - 0.01) * 100) / 100;
+        line.style.setProperty('--sl-ls', ls + 'em');
+      } else if (nm > 0){
+        nm = Math.round((nm - 0.02) * 100) / 100;
+        if (nm < 0) nm = 0;
+        line.style.setProperty('--nw-margin', nm + 'em');
+      } else {
+        break;
+      }
+    }
   }
 
-  /* 立即执行一次，减少闪动；字体加载完成后再校正一次 */
-  fit();
-  if (document.fonts && document.fonts.ready){
-    document.fonts.ready.then(fit).catch(function(){});
-  }
-  window.addEventListener('load', fit);
-  window.addEventListener('orientationchange', function(){ setTimeout(fit, 250); });
+  window.addEventListener('load', fitSubLine);
 
-  var timer;
+  var rt;
   window.addEventListener('resize', function(){
-    clearTimeout(timer);
-    timer = setTimeout(fit, 120);
+    clearTimeout(rt);
+    rt = setTimeout(fitSubLine, 120);
   });
-
-  /* 屏幕旋转 / 微信内置浏览器尺寸变化 */
-  if (window.visualViewport){
-    window.visualViewport.addEventListener('resize', function(){
-      clearTimeout(timer);
-      timer = setTimeout(fit, 120);
-    });
+  window.addEventListener('orientationchange', function(){
+    setTimeout(fitSubLine, 260);
+  });
+  if (document.fonts && document.fonts.ready){
+    document.fonts.ready.then(fitSubLine).catch(function(){});
   }
+  setTimeout(fitSubLine, 400);
+  setTimeout(fitSubLine, 1200);
+
 })();
 </script>
 
