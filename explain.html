@@ -12,14 +12,69 @@
       条件：不得单独售卖字体文件；修改后不得使用 “Source” 等保留字体名称；
       再分发时需保留版权声明与 OFL 许可证文本。
       许可证全文：https://scripts.sil.org/OFL
+
+      字体文件放置说明（与本 HTML 文件同级目录）：
+        fonts/SourceHanSansCN-Bold.woff2
+        fonts/SourceHanSansCN-Regular.woff2
     -->
     <style>
-        /* 基本重置与全局样式，优先适配移动端和微信浏览器 */
+        /* =========================================================
+           一、字体声明（自托管，默认首选）
+           标题：SourceHanSansCN-Bold   字重 700
+           正文：SourceHanSansCN-Regular 字重 400
+           文件均为 woff2 格式，位于同级 fonts 文件夹内
+           ========================================================= */
+        @font-face {
+            font-family: "SourceHanSansCN-Bold";
+            src: url("fonts/SourceHanSansCN-Bold.woff2") format("woff2");
+            font-weight: 700;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: "SourceHanSansCN-Regular";
+            src: url("fonts/SourceHanSansCN-Regular.woff2") format("woff2");
+            font-weight: 400;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        /* =========================================================
+           二、在线兜底字体（同名字体，仅用于本地子集中缺失的文字）
+           说明：只有在本地字体缺少某字形的字符时，浏览器才会去下载
+           对应在线字体；命中本地子集的文字不会触发网络请求。
+           若本地字体文件整体缺失，也会自动回退到这两个在线字体。
+           ========================================================= */
+        @font-face {
+            font-family: "SourceHanSansCN-Bold-Online";
+            src: url("https://cdn.jsdelivr.net/gh/adobe-fonts/source-han-sans@release/SubsetOTF/CN/SourceHanSansCN-Bold.otf") format("opentype");
+            font-weight: 700;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: "SourceHanSansCN-Regular-Online";
+            src: url("https://cdn.jsdelivr.net/gh/adobe-fonts/source-han-sans@release/SubsetOTF/CN/SourceHanSansCN-Regular.otf") format("opentype");
+            font-weight: 400;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        /* 字体族变量：本地自托管字体为首选 → 在线同名兜底 → 系统无衬线 */
+        :root {
+            --font-regular: "SourceHanSansCN-Regular", "SourceHanSansCN-Regular-Online", sans-serif;
+            --font-bold: "SourceHanSansCN-Bold", "SourceHanSansCN-Bold-Online", sans-serif;
+        }
+
+        /* =========================================================
+           三、基本重置与全局样式，优先适配移动端和微信浏览器
+           ========================================================= */
         html, body {
             background-color: #ffffff;
-            /* 全文统一使用思源黑体（仅保留思源黑体名称，不混入 Noto 等别名） */
-            font-family: "Source Han Sans SC", "Source Han Sans", "思源黑体", sans-serif;
-            /* 正文 Regular(400)，比标题 Bold(700) 小两个字重档位 */
+            /* 正文统一使用自托管的思源黑体 Regular */
+            font-family: var(--font-regular);
             font-weight: 400;
             color: #000000;
             line-height: 1.8;
@@ -29,13 +84,15 @@
             word-wrap: break-word;
             overflow-wrap: break-word;
             -webkit-text-size-adjust: 100%; /* 防止微信字体缩放 */
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
-        /* 标题类统一使用思源黑体，字重 Bold(700) */
+        /* 标题类统一使用自托管的思源黑体 Bold */
         h1,
         .slogan,
         .section-title {
-            font-family: "Source Han Sans SC", "Source Han Sans", "思源黑体", sans-serif;
+            font-family: var(--font-bold);
             font-weight: 700;
             color: #000000;
         }
@@ -73,7 +130,7 @@
             line-height: 1.6;
         }
 
-        /* 通用段落：正文 Regular(400) */
+        /* 通用段落：正文 Regular */
         p {
             margin-top: 0;
             margin-bottom: 20px;
@@ -115,9 +172,11 @@
             margin-right: 10px;
             box-shadow: 0 1px 3px rgba(0,0,0,0.1);
             flex-shrink: 0;
+            /* 符号“!”沿用标题字体族 */
+            font-family: var(--font-bold);
         }
 
-        /* 列表样式：正文 Regular(400) */
+        /* 列表样式：正文 Regular */
         ol {
             padding-left: 20px;
             margin-top: 0;
@@ -162,6 +221,7 @@
             text-decoration: none;
             font-size: 14px;
             font-weight: 400;
+            font-family: var(--font-regular);
         }
 
         /* 适配极小屏幕的手机 */

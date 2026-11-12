@@ -5,11 +5,42 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <title>ESG</title>
 
+<!--
+  网络补字（兜底）：
+  自托管思源黑体子集中缺少某个字形时，浏览器会按字体栈顺序
+  自动回退到下面的 Noto Sans SC（思源黑体 Google 版），
+  并且只请求缺失字符对应的 unicode-range 分片。
+-->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700&amp;display=swap" rel="stylesheet">
 
 <style>
+  /* ============================================================
+     字体：思源黑体（Source Han Sans CN）自托管 —— 默认首选字体
+     - 正文 / 页脚：SourceHanSansCN-Regular.woff2
+     - 标题 / 加粗：SourceHanSansCN-Bold.woff2
+     - 字体文件位于当前 html 同目录下的 fonts/ 文件夹
+     - 字体栈顺序：自托管字体 → 网络同名字体(Noto Sans SC) → sans-serif
+       页面新增文字不在子集中时，仅缺失字符会向网络回退
+     ============================================================ */
+
+  @font-face {
+    font-family: "SourceHanSansCN-Regular";
+    src: url("fonts/SourceHanSansCN-Regular.woff2") format("woff2");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: "SourceHanSansCN-Bold";
+    src: url("fonts/SourceHanSansCN-Bold.woff2") format("woff2");
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+  }
+
   :root {
     --ink: #1a2a33;
     --ink-soft: #3f5560;
@@ -23,8 +54,9 @@
     --radius: 10px;
     --max: 1040px;
 
-    /* 统一使用思源黑体 */
-    --font-sans: "Noto Sans SC", "Source Han Sans SC", "Source Han Sans CN", sans-serif;
+    /* 默认首选字体：自托管思源黑体；网络同名字体仅作缺字兜底 */
+    --font-regular: "SourceHanSansCN-Regular", "Noto Sans SC", sans-serif;
+    --font-bold: "SourceHanSansCN-Bold", "Noto Sans SC", sans-serif;
   }
   
   * { 
@@ -40,7 +72,7 @@
   }
   
   body {
-    font-family: var(--font-sans);
+    font-family: var(--font-regular);
     background: var(--paper);
     color: var(--ink);
     line-height: 1.75;
@@ -50,6 +82,11 @@
     flex-direction: column;
     min-height: 100vh;
     overflow-x: hidden;
+  }
+
+  /* 所有语义加粗统一使用 Bold 字重文件，避免浏览器合成加粗 */
+  strong, b {
+    font-family: var(--font-bold);
   }
   
   .wrap { max-width: var(--max); margin:0 auto; padding:0 24px; width: 100%; }
@@ -78,7 +115,7 @@
   .header-left { max-width: 620px; }
   
   .eyebrow {
-    display: inline-block; font-family: var(--font-sans);
+    display: inline-block; font-family: var(--font-regular);
     font-size: 14px; 
     letter-spacing: 0.16em; text-transform: uppercase;
     color: #ffffff; 
@@ -90,7 +127,7 @@
   .eyebrow .sep { display: inline; }
 
   .hero-title {
-    font-family: var(--font-sans);
+    font-family: var(--font-bold);
     font-size: clamp(24px, 3.6vw, 36px);
     line-height: 1.28; font-weight: 600;
     letter-spacing: -0.01em; margin-bottom: 14px;
@@ -100,6 +137,7 @@
     text-shadow: 0 2px 4px rgba(0,0,0,0.15);
   }
   .hero-sub {
+    font-family: var(--font-regular);
     font-size: clamp(14px, 1.5vw, 16px);
     color: rgba(255,255,255,0.95);
     font-weight: 400;
@@ -129,7 +167,7 @@
     background: rgba(255, 255, 255, 0.08);
     border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 100px;
-    font-family: var(--font-sans);
+    font-family: var(--font-regular);
     font-size: 13.5px;
     color: rgba(255, 255, 255, 0.90);
     padding: 9px 2px;
@@ -150,6 +188,7 @@
     outline: 2px solid #b9dcc9; outline-offset: 2px;
   }
   .tab.active {
+    font-family: var(--font-bold);
     background: #ffffff;
     color: var(--green);
     font-weight: 600;
@@ -169,7 +208,7 @@
 
   .sec-head { margin-bottom: 24px; }
   .sec-head h2 {
-    font-family: var(--font-sans);
+    font-family: var(--font-bold);
     font-size: clamp(21px, 2.6vw, 28px); font-weight: 600; line-height: 1.38;
     letter-spacing: -0.01em;
   }
@@ -190,7 +229,7 @@
   .esg-card.g::before { background: #1f4e6b; }
   
   .esg-label {
-    font-family: var(--font-sans);
+    font-family: var(--font-bold);
     font-size: 16.5px; 
     letter-spacing: 0.08em; 
     font-weight: 600; 
@@ -199,7 +238,7 @@
   }
   
   .esg-card h3 {
-    font-family: var(--font-sans);
+    font-family: var(--font-bold);
     font-size: 20px; font-weight: 600; margin-bottom: 16px; line-height: 1.45;
   }
   .esg-card p { font-size: 14.5px; color: var(--ink-soft); line-height: 1.85; margin-bottom: 12px; font-weight: 400; }
@@ -211,12 +250,12 @@
     background: #f9fbfa; border: 1px solid var(--line); border-radius: 8px; padding: 18px;
   }
   .sub-item h4 {
-    font-family: var(--font-sans);
+    font-family: var(--font-bold);
     font-size: 14px; font-weight: 600; margin-bottom: 8px; line-height: 1.5;
   }
   .sub-item p { font-size: 13px; color: var(--ink-soft); line-height: 1.75; margin-bottom: 0; font-weight: 400; }
   .sub-item .num {
-    font-family: var(--font-sans);
+    font-family: var(--font-bold);
     display: inline-block; font-size: 20px; font-weight: 700; color: var(--green);
     line-height: 1.2; margin-bottom: 4px;
   }
@@ -237,7 +276,7 @@
   }
   .data-item { background: #fff; padding: 24px 20px; }
   .data-item .big {
-    font-family: var(--font-sans);
+    font-family: var(--font-bold);
     font-size: 26px; font-weight: 700; color: var(--green);
     line-height: 1.15; letter-spacing: -0.02em;
   }
@@ -249,7 +288,7 @@
     padding: 30px 28px;
   }
   .policy-box h4 {
-    font-family: var(--font-sans);
+    font-family: var(--font-bold);
     font-size: 16px; font-weight: 600; margin-bottom: 12px;
   }
   .policy-box p { font-size: 14.5px; color: var(--ink-soft); line-height: 1.85; margin-bottom: 12px; font-weight: 400; }
@@ -277,7 +316,7 @@
     box-shadow: 0 4px 16px rgba(23, 51, 63, 0.06);
   }
   .action-index {
-    font-family: var(--font-sans);
+    font-family: var(--font-bold);
     font-size: 28px;
     font-weight: 700;
     color: var(--green);
@@ -289,7 +328,7 @@
   }
   .action-body { flex: 1; min-width: 0; }
   .action-body h3 {
-    font-family: var(--font-sans);
+    font-family: var(--font-bold);
     font-size: 16px;
     font-weight: 600;
     line-height: 1.5;
@@ -356,12 +395,12 @@
     margin-bottom: 6px;
   }
   .flow-num {
-    font-family: var(--font-sans);
+    font-family: var(--font-bold);
     font-size: 26px; font-weight: 700; color: var(--green);
     line-height: 1; letter-spacing: -0.02em;
   }
   .flow-head h3 {
-    font-family: var(--font-sans);
+    font-family: var(--font-bold);
     font-size: 19px; font-weight: 600; line-height: 1.4;
   }
   .flow-step > p {
@@ -373,7 +412,7 @@
 
   .flow-cols { display: grid; grid-template-columns: 1.15fr 1fr; gap: 18px; }
   .flow-col h4 {
-    font-family: var(--font-sans);
+    font-family: var(--font-bold);
     font-size: 12px; letter-spacing: 0.1em; font-weight: 600;
     color: #7a8e87; margin-bottom: 8px;
   }
@@ -395,7 +434,7 @@
     font-weight: 400;
   }
   .flow-deliver strong {
-    font-family: var(--font-sans);
+    font-family: var(--font-bold);
     color: var(--ink); font-weight: 600; display: block;
     margin-bottom: 4px; font-size: 12px; letter-spacing: 0.08em;
   }
@@ -416,7 +455,7 @@
     padding: 28px; position: relative;
   }
   .case-card h4 {
-    font-family: var(--font-sans); font-size: 18px; font-weight: 600;
+    font-family: var(--font-bold); font-size: 18px; font-weight: 600;
     margin-bottom: 12px; color: var(--ink);
   }
   .case-card .case-meta {
@@ -432,11 +471,12 @@
     padding: 22px 24px; margin-bottom: 12px;
   }
   .faq-item h4 {
-    font-family: var(--font-sans); font-size: 15.5px; font-weight: 600;
+    font-family: var(--font-bold); font-size: 15.5px; font-weight: 600;
     margin-bottom: 10px; color: var(--ink);
   }
   .faq-item h4::before {
     content: "Q "; color: var(--green); font-weight: 700;
+    font-family: var(--font-bold);
   }
   .faq-item p {
     font-size: 14px; color: var(--ink-soft); line-height: 1.8;
@@ -444,6 +484,7 @@
   }
   .faq-item p::before {
     content: "A "; color: var(--accent); font-weight: 700;
+    font-family: var(--font-bold);
   }
 
   .table-responsive {
@@ -465,7 +506,7 @@
     border-bottom: 1px solid var(--line); vertical-align: top;
   }
   .map-table th {
-    font-family: var(--font-sans);
+    font-family: var(--font-bold);
     background: #f0f5f2; font-weight: 600; color: var(--ink);
     font-size: 13px; letter-spacing: 0.04em;
   }
@@ -473,7 +514,7 @@
   .map-table tr:last-child td { border-bottom: none; }
   .map-table td strong { color: var(--ink); font-weight: 600; }
   .map-table .mod {
-    font-family: var(--font-sans);
+    font-family: var(--font-regular);
     display: inline-block; font-size: 11px; color: var(--green);
     background: var(--green-light); border-radius: 4px;
     padding: 2px 7px; margin: 2px 4px 2px 0; white-space: nowrap;
@@ -485,7 +526,7 @@
     color: #ffffff;
     padding: 24px 0;
     padding-bottom: calc(24px + env(safe-area-inset-bottom));
-    font-family: var(--font-sans);
+    font-family: var(--font-regular);
     font-size: 13.5px;
     border-top: 1px solid rgba(255,255,255,0.1);
     margin-top: auto;

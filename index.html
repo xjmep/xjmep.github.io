@@ -5,7 +5,57 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="机电设计 · 专业设计 · 机电 CAD 图纸设计 · 水电 CAD 图纸设计 · 施工图设计">
 <title>小匠机电图纸设计</title>
+
+<!-- ==========================================================================
+     网络兜底字体（仅用于本地字体子集中缺失的文字）
+     1) Noto Sans SC 与思源黑体 Source Han Sans 为同源同名字体（Source Han Sans = Noto Sans CJK），
+        Google Fonts 提供按 unicode-range 切分的分片，浏览器只会按需下载“本地子集里没有的
+        那一小部分文字”所在的分片，不会整包下载，也不会影响已收录文字的本地加载。
+     2) Rubik 为 logo 所用拉丁字体的同名字体网络版，同样只补齐本地 Rubik-MediumItalic
+        子集中缺失的字符（含斜体 500 字重）。
+     这里用 media="print" + onload 的方式异步加载，避免外部字体不可达时阻塞首屏渲染。
+     ========================================================================== -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700&family=Rubik:ital,wght@1,500&display=swap"
+      media="print" onload="this.media='all'">
+<noscript>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700&family=Rubik:ital,wght@1,500&display=swap">
+</noscript>
+
 <style>
+
+  /* ==========================================================================
+     一、自托管字体（字体文件位于本 HTML 同目录下的 fonts 文件夹）
+     - 标题：SourceHanSansCN-Bold.woff2
+     - 正文 / 页脚：SourceHanSansCN-Regular.woff2
+     - 首屏 logo 文字：Rubik-MediumItalic.woff2
+     说明：这里只声明实际存在的 .woff2 文件，避免浏览器对不存在的 .woff/.ttf/.otf
+           发起无效请求；woff2 体积最小、压缩率最高，且现代浏览器全面支持。
+     ========================================================================== */
+  @font-face{
+    font-family:"SourceHanSansCN-Bold";
+    src:url("fonts/SourceHanSansCN-Bold.woff2") format("woff2");
+    font-weight:700;
+    font-style:normal;
+    font-display:swap;
+  }
+  @font-face{
+    font-family:"SourceHanSansCN-Regular";
+    src:url("fonts/SourceHanSansCN-Regular.woff2") format("woff2");
+    font-weight:400;
+    font-style:normal;
+    font-display:swap;
+  }
+  /* logo 文字字体：Rubik Medium Italic（字体文件本身即为斜体字形） */
+  @font-face{
+    font-family:"Rubik-MediumItalic";
+    src:url("fonts/Rubik-MediumItalic.woff2") format("woff2");
+    font-weight:500;
+    font-style:italic;
+    font-display:swap;
+  }
 
   :root{
     --bg:#F79F19;
@@ -15,8 +65,12 @@
     --ink-soft:#9A5B00;
     --btn:#3A3A3A;
 
-    /* ===== 全站统一使用思源黑体 ===== */
-    --font-sans:"Source Han Sans SC","思源黑体","Source Han Sans CN","Noto Sans SC",sans-serif;
+    /* ===== 全站默认首选字体：自托管 woff2 =====
+       本地字体族排在第一位，其后紧跟同名字体 Noto Sans SC / Rubik（网络版），
+       仅在“本地字体子集中找不到该文字”时自动联网补齐，其他字体一律不用。 */
+    --font-title:"SourceHanSansCN-Bold","Noto Sans SC",sans-serif;   /* 标题 */
+    --font-sans:"SourceHanSansCN-Regular","Noto Sans SC",sans-serif;  /* 正文 / 页脚 */
+    --font-logo:"Rubik-MediumItalic","Rubik",sans-serif;              /* 首屏 logo 文字 */
 
     /* ===== 字重规范：标题 700，正文比标题小两号（400） ===== */
     --fw-title:700;
@@ -24,6 +78,8 @@
   }
   *{margin:0;padding:0;box-sizing:border-box;}
   html{-webkit-text-size-adjust:100%;}
+
+  /* body 默认使用自托管 Regular，即全站默认首选字体 */
   body{
     font-family:var(--font-sans);
     font-weight:var(--fw-body);
@@ -53,7 +109,26 @@
     flex:1 1 auto;
     gap:clamp(12px,1.8vh,26px);
   }
-  .hero-logo{width:min(320px,70vw);margin:0;}
+
+  /* 首屏 logo：文字“XJ MEP”
+     —— 宽度内容自适应（fit-content），由 .hero-inner 的 align-items:center
+        保证与其他行文字同一垂直中轴线对齐；
+        字号仍与原 logo 占位 min(320px,70vw) 按比例联动，视觉大小基本不变。 */
+  .hero-logo{
+    width:fit-content;
+    max-width:100%;
+    margin:0 auto;
+    display:block;
+    text-align:center;
+    font-family:var(--font-logo);
+    font-style:italic;
+    font-weight:500;
+    font-size:calc(min(320px,70vw) * 0.3);
+    line-height:1;
+    letter-spacing:.01em;
+    color:#000000;
+    white-space:nowrap;
+  }
 
   /* 顶部小标语：电脑端字号与“承接机电全专业 CAD 图纸”一致 */
   .hero-topline{
@@ -211,7 +286,7 @@
 
   #phone-modal .tel{
     display:block;
-    font-family:var(--font-sans);
+    font-family:var(--font-title);
     font-size:clamp(1.18rem,4.5vw,1.38rem);
     font-weight:var(--fw-title);
     letter-spacing:.04em;color:#000000;margin-top:16px;
@@ -223,7 +298,7 @@
   #phone-modal .tel:hover,
   #phone-modal .tel:active{color:#000000;text-decoration:none;}
   #phone-modal .tel-sub{
-    font-family:var(--font-sans);
+    font-family:var(--font-title);
     font-size:clamp(.98rem,3.9vw,1.12rem);
     font-weight:var(--fw-title);
     letter-spacing:.06em;color:#000000;margin-top:6px;
@@ -317,6 +392,37 @@
   }
 
   /* ==========================================================================
+     字体绑定：全部以自托管 woff2 为首选
+     1) 所有标题类文字（含 b / strong）统一使用 SourceHanSansCN-Bold；
+        若某个字不在 Bold 子集内，则自动落到同名字体 Noto Sans SC 的 700 字重分片。
+     2) 正文、页脚、说明性小字统一使用 SourceHanSansCN-Regular；
+        缺失字符同样自动由同名字体 Noto Sans SC 的 400 字重分片补齐。
+     3) 首屏 logo 文字使用 Rubik-MediumItalic，缺失字符自动落到网络同名
+        Rubik 斜体 500 字重分片。
+     ========================================================================== */
+  .hero-topline,
+  .hero h1,
+  .hero .sub,
+  .sub-line,
+  .sec-title,
+  .card h3,
+  .step .num,
+  th,
+  footer,
+  #qr-modal p,
+  #phone-modal .tel,
+  #phone-modal .tel-sub,
+  b,
+  strong{
+    font-family:var(--font-title);
+  }
+
+  .preview-hint,
+  footer small{
+    font-family:var(--font-sans);
+  }
+
+  /* ==========================================================================
      手机浏览器 / 微信内置浏览器 专项适配
      1) 首屏高度改用真实可视区高度（--vh），并用 space-evenly 让元素行距
         与上下页边距均分，避免内容被压在中间、上下留白过大
@@ -378,7 +484,7 @@
 
     <div class="hero-topline"><span>机电图纸制作</span><span>专业设计服务</span></div>
 
-    <img class="hero-logo" src="logo.png" alt="XJ MEP">
+    <div class="hero-logo" role="img" aria-label="XJ MEP">XJ MEP</div>
     <h1>因为专注&nbsp;&nbsp;&nbsp;&nbsp;所以专业</h1>
     <div class="sub">承接机电全专业&nbsp;CAD 图纸</div>
     <div class="sub-line" id="subLine"><span class="sub-line-inner"><span class="nw">一对一服务·</span><span class="nw">非中介·</span><span class="nw">不分包·</span><span class="nw">不转包</span></span></div>

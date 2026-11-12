@@ -8,16 +8,61 @@
 <meta name="description" content="XJ MEP 小匠机电，提供机电系统咨询、方案策划、图纸设计、设计优化、成本管理、施工配合、调试验收及运维支持等全周期顾问服务。">
 <meta name="color-scheme" content="dark">
 
-<!-- 自托管字体：本地 Rubik Medium Italic -->
-<link rel="preload" href="./fonts/Rubik-MediumItalic.ttf" as="font" type="font/ttf" crossorigin>
+<!-- ===== 字体预加载：Rubik Medium Italic (woff2) ===== -->
+<link rel="preload" href="./fonts/Rubik-MediumItalic.woff2" as="font" type="font/woff2" crossorigin>
+
+<!-- ===== 在线兜底字体（仅用于自托管字体子集外的字符） ===== -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700&display=swap" media="print" onload="this.media='all'">
+<noscript>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700&display=swap">
+</noscript>
 
 <style>
-  /* ===== 自托管 Rubik Medium Italic ===== */
+  /* =========================================================
+     自托管字体（仅以下三种，均为 woff2，作为默认首选）
+     1) SourceHanSansCN-Bold.woff2     —— 标题
+     2) SourceHanSansCN-Regular.woff2  —— 正文 / 页脚
+     3) Rubik-MediumItalic.woff2       —— “XJ MEP”
+     ========================================================= */
+
+  /* ----- 标题：思源黑体 Bold ----- */
   @font-face{
-    font-family:"Rubik";
-    src:url("./fonts/Rubik-MediumItalic.ttf") format("truetype");
+    font-family:"SourceHanSansCN-Bold";
+    src:url("./fonts/SourceHanSansCN-Bold.woff2") format("woff2");
+    font-weight:700;
+    font-style:normal;
+    font-display:swap;
+  }
+
+  /* ----- 正文：思源黑体 Regular ----- */
+  @font-face{
+    font-family:"SourceHanSansCN-Regular";
+    src:url("./fonts/SourceHanSansCN-Regular.woff2") format("woff2");
+    font-weight:400;
+    font-style:normal;
+    font-display:swap;
+  }
+
+  /* ----- 品牌字：Rubik Medium Italic -----
+     文件本身为 Medium Italic 字形。
+     为确保浏览器在 font-style:italic 请求下稳定命中，
+     这里注册 italic 描述符；同时注册 normal 描述符指向同一文件，
+     避免个别浏览器因字体内部元数据不匹配而回退。
+     两处均声明 font-weight:500。 */
+  @font-face{
+    font-family:"Rubik-MediumItalic";
+    src:url("./fonts/Rubik-MediumItalic.woff2") format("woff2");
     font-weight:500;
     font-style:italic;
+    font-display:swap;
+  }
+  @font-face{
+    font-family:"Rubik-MediumItalic";
+    src:url("./fonts/Rubik-MediumItalic.woff2") format("woff2");
+    font-weight:500;
+    font-style:normal;
     font-display:swap;
   }
 
@@ -39,9 +84,10 @@
     --nav-h:68px;
     --footer-h:54px;
 
-    --font-sans:"Noto Sans SC","PingFang SC","Hiragino Sans GB","Microsoft YaHei","Source Han Sans SC",sans-serif;
-    --font-mark:"Rubik","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
-    --font-mono:"Rubik","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+    /* 字体族：三种自托管字体分别作为默认首选，在线 Noto 仅兜底子集外字符 */
+    --font-body:"SourceHanSansCN-Regular","Noto Sans SC",sans-serif;
+    --font-title:"SourceHanSansCN-Bold","Noto Sans SC",sans-serif;
+    --font-mark:"Rubik-MediumItalic","Noto Sans SC",sans-serif;
 
     /* 字重层级：标题 700 / 800，正文 400 */
     --w-title:700;
@@ -60,7 +106,7 @@
 
   body{
     margin:0;
-    font-family:var(--font-sans);
+    font-family:var(--font-body);
     font-weight:var(--w-body);
     color:var(--text);
     background:var(--bg);
@@ -73,15 +119,28 @@
     margin:0;
     color:var(--ink);
     line-height:1.3;
-    font-family:var(--font-sans);
+    font-family:var(--font-title);
     font-weight:var(--w-title);
   }
   p{margin:0;}
   a{text-decoration:none;color:inherit;}
 
+  strong,b{
+    font-family:var(--font-title);
+    font-weight:700;
+  }
+
   .latin{
-    font-family:var(--font-sans);
+    font-family:var(--font-body);
     letter-spacing:.01em;
+  }
+
+  /* 句中出现的 “XJ MEP” */
+  .mark-inline{
+    font-family:var(--font-mark);
+    font-style:italic;
+    font-weight:500;
+    font-synthesis:none;
   }
 
   .wrap{width:min(1120px, calc(100% - 48px));margin:0 auto;}
@@ -102,7 +161,7 @@
     gap:24px;height:var(--nav-h);
   }
 
-  .brand{display:flex;align-items:center;gap:12px;font-family:var(--font-sans);}
+  .brand{display:flex;align-items:center;gap:12px;font-family:var(--font-body);}
 
   .brand-mark{
     width:42px;
@@ -116,20 +175,26 @@
     font-family:var(--font-mark);
     font-style:italic;
     font-weight:500;
-    font-size:.64rem;          /* 原 .70rem，小一号 */
+    font-size:.64rem;
     letter-spacing:0;
     line-height:1;
     white-space:nowrap;
+    font-synthesis:none;
   }
 
   .brand-text{
     display:flex;flex-direction:column;
     line-height:1.25;
     text-align:center;
-    font-family:var(--font-sans);
+    font-family:var(--font-body);
   }
-  .brand-text strong{font-size:1.02rem;color:var(--ink);letter-spacing:.02em;font-weight:700;white-space:nowrap;}
+  .brand-text strong{
+    font-family:var(--font-title);
+    font-size:1.02rem;color:var(--ink);letter-spacing:.02em;font-weight:700;white-space:nowrap;
+  }
   .brand-text small{
+    font-family:var(--font-mark);
+    font-style:italic;
     font-size:.84rem;
     color:var(--muted);
     letter-spacing:.08em;
@@ -137,12 +202,13 @@
     text-align:center;
     font-weight:500;
     white-space:nowrap;
+    font-synthesis:none;
   }
 
   .nav-links{
     display:flex;gap:28px;
-    font-size:.9rem;font-weight:500;color:var(--ink-2);
-    font-family:var(--font-sans);
+    font-size:.9rem;font-weight:400;color:var(--ink-2);
+    font-family:var(--font-body);
   }
   .nav-links a{position:relative;padding:6px 0;transition:color .2s;white-space:nowrap;}
   .nav-links a::after{
@@ -161,7 +227,7 @@
     border-top:1px solid var(--line);
     font-size:.78rem;
     color:#ffffff;
-    font-family:var(--font-sans);
+    font-family:var(--font-body);
     padding-bottom:env(safe-area-inset-bottom);
   }
 
@@ -180,14 +246,13 @@
     align-items:center;
     justify-content:center;
     white-space:nowrap;
-    font-family:var(--font-sans);
+    font-family:var(--font-body);
     font-weight:var(--w-body);
     line-height:1.4;
     flex:0 1 auto;
     color:#ffffff;
   }
 
-  /* © / 年份 / 电小匠：三子项等间距 */
   .footer-left{color:#ffffff;gap:.55em;}
   .footer-left .latin{color:#ffffff;}
 
@@ -204,13 +269,13 @@
 
   .footer-org{color:#ffffff;}
 
-  /* 页脚邮箱：整段一行，无额外 gap，紧贴全角冒号，不加粗 */
   .footer-mail{
     display:inline-flex;
     align-items:center;
     gap:0;
     color:#ffffff;
     font-size:.82rem;
+    font-family:var(--font-body);
     font-weight:var(--w-body);
     letter-spacing:.01em;
     white-space:nowrap;
@@ -238,7 +303,7 @@
   .section-head{max-width:680px;margin-bottom:30px;}
   .section-head p:not(.eyebrow){
     color:var(--text-soft);margin-top:10px;font-size:.95rem;
-    font-family:var(--font-sans);font-weight:var(--w-body);
+    font-family:var(--font-body);font-weight:var(--w-body);
     text-align: left;
     word-break: normal;
     overflow-wrap: break-word;
@@ -248,7 +313,7 @@
   .eyebrow{
     font-size:.95rem;letter-spacing:.16em;text-transform:uppercase;
     font-weight:700;color:var(--accent-bright);margin:0 0 12px;
-    font-family:var(--font-sans);
+    font-family:var(--font-title);
   }
 
   .eyebrow-split{
@@ -294,11 +359,12 @@
     mask-image:linear-gradient(100deg, transparent 0%, #000 34%);
   }
   .hero-diagram text{
-    font-family:var(--font-mono);
+    font-family:var(--font-mark);
     font-style:italic;
     font-weight:500;
     font-size:9px;
     letter-spacing:.5px;
+    font-synthesis:none;
   }
 
   .hero h1{
@@ -306,7 +372,7 @@
     color:#fff;font-weight:var(--w-title-xl);letter-spacing:.01em;
     display:flex;flex-wrap:wrap;align-items:baseline;
     gap:1ch;
-    font-family:var(--font-sans);
+    font-family:var(--font-title);
     white-space:nowrap;
   }
   .hero h1 .hero-en{
@@ -316,9 +382,10 @@
     font-weight:500;
     letter-spacing:.01em;
     font-size:1.2em;
+    font-synthesis:none;
   }
   .hero h1 .hero-en .reg-mark{
-    font-family:var(--font-sans);
+    font-family:var(--font-body);
     font-style:normal;
     font-weight:600;
     font-size:.68em;
@@ -327,20 +394,21 @@
     margin-left:.08em;
     letter-spacing:0;
     color:inherit;
+    font-synthesis:none;
   }
 
   .tagline{
     margin-top:16px;font-size:clamp(.98rem,2vw,1.16rem);
     color:#e4e9ed;letter-spacing:.06em;
-    font-family:var(--font-sans);
-    font-weight:500;
+    font-family:var(--font-body);
+    font-weight:400;
     white-space:nowrap;
   }
 
   .lead{
     margin-top:16px;max-width:620px;
     color:rgba(255,255,255,.88);font-size:.98rem;
-    font-family:var(--font-sans);font-weight:var(--w-body);
+    font-family:var(--font-body);font-weight:var(--w-body);
     text-align: left;
     word-break: normal;
     overflow-wrap: break-word;
@@ -359,23 +427,25 @@
     letter-spacing:.01em;
     white-space:nowrap;
     font-size:1.2em;
+    font-synthesis:none;
   }
 
   .about-text h2 .reg-mark{
-    font-family:var(--font-sans);
+    font-family:var(--font-body);
     font-style:normal;
     font-weight:600;
-    font-size:.68em;           /* 与首屏 R 标比例一致 */
+    font-size:.68em;
     line-height:1;
-    vertical-align:super;     /* 与首屏一致，回到右上角 */
+    vertical-align:super;
     margin-left:.08em;
     letter-spacing:0;
     color:inherit;
+    font-synthesis:none;
   }
 
   .about-text p:not(.eyebrow) + p:not(.eyebrow){margin-top:12px;color:var(--text-soft);}
   .about-text p:not(.eyebrow){
-    font-family:var(--font-sans);font-size:.95rem;font-weight:var(--w-body);
+    font-family:var(--font-body);font-size:.95rem;font-weight:var(--w-body);
     text-align: left;
     word-break: normal;
     overflow-wrap: break-word;
@@ -383,7 +453,7 @@
   .about-text p:first-of-type:not(.eyebrow){color:var(--text);}
 
   .about-text p.about-lead:not(.eyebrow){
-    font-family:var(--font-sans);
+    font-family:var(--font-body);
     font-weight:var(--w-body);
   }
 
@@ -396,17 +466,17 @@
   .entity-card .label{
     font-size:.8rem;letter-spacing:.18em;text-transform:uppercase;
     color:#c3cbd2;font-weight:700;margin-bottom:12px;
-    font-family:var(--font-sans);
+    font-family:var(--font-title);
   }
   .entity-card .entity-name{
     font-size:1.08rem;font-weight:700;letter-spacing:.02em;line-height:1.6;
-    font-family:var(--font-sans);
+    font-family:var(--font-title);
     white-space:nowrap;
   }
   .entity-card .entity-desc{
     margin-top:14px;padding-top:14px;border-top:1px solid rgba(255,255,255,.16);
     font-size:.85rem;color:rgba(255,255,255,.82);
-    font-family:var(--font-sans);font-weight:var(--w-body);
+    font-family:var(--font-body);font-weight:var(--w-body);
     text-align: left;
     word-break: normal;
     overflow-wrap: break-word;
@@ -427,7 +497,7 @@
     box-shadow:0 18px 36px -24px rgba(0,0,0,.95);
   }
   .card h3{
-    font-size:.96rem;font-weight:700;font-family:var(--font-sans);
+    font-size:.96rem;font-weight:700;font-family:var(--font-title);
     white-space:nowrap;
   }
 
@@ -436,7 +506,7 @@
     width:28px;height:28px;border-radius:9px;margin-bottom:10px;
     background:rgba(168,176,184,.18);color:#d2d9de;
     font-size:.74rem;font-weight:800;letter-spacing:.04em;
-    font-family:var(--font-sans);
+    font-family:var(--font-title);
   }
 
   /* ---------- 覆盖业态 ---------- */
@@ -457,7 +527,7 @@
     color:#eef2f5;
     font-weight:600;
     font-size:.94rem;
-    font-family:var(--font-sans);
+    font-family:var(--font-title);
     text-align:center;
     white-space:nowrap;
     letter-spacing:.04em;
@@ -493,12 +563,12 @@
   .disc:hover::before{transform:scaleX(1);}
   .disc strong{
     display:block;font-size:1rem;color:var(--ink);letter-spacing:.04em;
-    font-family:var(--font-sans);font-weight:700;
+    font-family:var(--font-title);font-weight:700;
     white-space:nowrap;
   }
   .disc small{
     display:block;margin-top:6px;font-size:.7rem;letter-spacing:.14em;color:var(--muted);
-    text-transform:uppercase;font-family:var(--font-sans);font-weight:500;
+    text-transform:uppercase;font-family:var(--font-body);font-weight:400;
     white-space:nowrap;
   }
 
@@ -512,13 +582,13 @@
     font-size:clamp(1.4rem,3.4vw,2.2rem);
     font-weight:var(--w-title-xl);color:#fff;line-height:1.4;
     letter-spacing:.04em;margin:0 0 16px;
-    font-family:var(--font-sans);
+    font-family:var(--font-title);
   }
   .quote span{color:#d4dbe0;}
 
   .philosophy .phil-text{
     color:rgba(255,255,255,.86);font-size:.96rem;
-    font-family:var(--font-sans);font-weight:var(--w-body);
+    font-family:var(--font-body);font-weight:var(--w-body);
     white-space:nowrap;
     text-align: left;
     word-break: normal;
@@ -544,16 +614,16 @@
   .value .idx{
     font-size:1.2rem;font-weight:800;letter-spacing:.14em;line-height:1.2;
     color:#b9c2c9;display:block;margin-bottom:10px;
-    font-family:var(--font-sans);
+    font-family:var(--font-title);
   }
   .value strong{
     display:block;font-size:1rem;color:#fff;letter-spacing:.05em;
-    font-family:var(--font-sans);font-weight:700;
+    font-family:var(--font-title);font-weight:700;
     white-space:nowrap;
   }
   .value p{
     margin-top:6px;font-size:.84rem;color:rgba(255,255,255,.8);line-height:1.75;
-    font-family:var(--font-sans);font-weight:var(--w-body);
+    font-family:var(--font-body);font-weight:var(--w-body);
     text-align: left;
     word-break: normal;
     overflow-wrap: break-word;
@@ -580,13 +650,15 @@
 
   .esg-bg h2,
   .esg-bg h3,
-  .esg-bg .esg-en,
   .esg-bg .btn-esg{
-    font-family:var(--font-sans);
+    font-family:var(--font-title);
+  }
+  .esg-bg .esg-en{
+    font-family:var(--font-body);
   }
   .esg-bg .section-head p:not(.eyebrow),
   .esg-bg .esg-desc{
-    font-family:var(--font-sans);
+    font-family:var(--font-body);
   }
 
   .esg-grid{
@@ -629,13 +701,15 @@
     letter-spacing:.14em;
     text-transform:uppercase;
     color:var(--muted);
-    font-weight:500;
+    font-family:var(--font-body);
+    font-weight:400;
     white-space:nowrap;
   }
   .esg-card .esg-desc{
     margin-top:16px;
     font-size:.86rem;
     color:rgba(255,255,255,.8);
+    font-family:var(--font-body);
     font-weight:var(--w-body);
     line-height:1.8;
     text-align:left;
@@ -663,6 +737,7 @@
     font-weight:700;
     letter-spacing:.06em;
     white-space:nowrap;
+    font-family:var(--font-title);
     transition:background .25s ease, border-color .25s ease, transform .25s ease, box-shadow .25s ease, color .25s ease;
   }
   .btn-esg svg{
@@ -689,7 +764,10 @@
   /* ---------- 字体兜底：禁止合成斜体/粗体 ---------- */
   .brand-mark,
   .hero h1 .hero-en,
-  .about-text h2 .brand-en{
+  .about-text h2 .brand-en,
+  .mark-inline,
+  .brand-text small,
+  .hero-diagram text{
     font-synthesis:none;
   }
 
@@ -802,7 +880,6 @@
       letter-spacing:normal !important;
     }
 
-    /* 页脚四项：手机 / 微信内置浏览器自动两行 */
     .page-footer-inner{
       display:grid;
       grid-template-columns:repeat(2, minmax(0, 1fr));
@@ -829,7 +906,7 @@
   @media (max-width:560px){
     .wrap{width:calc(100% - 32px);}
 
-    .brand-mark{font-size:.60rem;}   /* 原 .66rem，小一号 */
+    .brand-mark{font-size:.60rem;}
     .brand-text strong{font-size:.98rem;}
     .brand-text small{font-size:.78rem;}
 
@@ -1100,7 +1177,7 @@
         <p class="eyebrow">品牌简介 / About</p>
         <h2><span class="brand-en">XJ MEP<sup class="reg-mark">®</sup></span> 小匠机电</h2>
         <p class="about-lead">
-          <span class="latin">XJ MEP（Xiao Jiang Mechanical Electrical Plumbing）</span>，中文名称：小匠机电，是四川电小匠工程设计有限公司运营的机电顾问品牌。
+          <span class="latin"><span class="mark-inline">XJ MEP</span>（Xiao Jiang Mechanical Electrical Plumbing）</span>，中文名称：小匠机电，是四川电小匠工程设计有限公司运营的机电顾问品牌。
         </p>
         <p>
           围绕工程领域机电顾问为核心业务，服务范围涵盖住宅、办公、商业、酒店、厂房、医院、学校、展馆、场馆、园区、市政、景观等多业态，为项目提供全周期技术支持。
@@ -1323,6 +1400,32 @@
     document.querySelectorAll('.reveal').forEach(function (el) { io.observe(el); });
   } else {
     document.querySelectorAll('.reveal').forEach(function (el) { el.classList.add('in'); });
+  }
+
+  /* =========================================================
+     字体加载检测：三种自托管 woff2 是否成功加载
+     ========================================================= */
+  if (document.fonts && document.fonts.check) {
+    document.fonts.ready.then(function () {
+      var checks = [
+        { label: 'SourceHanSansCN-Bold', css: '700 16px "SourceHanSansCN-Bold"' },
+        { label: 'SourceHanSansCN-Regular', css: '400 16px "SourceHanSansCN-Regular"' },
+        { label: 'Rubik-MediumItalic', css: 'italic 500 16px "Rubik-MediumItalic"' }
+      ];
+      checks.forEach(function (item) {
+        if (!document.fonts.check(item.css)) {
+          console.warn(
+            '[字体检测] "' + item.label + '" 未成功加载。\n' +
+            '请检查：\n' +
+            '  1. 文件是否存在于 ./fonts/ 目录（注意大小写）；\n' +
+            '  2. 文件是否为有效的 woff2 字体；\n' +
+            '  3. 页面是否通过 http(s) 访问（file:// 协议可能拦截字体加载）。'
+          );
+        } else {
+          console.info('[字体检测] "' + item.label + '" 已成功加载。');
+        }
+      });
+    });
   }
 </script>
 
