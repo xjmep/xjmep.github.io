@@ -1230,11 +1230,20 @@
       appearance: none;
     }
 
+    /* 电话号码：字体放大两号、黑色、无下划线 */
     .phone-dial {
-      color: var(--primary);
+      color: #000000;
+      font-size: 21px;
       text-decoration: none;
       touch-action: manipulation;
       transition: color 0.2s ease;
+    }
+
+    /* “联系电话：”与号码保持同字号、同色 */
+    .phone-label {
+      font-size: 21px;
+      color: #000000;
+      font-weight: 400;
     }
 
     .js .reveal {
@@ -1268,7 +1277,6 @@
         transform: translateY(-2px);
       }
       .modal-close:hover { background: #e2ecf3; }
-      .phone-dial:hover { text-decoration: underline; }
       .footer-bottom a:hover { color: var(--primary-3); }
     }
 
@@ -1961,7 +1969,7 @@
     <button class="modal-close" type="button" id="phoneClose" aria-label="关闭二维码">✕</button>
     <img src="phone.png" alt="电话联系二维码" />
     <p class="modal-tip">
-      联系电话：<a class="phone-dial" href="tel:18108010958">18108010958</a><br />
+      <span class="phone-label">联系电话：</span><a class="phone-dial" href="tel:18108010958">18108010958</a><br />
       点击号码或手机扫码直接拨打
     </p>
   </div>
