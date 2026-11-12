@@ -235,9 +235,10 @@
   .card p{margin-top:10px;color:#000000;font-size:var(--fs-body);}
 
   .steps{margin-top:40px;}
+  /* 步骤项：无边框、无背景色，保持与页面一致的简洁列表外观 */
   .step{
-    display:flex;gap:22px;align-items:flex-start;background:#FFFFFF;border-radius:14px;
-    padding:24px;margin-bottom:16px;border-left:6px solid var(--bg);
+    display:flex;gap:22px;align-items:flex-start;
+    padding:14px 0;margin-bottom:6px;
   }
   .step .num{
     flex:0 0 46px;height:46px;border-radius:50%;background:var(--bg);color:#000000;
@@ -272,9 +273,10 @@
   td.yes{color:#1e9e4a;font-weight:var(--fw-body);}
   td.no{color:#c0392b;font-weight:var(--fw-body);}
 
+  /* 图纸制作要点：去掉边框，与页面整体简洁风格一致 */
   .rules{
-    background:#FFFFFF;border:2px dashed var(--bg);border-radius:16px;
-    padding:30px;margin-top:40px;font-size:var(--fs-body);color:#000000;
+    background:#FFFFFF;border:none;border-radius:16px;
+    padding:30px 0;margin-top:40px;font-size:var(--fs-body);color:#000000;
   }
   .rules li{margin:12px 0 12px 22px;}
   .rules b{color:var(--ink-soft);}
@@ -414,7 +416,7 @@
     section{padding:56px 16px;}
     .cta-group{gap:20px;}
     .cta{padding:9px 14px;letter-spacing:.14em;text-indent:.14em;}
-    .step{flex-direction:column;gap:12px;align-items:center;}
+    .step{flex-direction:column;gap:12px;align-items:center;text-align:center;}
     .step .num{flex:none;width:46px;height:46px;}
     .step p{padding-top:0;}
     .card{padding:22px 18px;}
