@@ -200,6 +200,21 @@
             font-weight: 400;
         }
 
+        /* 合作流程：每一行独立成行 */
+        .workflow .workflow-overview {
+            display: block;
+            margin-bottom: 12px;
+        }
+
+        .workflow .workflow-line {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .workflow .workflow-line:last-child {
+            margin-bottom: 0;
+        }
+
         /* 底部邮箱区域 */
         .footer-email {
             display: flex;
@@ -286,7 +301,12 @@
             <span class="section-icon">!</span> 合作流程
         </div>
         <div class="workflow">
-            　　沟通要求——下订——预付款（付款前再次核对相关要求）——设计与制作——发初稿产品——定稿前沟通修改——确认定稿，付尾款——发定稿产品——售后服务
+            <span class="workflow-overview">　　沟通需求——下订——预付款（付款前再次核对相关要求）——设计与制作——发初稿产品——定稿前沟通修改——确认定稿，付尾款——发定稿产品——售后服务</span>
+            <span class="workflow-line">沟通需求：线上接单，一对一沟通，如需现场服务，另行沟通细则；</span>
+            <span class="workflow-line">确定下订：订单（口头、书面）确定后，委托方预付50%合约款；</span>
+            <span class="workflow-line">沟通修改：服务期内提交初稿产品，由委托方予以审核，我们按需修改；</span>
+            <span class="workflow-line">尾款交付：委托方支付剩余50%合约款后，我们交付定稿产品；</span>
+            <span class="workflow-line">售后无忧：就委托内容，我们提供至少一个月的售后服务。</span>
         </div>
     </div>
 
