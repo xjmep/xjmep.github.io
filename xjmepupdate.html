@@ -257,6 +257,8 @@
       display: flex;
       align-items: center;
       gap: 18px;
+      flex-wrap: nowrap;
+      min-width: 0;
     }
 
     .nav-links a {
@@ -268,6 +270,32 @@
       border-bottom: 2px solid transparent;
       transition: color 0.2s ease, border-color 0.2s ease;
       touch-action: manipulation;
+    }
+
+    /* ============================================================
+       导航文字「自适应换行」核心规则
+       ------------------------------------------------------------
+       · 每个导航项的文字被拆成两个 <span>（各 2 个字）
+       · <a> 本身是 inline-flex + flex-wrap: wrap
+       · 空间足够 → 两个 span 并排（一行 4 个字）
+       · 空间不足 → 两个 span 各占一行，自动变成 2+2
+         （绝不会出现 3+1 的断行方式）
+       · min-width: 0 + flex: 0 1 auto 让导航项可被容器压缩，
+         从而触发上面的换行逻辑
+       ============================================================ */
+    .nav-links a:not(.btn) {
+      display: inline-flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      min-width: 0;
+      flex: 0 1 auto;
+      text-align: center;
+    }
+
+    .nav-links a:not(.btn) > span {
+      display: block;
+      white-space: nowrap;
     }
 
     .nav-links a:not(.btn).active {
@@ -1324,6 +1352,13 @@
         border-bottom: none;
         font-size: 15px;
       }
+
+      /* 移动端下拉菜单内宽度充足，始终单行显示 4 个字 */
+      .nav-links a:not(.btn) {
+        flex-wrap: nowrap;
+        justify-content: center;
+      }
+
       .nav-links .btn {
         color: #fff;
         margin-top: 6px;
@@ -1997,14 +2032,14 @@
         </button>
 
         <nav class="nav-links" aria-label="主导航">
-          <a href="#home" data-nav="home">机电更新</a>
-          <a href="#pain" data-nav="pain">现存问题</a>
-          <a href="#services" data-nav="services">服务范围</a>
-          <a href="#goals" data-nav="goals">更新目标</a>
-          <a href="#process" data-nav="process">实施流程</a>
-          <a href="#cases" data-nav="cases">案例场景</a>
-          <a href="#why" data-nav="why">推荐理由</a>
-          <a href="#contact" data-nav="contact">您的需求</a>
+          <a href="#home" data-nav="home"><span>机电</span><span>更新</span></a>
+          <a href="#pain" data-nav="pain"><span>现存</span><span>问题</span></a>
+          <a href="#services" data-nav="services"><span>服务</span><span>范围</span></a>
+          <a href="#goals" data-nav="goals"><span>更新</span><span>目标</span></a>
+          <a href="#process" data-nav="process"><span>实施</span><span>流程</span></a>
+          <a href="#cases" data-nav="cases"><span>案例</span><span>场景</span></a>
+          <a href="#why" data-nav="why"><span>推荐</span><span>理由</span></a>
+          <a href="#contact" data-nav="contact"><span>您的</span><span>需求</span></a>
           <a href="esg.html" target="_blank" rel="noopener">ESG</a>
         </nav>
       </div>
