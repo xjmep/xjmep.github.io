@@ -1007,11 +1007,18 @@
       font-size: 15px;
     }
 
+    /* ===== 「填写表单」按钮：作为全站椭圆按钮尺寸的基准（160 × 46） ===== */
     .cta-inner .btn {
+      width: 160px;
       min-width: 160px;
-      max-width: 220px;
+      max-width: 160px;
+      height: 46px;
       min-height: 46px;
-      padding: 0 32px;
+      max-height: 46px;
+      padding: 0 8px;
+      font-size: 15px;
+      line-height: 1.2;
+      white-space: nowrap;
       flex-shrink: 0;
     }
 
@@ -1080,10 +1087,20 @@
       box-shadow: 0 0 0 4px rgba(14, 143, 126, 0.12);
     }
 
+    /* ===== 「提交需求」按钮：与「填写表单」尺寸完全一致（160 × 46） ===== */
     .lead-form .btn {
       grid-column: 1 / -1;
-      width: 100%;
-      max-width: 220px;
+      justify-self: center;
+      width: 160px;
+      min-width: 160px;
+      max-width: 160px;
+      height: 46px;
+      min-height: 46px;
+      max-height: 46px;
+      padding: 0 8px;
+      font-size: 15px;
+      line-height: 1.2;
+      white-space: nowrap;
       margin: 0 auto;
     }
 
@@ -1114,15 +1131,18 @@
       border-bottom: 1px solid rgba(255, 255, 255, 0.12);
     }
 
+    /* 四个按钮固定宽度列，居中排布，避免被拉伸成不同形状 */
     .footer-actions {
       display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
+      grid-template-columns: repeat(4, 160px);
+      justify-content: center;
+      justify-items: center;
       gap: 14px;
       width: 100%;
-      max-width: 680px;
       margin: 0 auto;
     }
 
+    /* ===== 微信 / 电话 / 邮件 / 关于我们 按钮：与「填写表单」尺寸完全一致（160 × 46） ===== */
     .wechat-btn,
     .phone-btn,
     .about-btn,
@@ -1130,17 +1150,23 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      width: 100%;
-      min-width: 0;
+      box-sizing: border-box;
+      width: 160px;
+      min-width: 160px;
+      max-width: 160px;
+      height: 46px;
       min-height: 46px;
-      padding: 0 16px;
+      max-height: 46px;
+      padding: 0 8px;
       border-radius: 999px;
       border: 1px solid rgba(126, 232, 211, 0.45);
       background: rgba(126, 232, 211, 0.12);
       color: #fff;
-      font-size: 14px;
+      font-size: 15px;
       font-weight: 700;
-      letter-spacing: 0.04em;
+      letter-spacing: 0.02em;
+      line-height: 1.2;
+      white-space: nowrap;
       cursor: pointer;
       text-decoration: none;
       touch-action: manipulation;
@@ -1446,16 +1472,13 @@
 
       .footer-main { padding-bottom: 18px; }
 
+      /* 移动端：单列居中，按钮仍保持 160 × 46，不被拉伸 */
       .footer-actions {
-        grid-template-columns: 1fr;
+        grid-template-columns: 160px;
+        justify-content: center;
+        justify-items: center;
         gap: 10px;
-        max-width: 220px;
       }
-
-      .wechat-btn,
-      .phone-btn,
-      .about-btn,
-      .email-btn { padding: 0 14px; }
 
       .footer-bottom {
         flex-direction: column;
