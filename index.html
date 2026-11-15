@@ -298,26 +298,45 @@
     box-sizing:border-box;
   }
 
-  #qr-modal,#phone-modal{
+  #qr-modal,#phone-modal,#gzh-modal{
     display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:99;
     align-items:center;justify-content:center;padding:20px;
   }
-  #qr-modal .box,#phone-modal .box{
+  #qr-modal .box,#phone-modal .box,#gzh-modal .box{
     background:#FFFFFF;border-radius:18px;padding:34px 40px;text-align:center;position:relative;
     max-width:90vw;
   }
-  #qr-modal img,#phone-modal img{width:min(280px,70vw);border-radius:10px;display:block;margin:0 auto;}
-  #qr-modal p,#phone-modal p{margin-top:14px;font-weight:var(--fw-title);color:#000000;font-size:1.05rem;}
-  #qr-modal .close,#phone-modal .close{
+  #qr-modal img,#phone-modal img,#gzh-modal img{width:min(280px,70vw);border-radius:10px;display:block;margin:0 auto;}
+  #qr-modal .close,#phone-modal .close,#gzh-modal .close{
     position:absolute;top:8px;right:16px;font-size:1.6rem;cursor:pointer;color:#000000;
     background:none;border:none;line-height:1;
   }
 
+  /* ===== 微信二维码弹窗文字：常规字重、不加粗；字号增大两号（1.05rem + 0.12rem = 1.17rem） ===== */
+  #qr-modal p{
+    margin-top:14px;
+    font-family:var(--font-sans);
+    font-weight:var(--fw-body);
+    color:#000000;
+    font-size:1.17rem;
+  }
+
+  /* ===== 公众号二维码弹窗文字：思源黑体、黑色、不加粗；字号增大两号 ===== */
+  #gzh-modal p{
+    margin-top:14px;
+    font-family:var(--font-sans);
+    font-weight:var(--fw-body);
+    color:#000000;
+    font-size:1.17rem;
+    letter-spacing:.04em;
+  }
+
+  /* ===== 电话弹窗文字：不加粗 ===== */
   #phone-modal .tel{
     display:block;
-    font-family:var(--font-title);
+    font-family:var(--font-sans);
     font-size:clamp(1.18rem,4.5vw,1.38rem);
-    font-weight:var(--fw-title);
+    font-weight:var(--fw-body);
     letter-spacing:.04em;color:#000000;margin-top:16px;
     text-decoration:none;
     cursor:pointer;
@@ -327,9 +346,9 @@
   #phone-modal .tel:hover,
   #phone-modal .tel:active{color:#000000;text-decoration:none;}
   #phone-modal .tel-sub{
-    font-family:var(--font-title);
+    font-family:var(--font-sans);
     font-size:clamp(.98rem,3.9vw,1.12rem);
-    font-weight:var(--fw-title);
+    font-weight:var(--fw-body);
     letter-spacing:.06em;color:#000000;margin-top:6px;
   }
 
@@ -412,7 +431,7 @@
     .step .num{flex:none;width:46px;height:46px;}
     .step p{padding-top:0;}
     .card{padding:22px 18px;}
-    #qr-modal .box,#phone-modal .box{padding:28px 22px;}
+    #qr-modal .box,#phone-modal .box,#gzh-modal .box{padding:28px 22px;}
   }
 
   @media(max-width:360px){
@@ -438,16 +457,17 @@
   .step .num,
   th,
   footer,
-  #qr-modal p,
-  #phone-modal .tel,
-  #phone-modal .tel-sub,
   b,
   strong{
     font-family:var(--font-title);
   }
 
   .preview-hint,
-  footer small{
+  footer small,
+  #qr-modal p,
+  #gzh-modal p,
+  #phone-modal .tel,
+  #phone-modal .tel-sub{
     font-family:var(--font-sans);
   }
 
@@ -639,10 +659,9 @@
   </button>
 
   <button type="button" class="ib"
-          data-href="https://v.douyin.com/3WKXVOz-JII/"
-          data-scheme="snssdk1128://"
-          data-name="抖音">
-    <img src="dy.png" alt="抖音" width="50" height="50">
+          data-modal="gzh-modal"
+          data-name="公众号">
+    <img src="gzh.png" alt="公众号" width="50" height="50">
   </button>
 
   <button type="button" class="ib"
@@ -742,6 +761,14 @@ function openInApp(scheme, webUrl, appName){
 /* ============ 绑定底部图标按钮 ============ */
 document.querySelectorAll('.icon-strip .ib').forEach(function(btn){
   btn.addEventListener('click', function(){
+    /* 弹窗类按钮（如公众号二维码） */
+    var modalId = btn.getAttribute('data-modal');
+    if (modalId){
+      var m = document.getElementById(modalId);
+      if (m){ m.style.display = 'flex'; }
+      return;
+    }
+
     var webUrl = btn.getAttribute('data-href');
     var scheme = btn.getAttribute('data-scheme');
     var name   = btn.getAttribute('data-name');
@@ -853,6 +880,15 @@ document.querySelectorAll('.icon-strip .ib').forEach(function(btn){
     <img src="phone.png" alt="电话二维码">
     <a class="tel" href="tel:18108010958">联系电话：18108010958</a>
     <p class="tel-sub">点击号码或手机扫码直接拨打</p>
+  </div>
+</div>
+
+<!-- 公众号二维码弹窗 -->
+<div id="gzh-modal" onclick="if(event.target===this)this.style.display='none'">
+  <div class="box">
+    <button class="close" onclick="document.getElementById('gzh-modal').style.display='none'">×</button>
+    <img src="gzhewm.png" alt="公众号二维码">
+    <p>扫码关注公众号</p>
   </div>
 </div>
 
