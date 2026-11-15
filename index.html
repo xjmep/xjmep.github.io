@@ -279,6 +279,32 @@
   }
   footer small{display:block;margin-top:10px;color:#FFFFFF;font-weight:var(--fw-body);letter-spacing:.05em;font-size:.85rem;}
 
+  /* ==========================================================================
+     页脚链接行（网站协议 / 产品说明 / 在线留言 / 关于我们）
+     —— 用 flex 单行排列；链接间距由 JS 按可用宽度自动收紧（--fl-gap），
+        极窄屏兜底时才会轻微缩小字号（--fl-fs），确保四个按钮始终一行显示。
+     ========================================================================== */
+  .footer-links{
+    margin-top:6px;
+    width:100%;
+    display:flex;
+    flex-wrap:nowrap;
+    justify-content:center;
+    align-items:center;
+    gap:var(--fl-gap,28px);
+  }
+  .footer-links a{
+    display:inline-block;
+    flex:0 0 auto;
+    white-space:nowrap;
+    color:#FFFFFF;
+    font-weight:400;
+    letter-spacing:.05em;
+    font-size:var(--fl-fs,1rem);
+    font-family:var(--font-sans);
+    text-decoration:none;
+  }
+
   .detail-grid{grid-template-columns:repeat(auto-fit,minmax(220px,1fr));}
   .detail-grid .card{padding:20px 18px;}
   .detail-grid .card h3{font-size:var(--fs-card-title);}
@@ -434,9 +460,17 @@
     #qr-modal .box,#phone-modal .box,#gzh-modal .box{padding:28px 22px;}
   }
 
-  @media(max-width:360px){
-    .cta-group{gap:16px;}
-    .cta{padding:8px 12px;letter-spacing:.1em;text-indent:.1em;}
+  /* ==========================================================================
+     首屏新增“在线留言”按钮后为三个按钮：窄屏自动收紧按钮间距与内边距，
+     保证三个按钮始终一行显示（只动间距/内边距，字号保持原规范）。
+     ========================================================================== */
+  @media(max-width:380px){
+    .cta-group{gap:10px;}
+    .cta{padding:8px 9px;letter-spacing:.08em;text-indent:.08em;}
+  }
+  @media(max-width:320px){
+    .cta-group{gap:8px;}
+    .cta{padding:8px 7px;letter-spacing:.04em;text-indent:.04em;}
   }
 
   /* ==========================================================================
@@ -541,6 +575,8 @@
     <div class="cta-group">
       <button class="cta" type="button" onclick="document.getElementById('qr-modal').style.display='flex'">微信咨询</button>
       <button class="cta" type="button" onclick="document.getElementById('phone-modal').style.display='flex'">电话咨询</button>
+      <!-- 新增：在线留言（新标签页打开 message.html） -->
+      <a class="cta" href="message.html" target="_blank" rel="noopener noreferrer">在线留言</a>
     </div>
   </div>
 </header>
@@ -672,13 +708,13 @@
 </div>
 
 <footer id="contact">
-  <div style="margin-top:6px;">
-    <a href="agreement.html" target="_blank" rel="noopener noreferrer"
-       style="display:inline-block;color:#FFFFFF;font-weight:400;letter-spacing:.05em;font-size:1rem;font-family:var(--font-sans);text-decoration:none;margin:0 14px;">网站协议</a>
-    <a href="explain.html" target="_blank" rel="noopener noreferrer"
-       style="display:inline-block;color:#FFFFFF;font-weight:400;letter-spacing:.05em;font-size:1rem;font-family:var(--font-sans);text-decoration:none;margin:0 14px;">产品说明</a>
-    <a href="about.html" target="_blank" rel="noopener noreferrer"
-       style="display:inline-block;color:#FFFFFF;font-weight:400;letter-spacing:.05em;font-size:1rem;font-family:var(--font-sans);text-decoration:none;margin:0 14px;">关于我们</a>
+  <!-- 四个链接：由 JS 按可用宽度自动收紧间距，保证始终一行显示 -->
+  <div class="footer-links" id="footerLinks">
+    <a href="agreement.html" target="_blank" rel="noopener noreferrer">网站协议</a>
+    <a href="explain.html" target="_blank" rel="noopener noreferrer">产品说明</a>
+    <!-- 新增：在线留言（新标签页打开 message.html） -->
+    <a href="message.html" target="_blank" rel="noopener noreferrer">在线留言</a>
+    <a href="about.html" target="_blank" rel="noopener noreferrer">关于我们</a>
   </div>
   <small style="margin-top:6px;">Designed by xjmep.design</small>
   <small style="margin-top:6px;">Email：dxj@xjmep.com</small>
@@ -857,6 +893,86 @@ document.querySelectorAll('.icon-strip .ib').forEach(function(btn){
   }
   setTimeout(fitSubLine, 400);
   setTimeout(fitSubLine, 1200);
+
+})();
+
+/* ==========================================================================
+   页脚链接行：一行显示自适应
+   —— “网站协议 / 产品说明 / 在线留言 / 关于我们”四个链接，
+      在手机浏览器、微信内置浏览器等窄屏环境下若无法一行放下，
+      自动逐级减小链接之间的间距（--fl-gap），确保四个按钮始终一行显示；
+      若能一行显示，则完全保持默认间距，不做任何调整。
+      仅当间距已压缩到 0 仍放不下（极窄屏兜底）时，才轻微缩小字号（--fl-fs）。
+   ========================================================================== */
+(function(){
+
+  var wrap = null, links = null;
+  var DEFAULT_GAP = 28;    /* 默认链接间距（px），与 CSS 中 --fl-gap 的缺省值一致 */
+  var MIN_FONT    = 0.78;  /* 极窄屏兜底：字号下限（rem） */
+
+  /* 所有链接文字宽度之和（不含间距） */
+  function linksWidth(){
+    var total = 0;
+    for (var i = 0; i < links.length; i++){
+      total += links[i].getBoundingClientRect().width;
+    }
+    return total;
+  }
+
+  function fitFooterLinks(){
+    wrap = document.getElementById('footerLinks');
+    if (!wrap) return;
+    links = wrap.querySelectorAll('a');
+    if (!links.length) return;
+
+    /* 先复位到默认状态，再重新判断 */
+    wrap.style.removeProperty('--fl-gap');
+    wrap.style.removeProperty('--fl-fs');
+    void wrap.offsetWidth;   /* 强制重排 */
+
+    var avail = wrap.clientWidth;   /* 可用宽度 */
+    if (!avail) return;
+
+    var gaps = links.length - 1;
+    if (gaps <= 0) return;
+
+    var w = linksWidth();
+
+    /* 默认间距即可一行显示 → 不做任何调整 */
+    if (w + gaps * DEFAULT_GAP <= avail + 0.5) return;
+
+    /* 第一步：按可用宽度计算并收紧链接间距 */
+    var gap = Math.floor((avail - w) / gaps);
+    if (gap < 0) gap = 0;
+    wrap.style.setProperty('--fl-gap', gap + 'px');
+
+    if (w + gaps * gap <= avail + 0.5) return;
+
+    /* 第二步（极窄屏兜底）：间距已为 0 仍放不下时，轻微缩小字号 */
+    var fs = 1;
+    while (fs > MIN_FONT){
+      fs = Math.round((fs - 0.02) * 100) / 100;
+      wrap.style.setProperty('--fl-fs', fs + 'rem');
+      void wrap.offsetWidth;
+      if (linksWidth() <= avail + 0.5) break;
+    }
+  }
+
+  window.addEventListener('load', fitFooterLinks);
+
+  var rt;
+  window.addEventListener('resize', function(){
+    clearTimeout(rt);
+    rt = setTimeout(fitFooterLinks, 120);
+  });
+  window.addEventListener('orientationchange', function(){
+    setTimeout(fitFooterLinks, 260);
+  });
+  if (document.fonts && document.fonts.ready){
+    document.fonts.ready.then(fitFooterLinks).catch(function(){});
+  }
+  setTimeout(fitFooterLinks, 400);
+  setTimeout(fitFooterLinks, 1200);
 
 })();
 </script>
