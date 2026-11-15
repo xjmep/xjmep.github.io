@@ -1284,20 +1284,21 @@
       appearance: none;
     }
 
-    /* 电话号码：字体放大两号、黑色、无下划线 */
+    /* 电话号码：字体大小缩小一号、黑色、无下划线、明确不加粗 */
     .phone-dial {
       color: #000000;
-      font-size: 21px;
+      font-size: 20px;
+      font-weight: 400 !important;
       text-decoration: none;
       touch-action: manipulation;
       transition: color 0.2s ease;
     }
 
-    /* “联系电话：”与号码保持同字号、同色 */
+    /* “联系电话：”与号码保持同字号、同色、同粗细 */
     .phone-label {
-      font-size: 21px;
+      font-size: 20px;
       color: #000000;
-      font-weight: 400;
+      font-weight: 400 !important;
     }
 
     .js .reveal {
