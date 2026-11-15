@@ -4,79 +4,70 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <meta name="format-detection" content="telephone=no,email=no,address=no" />
-  <meta name="color-scheme" content="light" />
   <meta name="theme-color" content="#000000" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <title>留言</title>
   <meta name="description" content="小匠机电" />
 
-  <!-- 仅预连接：用于「字体子集缺字时」自动在线补全同名字体（SourceHanSansCN） -->
+  <!-- 本地字体预加载 -->
+  <link rel="preload" href="./fonts/SourceHanSansCN-Regular.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="./fonts/SourceHanSansCN-Bold.woff2" as="font" type="font/woff2" crossorigin />
+
+  <!-- 在线兜底字体预连接：本地子集缺字时才会真正请求远程 OTF -->
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
 
   <script>document.documentElement.classList.add('js');</script>
 
   <style>
-    /* ============================================================
-       思源黑体 · 纯自托管（同目录 fonts/ 文件夹，仅 .woff2）
-       ============================================================ */
+    /* ===== 思源黑体：本地子集 + 在线兜底 ===== */
 
-    /* ---------- ① 标题体：本地自托管子集（仅 woff2） ---------- */
+    /* 正文：本地子集 */
     @font-face {
-      font-family: "SourceHanSansCN-Bold";
-      src: url("./fonts/SourceHanSansCN-Bold.woff2") format("woff2");
-      font-weight: 700;
-      font-style: normal;
-      font-display: swap;
-    }
-
-    /* ---------- ① 标题体：子集缺字时自动在线补全（同名字体） ---------- */
-    @font-face {
-      font-family: "SourceHanSansCN-Bold";
-      src: url("https://cdn.jsdelivr.net/gh/adobe-fonts/source-han-sans@release/SubsetOTF/CN/SourceHanSansCN-Bold.otf") format("opentype");
-      font-weight: 700;
-      font-style: normal;
-      font-display: swap;
-    }
-
-    /* ---------- ② 正文体：本地自托管子集（仅 woff2） ---------- */
-    @font-face {
-      font-family: "SourceHanSansCN-Regular";
+      font-family: "SourceHanSansCN";
       src: url("./fonts/SourceHanSansCN-Regular.woff2") format("woff2");
       font-weight: 400;
       font-style: normal;
       font-display: swap;
     }
 
-    /* ---------- ② 正文体：子集缺字时自动在线补全（同名字体） ---------- */
+    /* 正文：本地缺字时在线补全 */
     @font-face {
-      font-family: "SourceHanSansCN-Regular";
+      font-family: "SourceHanSansCN";
       src: url("https://cdn.jsdelivr.net/gh/adobe-fonts/source-han-sans@release/SubsetOTF/CN/SourceHanSansCN-Regular.otf") format("opentype");
       font-weight: 400;
       font-style: normal;
       font-display: swap;
     }
 
+    /* 标题：本地子集 */
+    @font-face {
+      font-family: "SourceHanSansCN";
+      src: url("./fonts/SourceHanSansCN-Bold.woff2") format("woff2");
+      font-weight: 700;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    /* 标题：本地缺字时在线补全 */
+    @font-face {
+      font-family: "SourceHanSansCN";
+      src: url("https://cdn.jsdelivr.net/gh/adobe-fonts/source-han-sans@release/SubsetOTF/CN/SourceHanSansCN-Bold.otf") format("opentype");
+      font-weight: 700;
+      font-style: normal;
+      font-display: swap;
+    }
+
     :root {
       color-scheme: light;
-      --primary: #0b5f8a;
-      --primary-2: #F79F19;          /* 原绿色 → 黄色 */
-      --primary-3: #FFD79A;          /* 原浅绿 → 浅黄 */
-      --dark: #0c2233;
-      --text: #233746;
-      --muted: #5b6b7a;
+      --primary-2: #f79f19;
       --bg: #f4f8fb;
-      --white: #ffffff;
       --line: #dce7ee;
-      --accent: #f5c96b;
-      --btn-gray: #4a4a4a;           /* 按钮灰色（已加深） */
-      --btn-gray-hover: #333333;     /* 按钮灰色悬停（已加深） */
+      --btn-gray: #4a4a4a;
+      --btn-gray-hover: #333333;
       --shadow: 0 18px 50px rgba(12, 34, 51, 0.12);
-      --radius: 20px;
       --max: 1180px;
-
-      /* 全站统一使用思源黑体（自托管 .woff2） */
-      --font-title: "SourceHanSansCN-Bold", "SourceHanSansCN-Regular", sans-serif;
-      --font-body: "SourceHanSansCN-Regular", "SourceHanSansCN-Bold", sans-serif;
+      --font: "SourceHanSansCN", -apple-system, BlinkMacSystemFont, "PingFang SC",
+              "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif;
     }
 
     * { box-sizing: border-box; }
@@ -84,21 +75,18 @@
     html {
       -webkit-text-size-adjust: 100%;
       text-size-adjust: 100%;
-      height: 100%;
       overflow-x: hidden;
-      overflow-y: auto;
       background: var(--bg);
       overscroll-behavior: none;
     }
 
     body {
       margin: 0;
-      height: auto;
-      min-height: 100%;
-      width: 100%;
-      overflow: visible;
-      font-family: var(--font-body);
-      color: #000000;
+      min-height: 100vh;
+      min-height: 100dvh;
+      font-family: var(--font);
+      font-weight: 400;
+      color: #000;
       background: var(--bg);
       line-height: 1.7;
       -webkit-font-smoothing: antialiased;
@@ -106,34 +94,7 @@
       overscroll-behavior: none;
     }
 
-    /* 标题 / 强调类文字：统一使用思源黑体 Bold（自托管） */
-    h1, h2, h3, h4, h5, h6,
-    .eyebrow,
-    .btn,
-    .badge,
-    .tag,
-    .icon,
-    .adv-icon,
-    .goal-num,
-    .step-num,
-    .case-visual span,
-    .hero-card-head,
-    .stat .num strong,
-    .stat .num em,
-    .lead-form label,
-    .form-status,
-    .section-head h2,
-    .cta-inner h2,
-    .nav-links a,
-    .logo strong,
-    .logo-mark,
-    .wechat-btn,
-    .phone-btn,
-    .about-btn,
-    .email-btn,
-    .nav-toggle {
-      font-family: var(--font-title);
-    }
+    h1, h2, h3, h4, h5, h6 { font-weight: 700; }
 
     a { color: inherit; }
 
@@ -144,31 +105,6 @@
       max-width: var(--max);
       margin: 0 auto;
       padding: 0 22px;
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      min-height: 48px;
-      padding: 0 24px;
-      border-radius: 999px;
-      text-decoration: none;
-      font-weight: 700;
-      font-size: 15px;
-      border: 1px solid transparent;
-      cursor: pointer;
-      touch-action: manipulation;
-      -webkit-user-select: none;
-      user-select: none;
-      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
-    }
-
-    .btn:disabled {
-      opacity: 0.7;
-      cursor: not-allowed;
-      transform: none;
     }
 
     .page {
@@ -182,28 +118,20 @@
       flex: 1 0 auto;
       width: 100%;
       padding: 62px 0 56px;
-      background: var(--bg);
+      padding-top: calc(62px + env(safe-area-inset-top, 0px));
       padding-left: env(safe-area-inset-left, 0px);
       padding-right: env(safe-area-inset-right, 0px);
-      padding-top: calc(62px + env(safe-area-inset-top, 0px));
     }
 
     .section-head {
       max-width: 800px;
-      margin-bottom: 40px;
-    }
-
-    .section-head.center {
-      margin-left: auto;
-      margin-right: auto;
+      margin: 0 auto 40px;
       text-align: center;
     }
 
-    /* ===== 提示语：字号放大两号（20px），一行放不下时自动折成两行 ===== */
     .section-head p {
       margin: 0;
-      padding: 0;
-      color: #000000;
+      color: #000;
       font-size: 20px;
       font-weight: 400;
       line-height: 1.6;
@@ -215,9 +143,7 @@
       row-gap: 0;
     }
 
-    .section-head p span {
-      display: inline-block;
-    }
+    .section-head p span { display: inline-block; }
 
     .contact-grid {
       max-width: 820px;
@@ -252,9 +178,10 @@
       border: 1px solid var(--line);
       border-radius: 12px;
       padding: 12px 14px;
-      font-family: var(--font-body);
+      font-family: inherit;
       font-size: 15px;
-      color: #000000;
+      font-weight: 400;
+      color: #000;
       background: #fbfdfe;
       outline: none;
       -webkit-appearance: none;
@@ -284,27 +211,42 @@
       box-shadow: 0 0 0 4px rgba(247, 159, 25, 0.18);
     }
 
-    /* ===== 「点击留言」与「返回主页」按钮：尺寸 160 × 46，深灰背景，字体不加粗 ===== */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 160px;
+      height: 46px;
+      padding: 0 8px;
+      border: 1px solid var(--btn-gray);
+      border-radius: 999px;
+      background: var(--btn-gray);
+      color: #fff;
+      font-family: inherit;
+      font-size: 15px;
+      font-weight: 400;
+      line-height: 1.2;
+      white-space: nowrap;
+      text-decoration: none;
+      cursor: pointer;
+      touch-action: manipulation;
+      -webkit-user-select: none;
+      user-select: none;
+      box-shadow: 0 12px 26px rgba(0, 0, 0, 0.22);
+      transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .btn:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+      transform: none;
+    }
+
     .lead-form .btn {
       grid-column: 1 / -1;
       justify-self: center;
-      width: 160px;
-      min-width: 160px;
-      max-width: 160px;
-      height: 46px;
-      min-height: 46px;
-      max-height: 46px;
-      padding: 0 8px;
-      font-family: var(--font-body);
-      font-size: 15px;
-      font-weight: 400;            /* 不加粗 */
-      line-height: 1.2;
-      white-space: nowrap;
       margin: 0 auto;
-      color: #ffffff;
-      background: var(--btn-gray);
-      border-color: var(--btn-gray);
-      box-shadow: 0 12px 26px rgba(0, 0, 0, 0.22);
     }
 
     .form-status {
@@ -314,76 +256,6 @@
       color: var(--primary-2);
       font-size: 14px;
       font-weight: 700;
-    }
-
-    .modal {
-      position: fixed;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      left: 0;
-      z-index: 300;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 24px;
-      background: rgba(7, 26, 40, 0.74);
-      -webkit-backdrop-filter: blur(4px);
-      backdrop-filter: blur(4px);
-    }
-
-    .modal.open { display: flex; }
-
-    .modal-box {
-      position: relative;
-      width: 100%;
-      max-width: 330px;
-      max-height: calc(100vh - 48px);
-      max-height: calc(100dvh - 48px);
-      overflow-y: auto;
-      -webkit-overflow-scrolling: touch;
-      padding: 26px 22px 24px;
-      border-radius: 20px;
-      background: #fff;
-      text-align: center;
-      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.32);
-    }
-
-    .modal-box img {
-      width: 100%;
-      max-width: 240px;
-      max-height: 60vh;
-      object-fit: contain;
-      margin: 0 auto 14px;
-      border-radius: 12px;
-      background: #f4f8fb;
-    }
-
-    .modal-tip {
-      margin: 0;
-      font-family: var(--font-body);
-      font-size: 17px;
-      font-weight: 400;
-      color: #000;
-      line-height: 1.6;
-    }
-
-    .modal-close {
-      position: absolute;
-      top: 8px;
-      right: 8px;
-      width: 34px;
-      height: 34px;
-      border: none;
-      border-radius: 50%;
-      background: #eef4f8;
-      color: #45606f;
-      font-size: 15px;
-      line-height: 1;
-      cursor: pointer;
-      touch-action: manipulation;
-      -webkit-appearance: none;
-      appearance: none;
     }
 
     .js .reveal {
@@ -398,24 +270,18 @@
     }
 
     @media (hover: hover) and (pointer: fine) {
-      .btn:hover { transform: translateY(-2px); }
-      .lead-form .btn:hover {
+      .btn:hover {
         background: var(--btn-gray-hover);
         border-color: var(--btn-gray-hover);
+        transform: translateY(-2px);
         box-shadow: 0 16px 32px rgba(0, 0, 0, 0.26);
       }
-      .modal-close:hover { background: #e2ecf3; }
     }
 
     @media (max-width: 760px) {
       .page-body { padding: 42px 0 44px; }
-
       .section-head { margin-bottom: 30px; }
-
-      .section-head p { font-size: 20px; }
-
       .lead-form { grid-template-columns: 1fr; padding: 22px; }
-
       .lead-form input,
       .lead-form select,
       .lead-form textarea { font-size: 16px; }
@@ -430,213 +296,121 @@
       .btn { transition: none; }
     }
 
-    /* ===== 1. 标题用 Bold 体、正文用 Regular 体 ===== */
-    h1, h2, h3, h4, h5, h6 {
-      font-weight: 700;
-    }
-
-    body,
-    p,
-    li,
-    input,
-    select,
-    textarea {
-      font-weight: 400;
-    }
-
-    /* 方框内正文统一不加粗 */
-    .section-head p,
-    .modal-tip {
-      font-weight: 400;
-    }
-
-    /* ===== 2. 文本输入光标不闪烁（隐藏插入符），鼠标指针正常显示 ===== */
-    input,
-    textarea,
-    [contenteditable] {
-      caret-color: transparent;
-    }
+    input, textarea, [contenteditable] { caret-color: transparent; }
   </style>
 </head>
 <body>
 
-<div id="app">
+<div class="page" id="page-contact">
+  <div class="page-body">
+    <section class="container">
+      <div class="section-head reveal">
+        <p>
+          <span>请留下您的需求</span>
+          <span>我们将尽快与您联系</span>
+        </p>
+      </div>
 
-  <div class="page" id="page-contact">
-    <div class="page-body">
-      <section class="container">
-        <div class="section-head center reveal">
-          <p>
-            <span>请留下您的需求</span>
-            <span>我们将尽快与您联系</span>
-          </p>
-        </div>
+      <div class="contact-grid">
+        <form
+          class="lead-form reveal"
+          id="leadForm"
+          action="https://api.web3forms.com/submit"
+          method="POST"
+        >
+          <input type="hidden" name="access_key" value="a8ae379d-2b62-4830-afaf-d7d75d46a694" />
+          <input type="hidden" name="subject" value="留言" />
+          <input type="checkbox" name="botcheck" style="display:none;" tabindex="-1" autocomplete="off" />
 
-        <div class="contact-grid">
-          <form
-            class="lead-form reveal"
-            id="leadForm"
-            action="https://api.web3forms.com/submit"
-            method="POST"
-          >
-            <input type="hidden" name="access_key" value="a8ae379d-2b62-4830-afaf-d7d75d46a694" />
-            <input type="hidden" name="subject" value="留言" />
-            <input type="checkbox" name="botcheck" style="display:none;" tabindex="-1" autocomplete="off" />
-
-            <label>
-              您的称呼
-              <input type="text" name="name" placeholder="请输入姓名或称呼" autocomplete="name" required />
-            </label>
-            <label>
-              联系电话
-              <input type="tel" name="phone" placeholder="请输入联系电话" inputmode="tel" autocomplete="tel" required />
-            </label>
-            <label>
-              联系微信
-              <input type="text" name="wechat" placeholder="请输入微信号（选填）" autocomplete="off" />
-            </label>
-            <label>
-              联系邮箱
-              <input type="email" name="email" placeholder="请输入联系邮箱" inputmode="email" autocomplete="email" required />
-            </label>
-            <label>
-              项目类型
-              <select name="building" autocomplete="off">
-                <option value="">请选择</option>
-                <option>办公</option>
-                <option>商业</option>
-                <option>住宅</option>
-                <option>酒店</option>
-                <option>医疗建筑</option>
-                <option>教育建筑</option>
-                <option>体育建筑</option>
-                <option>产业园区</option>
-                <option>厂房</option>
-                <option>市政</option>
-                <option>景观</option>
-                <option>其他</option>
-              </select>
-            </label>
-            <label>
-              需求类别
-              <select name="focus" autocomplete="off">
-                <option value="">请选择</option>
-                <option>给排水</option>
-                <option>暖通空调</option>
-                <option>电气</option>
-                <option>消防机电</option>
-                <option>装修机电</option>
-                <option>智能化</option>
-                <option>整体机电</option>
-              </select>
-            </label>
-            <label class="full">
-              需求说明
-              <textarea name="message" placeholder="如：施工图代画、竣工图绘制、装修机电等"></textarea>
-            </label>
-            <button class="btn" type="submit">点击留言</button>
-            <!-- 返回主页：在新标签页中打开同目录下的 index.html -->
-            <a class="btn" href="index.html" target="_blank" rel="noopener noreferrer">返回主页</a>
-            <p class="form-status" id="formStatus" role="status"></p>
-          </form>
-        </div>
-      </section>
-    </div>
+          <label>
+            您的称呼
+            <input type="text" name="name" placeholder="请输入姓名或称呼" autocomplete="name" required />
+          </label>
+          <label>
+            联系电话
+            <input type="tel" name="phone" placeholder="请输入联系电话" inputmode="tel" autocomplete="tel" required />
+          </label>
+          <label>
+            联系微信
+            <input type="text" name="wechat" placeholder="请输入微信号（选填）" autocomplete="off" />
+          </label>
+          <label>
+            联系邮箱
+            <input type="email" name="email" placeholder="请输入联系邮箱" inputmode="email" autocomplete="email" required />
+          </label>
+          <label>
+            项目类型
+            <select name="building" autocomplete="off">
+              <option value="">请选择</option>
+              <option>办公</option>
+              <option>商业</option>
+              <option>住宅</option>
+              <option>酒店</option>
+              <option>医疗建筑</option>
+              <option>教育建筑</option>
+              <option>体育建筑</option>
+              <option>产业园区</option>
+              <option>厂房</option>
+              <option>市政</option>
+              <option>景观</option>
+              <option>其他</option>
+            </select>
+          </label>
+          <label>
+            需求类别
+            <select name="focus" autocomplete="off">
+              <option value="">请选择</option>
+              <option>给排水</option>
+              <option>暖通空调</option>
+              <option>电气</option>
+              <option>消防机电</option>
+              <option>装修机电</option>
+              <option>智能化</option>
+              <option>整体机电</option>
+            </select>
+          </label>
+          <label class="full">
+            需求说明
+            <textarea name="message" placeholder="如：施工图代画、竣工图绘制、装修机电等"></textarea>
+          </label>
+          <button class="btn" type="submit">点击留言</button>
+          <a class="btn" href="index.html" target="_blank" rel="noopener noreferrer">返回主页</a>
+          <p class="form-status" id="formStatus" role="status"></p>
+        </form>
+      </div>
+    </section>
   </div>
-
 </div>
 
-
 <script>
-  // 滚动渐显
-  const revealItems = document.querySelectorAll('.reveal');
+  (function () {
+    var items = document.querySelectorAll('.reveal');
 
-  if ('IntersectionObserver' in window) {
-    const revealObserver = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
+    if (!('IntersectionObserver' in window)) {
+      items.forEach(function (el) { el.classList.add('visible'); });
+    } else {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
           if (entry.isIntersecting) {
             entry.target.classList.add('visible');
-            revealObserver.unobserve(entry.target);
+            io.unobserve(entry.target);
           }
         });
-      },
-      { threshold: 0.12 }
-    );
+      }, { threshold: 0.12 });
 
-    revealItems.forEach((item) => revealObserver.observe(item));
-  } else {
-    revealItems.forEach((item) => item.classList.add('visible'));
-  }
-
-  // 弹窗滚动锁定
-  function lockScroll(lock) {
-    document.documentElement.style.overflow = lock ? 'hidden' : '';
-    document.body.style.overflow = lock ? 'hidden' : '';
-  }
-
-  function initModal(modal, closeBtn, triggerSelector) {
-    if (!modal || !closeBtn) return;
-
-    let trigger = null;
-
-    function openModal(btn) {
-      trigger = btn || null;
-      modal.classList.add('open');
-      modal.setAttribute('aria-hidden', 'false');
-      lockScroll(true);
-      closeBtn.focus();
+      items.forEach(function (el) { io.observe(el); });
     }
 
-    function closeModal() {
-      modal.classList.remove('open');
-      modal.setAttribute('aria-hidden', 'true');
-      lockScroll(false);
-      if (trigger) trigger.focus();
-    }
+    var leadForm = document.getElementById('leadForm');
+    var formStatus = document.getElementById('formStatus');
 
-    document.querySelectorAll(triggerSelector).forEach((btn) => {
-      btn.addEventListener('click', (event) => {
-        event.preventDefault();
-        openModal(btn);
-      });
-    });
+    if (!leadForm || !formStatus) return;
 
-    closeBtn.addEventListener('click', closeModal);
-
-    modal.addEventListener('click', (event) => {
-      if (event.target === modal) closeModal();
-    });
-
-    document.addEventListener('keydown', (event) => {
-      if (event.key === 'Escape' && modal.classList.contains('open')) {
-        closeModal();
-      }
-    });
-  }
-
-  initModal(
-    document.getElementById('wechatModal'),
-    document.getElementById('wechatClose'),
-    '.wechat-btn'
-  );
-
-  initModal(
-    document.getElementById('phoneModal'),
-    document.getElementById('phoneClose'),
-    '.phone-btn'
-  );
-
-  // 需求表单提交
-  const leadForm = document.getElementById('leadForm');
-  const formStatus = document.getElementById('formStatus');
-
-  if (leadForm && formStatus) {
-    leadForm.addEventListener('submit', async (event) => {
+    leadForm.addEventListener('submit', function (event) {
       event.preventDefault();
 
-      const submitBtn = leadForm.querySelector('button[type="submit"]');
-      const originalText = submitBtn ? submitBtn.textContent : '';
+      var submitBtn = leadForm.querySelector('button[type="submit"]');
+      var originalText = submitBtn ? submitBtn.textContent : '';
 
       if (submitBtn) {
         submitBtn.disabled = true;
@@ -645,35 +419,34 @@
       formStatus.style.color = '';
       formStatus.textContent = '正在提交，请稍候...';
 
-      try {
-        const formData = new FormData(leadForm);
-        const response = await fetch(leadForm.action, {
-          method: 'POST',
-          body: formData,
-          headers: { Accept: 'application/json' },
-        });
-        const result = await response.json();
-
-        if (result.success) {
-          formStatus.style.color = 'var(--primary-2)';
-          formStatus.textContent = '我们已关注到您的需求，我们将尽快与您取得联系，感谢您的等待。';
-          leadForm.reset();
-        } else {
+      fetch(leadForm.action, {
+        method: 'POST',
+        body: new FormData(leadForm),
+        headers: { Accept: 'application/json' }
+      })
+        .then(function (response) { return response.json(); })
+        .then(function (result) {
+          if (result.success) {
+            formStatus.style.color = 'var(--primary-2)';
+            formStatus.textContent = '我们已关注到您的需求，我们将尽快与您取得联系，感谢您的等待。';
+            leadForm.reset();
+          } else {
+            formStatus.style.color = '#c0392b';
+            formStatus.textContent = '提交失败：' + (result.message || '请稍后重试或直接电话联系。');
+          }
+        })
+        .catch(function () {
           formStatus.style.color = '#c0392b';
-          formStatus.textContent =
-            '提交失败：' + (result.message || '请稍后重试或直接电话联系。');
-        }
-      } catch (error) {
-        formStatus.style.color = '#c0392b';
-        formStatus.textContent = '网络异常，请检查连接后重试，或直接电话联系。';
-      } finally {
-        if (submitBtn) {
-          submitBtn.disabled = false;
-          submitBtn.textContent = originalText;
-        }
-      }
+          formStatus.textContent = '网络异常，请检查连接后重试，或直接电话联系。';
+        })
+        .then(function () {
+          if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.textContent = originalText;
+          }
+        });
     });
-  }
+  })();
 </script>
 </body>
 </html>

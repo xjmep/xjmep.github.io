@@ -72,9 +72,7 @@
       --primary-3: #7ee8d3;
       --dark: #0c2233;
       --text: #233746;
-      --muted: #5b6b7a;
       --bg: #f4f8fb;
-      --white: #ffffff;
       --line: #dce7ee;
       --accent: #f5c96b;
       --shadow: 0 18px 50px rgba(12, 34, 51, 0.12);
@@ -152,6 +150,22 @@
       margin: 0 auto;
       padding: 0 22px;
     }
+
+    /* ===== 页面骨架：页头 / 内容 / 页脚 各一份 ===== */
+    #app {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      min-height: 100dvh;
+    }
+
+    #main {
+      flex: 1 0 auto;
+      width: 100%;
+    }
+
+    .page { display: block; }
+    .page[hidden] { display: none; }
 
     .site-header {
       position: sticky;
@@ -246,7 +260,7 @@
       justify-content: space-between;
       align-items: center;
       width: 100%;
-      color: #176C4E; /* 指定的深绿色 */
+      color: #176C4E;
       font-size: 12.5px;
       line-height: 1.2;
       letter-spacing: 0;
@@ -261,7 +275,23 @@
       min-width: 0;
     }
 
+    /* ============================================================
+       导航文字「自适应换行」核心规则
+       ------------------------------------------------------------
+       · 每个导航项的文字被拆成两个 <span>（各 2 个字）
+       · <a> 本身是 inline-flex + flex-wrap: wrap
+       · 空间足够 → 两个 span 并排（一行 4 个字）
+       · 空间不足 → 两个 span 各占一行，自动变成 2+2
+       · min-width: 0 + flex: 0 1 auto 让导航项可被容器压缩
+       ============================================================ */
     .nav-links a {
+      display: inline-flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      min-width: 0;
+      flex: 0 1 auto;
+      text-align: center;
       text-decoration: none;
       color: #254355;
       font-size: 14px;
@@ -272,49 +302,14 @@
       touch-action: manipulation;
     }
 
-    /* ============================================================
-       导航文字「自适应换行」核心规则
-       ------------------------------------------------------------
-       · 每个导航项的文字被拆成两个 <span>（各 2 个字）
-       · <a> 本身是 inline-flex + flex-wrap: wrap
-       · 空间足够 → 两个 span 并排（一行 4 个字）
-       · 空间不足 → 两个 span 各占一行，自动变成 2+2
-         （绝不会出现 3+1 的断行方式）
-       · min-width: 0 + flex: 0 1 auto 让导航项可被容器压缩，
-         从而触发上面的换行逻辑
-       ============================================================ */
-    .nav-links a:not(.btn) {
-      display: inline-flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: center;
-      min-width: 0;
-      flex: 0 1 auto;
-      text-align: center;
-    }
-
-    .nav-links a:not(.btn) > span {
+    .nav-links a > span {
       display: block;
       white-space: nowrap;
     }
 
-    .nav-links a:not(.btn).active {
+    .nav-links a.active {
       color: var(--primary-2);
       border-bottom-color: var(--primary-2);
-    }
-
-    .nav-links .btn { color: #fff; }
-
-    .nav-links .btn-circle {
-      width: 46px;
-      height: 46px;
-      min-height: 46px;
-      padding: 0;
-      border-radius: 50%;
-      font-size: 14px;
-      font-weight: 700;
-      letter-spacing: 0.02em;
-      flex-shrink: 0;
     }
 
     .nav-toggle {
@@ -409,23 +404,7 @@
       background: rgba(255, 255, 255, 0.06);
     }
 
-    .btn-sm {
-      min-height: 40px;
-      padding: 0 18px;
-      font-size: 14px;
-    }
-
-    .page {
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-      min-height: 100dvh;
-    }
-
-    .page[hidden] { display: none; }
-
     .page-body {
-      flex: 1 0 auto;
       width: 100%;
       padding: 62px 0 56px;
       background: var(--bg);
@@ -1313,7 +1292,7 @@
     }
 
     @media (hover: hover) and (pointer: fine) {
-      .nav-links a:not(.btn):hover { color: var(--primary-2); }
+      .nav-links a:hover { color: var(--primary-2); }
       .btn:hover { transform: translateY(-2px); }
       .btn-primary:hover { box-shadow: 0 16px 32px rgba(11, 95, 138, 0.28); }
       .btn-outline:hover { background: rgba(255, 255, 255, 0.14); }
@@ -1371,34 +1350,14 @@
       }
       .nav-links.open { display: flex; }
 
+      /* 移动端下拉菜单内宽度充足，始终单行显示 4 个字 */
       .nav-links a {
         width: 100%;
-        text-align: center;
         padding: 12px 14px;
         border-radius: 10px;
         border-bottom: none;
         font-size: 15px;
-      }
-
-      /* 移动端下拉菜单内宽度充足，始终单行显示 4 个字 */
-      .nav-links a:not(.btn) {
         flex-wrap: nowrap;
-        justify-content: center;
-      }
-
-      .nav-links .btn {
-        color: #fff;
-        margin-top: 6px;
-        padding: 12px 14px;
-      }
-
-      .nav-links .btn-circle {
-        align-self: center;
-        width: 48px;
-        height: 48px;
-        min-height: 48px;
-        padding: 0;
-        margin-top: 8px;
       }
 
       .hero { padding: 56px 0 56px; }
@@ -1556,469 +1515,524 @@
 
 <div id="app">
 
-  <div class="page" id="page-home">
-    <div class="page-body" style="padding:0;background:#fff;">
-      <section class="hero">
-        <div class="container hero-grid">
-          <div class="reveal">
-            <h1>让老建筑<br /><span>安全、节能、智慧</span><span class="run-text">地运行</span></h1>
-            <p class="hero-desc">
-             <p style="text-indent: 2em;">我们专注于机电更新，围绕给排水、暖通空调、供配电与照明、消防、电梯、智能化等系统，提供现状评估、方案编制、图纸设计、技术支持等更新服务。
-            </p>
-            <div class="hero-tags" aria-label="服务标签">
-              <span>安全合规</span>
-              <span>节能降耗</span>
-              <span>功能完善</span>
-              <span>智慧运维</span>
-            </div>
-          </div>
+  <header class="site-header">
+    <div class="container nav">
+      <a class="logo" href="#home" aria-label="小匠机电更新">
+        <span class="logo-mark" aria-hidden="true">
+          <span class="mark-inner">
+            <span class="mark-top">XJ MEP</span>
+            <span class="mark-sub">Update</span>
+          </span>
+        </span>
+        <span class="logo-text">
+          <strong>小匠机电更新</strong>
+          <small class="sub-justify"><span>机</span><span>电</span><span>系</span><span>统</span><span>更</span><span>新</span><span>专</span><span>家</span></small>
+        </span>
+      </a>
 
-          <aside class="hero-card reveal" aria-label="更新目标">
-            <div class="hero-card-head"><span class="dot"></span> 更新目标</div>
-            <div class="stats">
-              <div class="stat">
-                <div class="num"><strong data-count="98">98</strong><em>%</em></div>
-                <p>关键设备完好率目标</p>
+      <button class="nav-toggle" type="button" aria-label="打开导航菜单" aria-expanded="false">
+        <span class="nav-toggle-bars" aria-hidden="true"></span>
+      </button>
+
+      <nav class="nav-links" aria-label="主导航">
+        <a href="#home" data-nav="home"><span>机电</span><span>更新</span></a>
+        <a href="#pain" data-nav="pain"><span>现存</span><span>问题</span></a>
+        <a href="#services" data-nav="services"><span>服务</span><span>范围</span></a>
+        <a href="#goals" data-nav="goals"><span>更新</span><span>目标</span></a>
+        <a href="#process" data-nav="process"><span>实施</span><span>流程</span></a>
+        <a href="#cases" data-nav="cases"><span>案例</span><span>场景</span></a>
+        <a href="#why" data-nav="why"><span>推荐</span><span>理由</span></a>
+        <a href="#contact" data-nav="contact"><span>您的</span><span>需求</span></a>
+        <a href="esg.html" target="_blank" rel="noopener">ESG</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <div class="page" id="page-home">
+      <div class="page-body" style="padding:0;background:#fff;">
+        <section class="hero">
+          <div class="container hero-grid">
+            <div class="reveal">
+              <h1>让老建筑<br /><span>安全、节能、智慧</span><span class="run-text">地运行</span></h1>
+              <p style="text-indent: 2em;">我们专注于机电更新，围绕给排水、暖通空调、供配电与照明、消防、电梯、智能化等系统，提供现状评估、方案编制、图纸设计、技术支持等更新服务。</p>
+              <div class="hero-tags" aria-label="服务标签">
+                <span>安全合规</span>
+                <span>节能降耗</span>
+                <span>功能完善</span>
+                <span>智慧运维</span>
               </div>
-              <div class="stat">
-                <div class="num"><strong data-count="15">15</strong><em>%</em></div>
-                <p>系统能耗下降目标</p>
+            </div>
+
+            <aside class="hero-card reveal" aria-label="更新目标">
+              <div class="hero-card-head"><span class="dot"></span> 更新目标</div>
+              <div class="stats">
+                <div class="stat">
+                  <div class="num"><strong data-count="98">98</strong><em>%</em></div>
+                  <p>关键设备完好率目标</p>
+                </div>
+                <div class="stat">
+                  <div class="num"><strong data-count="15">15</strong><em>%</em></div>
+                  <p>系统能耗下降目标</p>
+                </div>
+                <div class="stat">
+                  <div class="num"><strong data-count="6">6</strong><em>大</em></div>
+                  <p>机电系统覆盖</p>
+                </div>
+                <div class="stat">
+                  <div class="num"><strong data-count="24">24</strong><em>h</em></div>
+                  <p>故障响应机制</p>
+                </div>
               </div>
-              <div class="stat">
-                <div class="num"><strong data-count="6">6</strong><em>大</em></div>
-                <p>机电系统覆盖</p>
+              <ul class="check-list">
+                <li>消除老旧线路、设备超期服役等安全隐患</li>
+                <li>高效设备替换、系统运行策略优化与提升</li>
+                <li>设备状态监测、故障报警与能耗计量管理</li>
+                <li>形成设备台账、竣工资料和运维交接成果</li>
+              </ul>
+            </aside>
+          </div>
+        </section>
+
+        <section class="cta-band">
+          <div class="container cta-inner">
+            <div>
+              <h2><span class="keep-together">若需机电更新，</span><span class="keep-together">请留下您的需求</span></h2>
+              <p><span class="cta-line">留下基本信息与主要问题，</span><span class="cta-line">我们将协助您梳理更新重点和实施路径。</span></p>
+            </div>
+            <a class="btn btn-outline" href="#contact" target="_blank" rel="noopener">填写表单</a>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <div class="page" id="page-pain" hidden>
+      <div class="page-body">
+        <section class="container">
+          <div class="section-head center reveal">
+            <span class="eyebrow">现存问题</span>
+            <h2><span class="keep-together">这些问题，</span><span class="keep-together">正在影响建筑运行</span></h2>
+            <p>既有建筑机电系统长期运行后，往往不是单一设备问题，而是安全性、能效、功能与运维的系统性叠加。</p>
+          </div>
+
+          <div class="pain-grid">
+            <div class="pain-item reveal">
+              <div>
+                <h3>设备超期服役，故障频发</h3>
+                <p>水泵、风机、空调等关键设备超过设计寿命，故障率上升，维修成本与停机风险高。</p>
               </div>
-              <div class="stat">
-                <div class="num"><strong data-count="24">24</strong><em>h</em></div>
-                <p>故障响应机制</p>
+            </div>
+            <div class="pain-item reveal">
+              <div>
+                <h3>空调冷热不均，能耗偏高</h3>
+                <p>冷热源效率下降、水力失衡、控制策略粗放，部分区域过冷或过热，能耗居高不下。</p>
               </div>
             </div>
-            <ul class="check-list">
-              <li>消除老旧线路、设备超期服役等安全隐患</li>
-              <li>高效设备替换、系统运行策略优化与提升</li>
-              <li>设备状态监测、故障报警与能耗计量管理</li>
-              <li>形成设备台账、竣工资料和运维交接成果</li>
-            </ul>
-          </aside>
-        </div>
-      </section>
-
-      <section class="cta-band">
-        <div class="container cta-inner">
-          <div>
-            <h2><span class="keep-together">若需机电更新，</span><span class="keep-together">请留下您的需求</span></h2>
-            <p><span class="cta-line">留下基本信息与主要问题，</span><span class="cta-line">我们将协助您梳理更新重点和实施路径。</span></p>
-          </div>
-          <a class="btn btn-outline" href="#contact" target="_blank" rel="noopener">填写表单</a>
-        </div>
-      </section>
-    </div>
-  </div>
-
-  <div class="page" id="page-pain" hidden>
-    <div class="page-body">
-      <section class="container">
-        <div class="section-head center reveal">
-          <span class="eyebrow">现存问题</span>
-          <h2><span class="keep-together">这些问题，</span><span class="keep-together">正在影响建筑运行</span></h2>
-          <p>既有建筑机电系统长期运行后，往往不是单一设备问题，而是安全性、能效、功能与运维的系统性叠加。</p>
-        </div>
-
-        <div class="pain-grid">
-          <div class="pain-item reveal">
-            <div>
-              <h3>设备超期服役，故障频发</h3>
-              <p>水泵、风机、空调等关键设备超过设计寿命，故障率上升，维修成本与停机风险高。</p>
+            <div class="pain-item reveal">
+              <div>
+                <h3>线路老化，存在用电隐患</h3>
+                <p>配电线路、开关柜长期运行，绝缘老化、容量不足，存在过载发热和电气火灾风险。</p>
+              </div>
+            </div>
+            <div class="pain-item reveal">
+              <div>
+                <h3>消防联动不足，合规压力大</h3>
+                <p>火灾报警、防排烟、消火栓、喷淋等系统联动关系不清，部分设施不满足现行规范。</p>
+              </div>
+            </div>
+            <div class="pain-item reveal">
+              <div>
+                <h3>弱电分散，运维管理粗放</h3>
+                <p>各子系统独立建设、数据不通，设备台账与运行记录缺失，难以支撑智能化运维决策。</p>
+              </div>
+            </div>
+            <div class="pain-item reveal">
+              <div>
+                <h3>给排水设施老化，水压水质难保障</h3>
+                <p>水泵、水箱与管道锈蚀结垢，水压不足和二次污染，漏损控制与用水计量手段缺失。</p>
+              </div>
             </div>
           </div>
-          <div class="pain-item reveal">
-            <div>
-              <h3>空调冷热不均，能耗偏高</h3>
-              <p>冷热源效率下降、水力失衡、控制策略粗放，部分区域过冷或过热，能耗居高不下。</p>
-            </div>
+        </section>
+      </div>
+    </div>
+
+    <div class="page" id="page-services" hidden>
+      <div class="page-body">
+        <section class="container">
+          <div class="section-head center reveal services-head">
+            <span class="eyebrow">服务范围</span>
+            <h2><span class="keep-together">覆盖机电更新</span><span class="keep-together">全专业</span></h2>
+            <p>以系统评估为基础，统筹设备更换、管线优化、系统联动和运行管理，避免“头痛医头、脚痛医脚”。</p>
           </div>
-          <div class="pain-item reveal">
-            <div>
-              <h3>线路老化，存在用电隐患</h3>
-              <p>配电线路、开关柜长期运行，绝缘老化、容量不足，存在过载发热和电气火灾风险。</p>
-            </div>
+
+          <div class="service-grid">
+            <article class="service-card reveal">
+              <div class="icon">给排水</div>
+              <h3>给排水系统更新</h3>
+              <p>水泵、水箱、管道、阀门及末端设施更新，解决水压不足、水质二次污染和计量粗放等问题。</p>
+              <span class="tag">安全供水 · 节水降耗</span>
+            </article>
+
+            <article class="service-card reveal">
+              <div class="icon">暖通</div>
+              <h3>暖通空调系统更新</h3>
+              <p>冷热源、空调机组、风机、水泵及自控系统的优化，改善冷热不均，提升系统能效和室内舒适性。</p>
+              <span class="tag">舒适调节 · 能效提升</span>
+            </article>
+
+            <article class="service-card reveal">
+              <div class="icon">电气</div>
+              <h3>供配电与照明更新</h3>
+              <p>配电柜、线路、桥架及照明系统改造，消除老化线路和容量不足风险，采用高效照明与分区控制。</p>
+              <span class="tag">安全用电 · 绿色照明</span>
+            </article>
+
+            <article class="service-card reveal">
+              <div class="icon">消防</div>
+              <h3>消防系统更新</h3>
+              <p>火灾报警、消火栓、喷淋及防排烟系统检修与消防联动更新、提升系统可靠性和规范性。</p>
+              <span class="tag">合规可靠 · 联动有效</span>
+            </article>
+
+            <article class="service-card reveal">
+              <div class="icon">电梯</div>
+              <h3>电梯与垂直交通</h3>
+              <p>围绕电梯运行安全、舒适性和能耗问题，配合开展设备评估、更新建议及附属机电条件完善。</p>
+              <span class="tag">运行安全 · 体验改善</span>
+            </article>
+
+            <article class="service-card reveal">
+              <div class="icon">智能化</div>
+              <h3>智能化与智慧运维</h3>
+              <p>建设或完善设备监控、能耗计量、故障报警和数据分析能力，让机电系统可看、可管、可优化。</p>
+              <span class="tag">状态监测 · 数据运维</span>
+            </article>
           </div>
-          <div class="pain-item reveal">
-            <div>
-              <h3>消防联动不足，合规压力大</h3>
-              <p>火灾报警、防排烟、消火栓、喷淋等系统联动关系不清，部分设施不满足现行规范。</p>
-            </div>
+        </section>
+      </div>
+    </div>
+
+    <div class="page" id="page-goals" hidden>
+      <div class="page-body">
+        <section class="container">
+          <div class="section-head center reveal">
+            <span class="eyebrow">更新目标</span>
+            <h2 class="two-line-title"><span class="keep-together">一次更新，</span><span class="keep-together">兼顾安全、能效与长期运维</span></h2>
+            <p>围绕实际使用需求与现状评估结果，形成可量化、可实施、可交接的更新目标。</p>
           </div>
-          <div class="pain-item reveal">
-            <div>
-              <h3>弱电分散，运维管理粗放</h3>
-              <p>各子系统独立建设、数据不通，设备台账与运行记录缺失，难以支撑智能化运维决策。</p>
-            </div>
+
+          <div class="goal-grid">
+            <article class="goal-card reveal">
+              <span class="goal-num">01</span>
+              <div>
+                <h3>安全合规</h3>
+                <p>让电气、给排水、暖通、电梯、消防、智能化等系统满足现行规范及使用要求，消除老旧线路、设备超期和消防联动不足等风险。</p>
+              </div>
+            </article>
+
+            <article class="goal-card reveal">
+              <span class="goal-num">02</span>
+              <div>
+                <h3>能效提升</h3>
+                <p>通过高效设备替换老旧设备、系统优化和运行策略调整，力争实现空调、照明、用水等主要系统能耗下降10%—15%。</p>
+              </div>
+            </article>
+
+            <article class="goal-card reveal">
+              <span class="goal-num">03</span>
+              <div>
+                <h3>功能完善</h3>
+                <p>解决温度不均、水压不足、照度不达标、弱电覆盖不足等问题，提升建筑的使用舒适性和功能适配性。</p>
+              </div>
+            </article>
+
+            <article class="goal-card reveal">
+              <span class="goal-num">04</span>
+              <div>
+                <h3>智慧运维</h3>
+                <p>建设或完善机电设备监控与能源管理系统，实现关键设备状态监测、故障报警、能耗计量和数据分析。</p>
+              </div>
+            </article>
+
+            <article class="goal-card reveal">
+              <span class="goal-num">05</span>
+              <div>
+                <h3>绿色低碳</h3>
+                <p>优先选用高效节能、低噪声、低排放设备和可回收材料，减少更新及运行阶段的资源消耗和环境影响。</p>
+              </div>
+            </article>
+
+            <article class="goal-card reveal">
+              <span class="goal-num">06</span>
+              <div>
+                <h3>实施保障</h3>
+                <p>合理设计，减少对建筑正常使用的影响，确保更新能安全、文明、有序推进，并形成完整交付资料。</p>
+              </div>
+            </article>
           </div>
-          <div class="pain-item reveal">
-            <div>
-              <h3>给排水设施老化，水压水质难保障</h3>
-              <p>水泵、水箱与管道锈蚀结垢，水压不足和二次污染，漏损控制与用水计量手段缺失。</p>
-            </div>
+        </section>
+      </div>
+    </div>
+
+    <div class="page" id="page-why" hidden>
+      <div class="page-body">
+        <section class="container">
+          <div class="section-head center reveal">
+            <span class="eyebrow">推荐理由</span>
+            <h2>选择小匠机电更新</h2>
+            <p>既懂设备更新，也懂建筑运行；既关注一次性改造，也关注后续长期运维。</p>
           </div>
-        </div>
-      </section>
+
+          <div class="advantage-grid">
+            <article class="advantage-card reveal">
+              <div class="adv-icon">评估</div>
+              <h3>评估定方案</h3>
+              <p>以现状诊断与分析为基础，严格比对现行规范。科学制定更新优先级，让每一次改造都有据可依，避免盲目更换设备与重复投资。</p>
+            </article>
+
+            <article class="advantage-card reveal">
+              <div class="adv-icon">协同</div>
+              <h3>全专业协同</h3>
+              <p>打破专业壁垒，统筹水、暖、电、消防、弱电、电梯等全系统。通过多维度深度协同，提前化解管线冲突与界面遗漏，全面提升机电更新工程的实施效率。</p>
+            </article>
+
+            <article class="advantage-card reveal">
+              <div class="adv-icon">设计</div>
+              <h3>定制化设计</h3>
+              <p>不套用模板，紧密结合建筑的实际使用特点与未来需求，完成精准的机电图纸设计。以高标准的设计图纸，为后续的高质量施工提供可靠依据。</p>
+            </article>
+
+            <article class="advantage-card reveal">
+              <div class="adv-icon">落地</div>
+              <h3>全周期服务</h3>
+              <p>提供全周期的保驾护航，前期提供扎实的施工技术支持，中期协助完成竣工验收与资料归档，后期提供专业运维服务。让更新成果真正实现可追溯、易管理、可持续运行。</p>
+            </article>
+          </div>
+        </section>
+      </div>
     </div>
-  </div>
 
-  <div class="page" id="page-services" hidden>
-    <div class="page-body">
-      <section class="container">
-        <div class="section-head center reveal services-head">
-          <span class="eyebrow">服务范围</span>
-          <h2><span class="keep-together">覆盖机电更新</span><span class="keep-together">全专业</span></h2>
-          <p>以系统评估为基础，统筹设备更换、管线优化、系统联动和运行管理，避免“头痛医头、脚痛医脚”。</p>
-        </div>
+    <div class="page" id="page-process" hidden>
+      <div class="page-body">
+        <section class="container">
+          <div class="section-head center reveal">
+            <span class="eyebrow">实施流程</span>
+            <h2><span class="keep-together">六步推进，</span><span class="keep-together">更新过程清晰可控</span></h2>
+            <p>从现状诊断到运维交接，建立闭环实施路径，兼顾设计质量、更新过程安全、使用体验和交付成果。</p>
+          </div>
 
-        <div class="service-grid">
-          <article class="service-card reveal">
-            <div class="icon">给排水</div>
-            <h3>给排水系统更新</h3>
-            <p>水泵、水箱、管道、阀门及末端设施更新，解决水压不足、水质二次污染和计量粗放等问题。</p>
-            <span class="tag">安全供水 · 节水降耗</span>
-          </article>
-
-          <article class="service-card reveal">
-            <div class="icon">暖通</div>
-            <h3>暖通空调系统更新</h3>
-            <p>冷热源、空调机组、风机、水泵及自控系统的优化，改善冷热不均，提升系统能效和室内舒适性。</p>
-            <span class="tag">舒适调节 · 能效提升</span>
-          </article>
-
-          <article class="service-card reveal">
-            <div class="icon">电气</div>
-            <h3>供配电与照明更新</h3>
-            <p>配电柜、线路、桥架及照明系统改造，消除老化线路和容量不足风险，采用高效照明与分区控制。</p>
-            <span class="tag">安全用电 · 绿色照明</span>
-          </article>
-
-          <article class="service-card reveal">
-            <div class="icon">消防</div>
-            <h3>消防系统更新</h3>
-            <p>火灾报警、消火栓、喷淋及防排烟系统检修与消防联动更新、提升系统可靠性和规范性。</p>
-            <span class="tag">合规可靠 · 联动有效</span>
-          </article>
-
-          <article class="service-card reveal">
-            <div class="icon">电梯</div>
-            <h3>电梯与垂直交通</h3>
-            <p>围绕电梯运行安全、舒适性和能耗问题，配合开展设备评估、更新建议及附属机电条件完善。</p>
-            <span class="tag">运行安全 · 体验改善</span>
-          </article>
-
-          <article class="service-card reveal">
-            <div class="icon">智能化</div>
-            <h3>智能化与智慧运维</h3>
-            <p>建设或完善设备监控、能耗计量、故障报警和数据分析能力，让机电系统可看、可管、可优化。</p>
-            <span class="tag">状态监测 · 数据运维</span>
-          </article>
-        </div>
-      </section>
+          <div class="flow-grid">
+            <article class="step reveal">
+              <div class="step-num">01</div>
+              <h3>现状诊断</h3>
+              <p>现场踏勘、设备排查、能耗分析和规范比对，识别安全、能效与功能问题。</p>
+            </article>
+            <article class="step reveal">
+              <div class="step-num">02</div>
+              <h3>方案评估</h3>
+              <p>明确更新范围、技术路线、实施优先级和投资估算，形成可实施方案。</p>
+            </article>
+            <article class="step reveal">
+              <div class="step-num">03</div>
+              <h3>图纸设计</h3>
+              <p>完成更新所需图纸设计，明确设备参数、管线走向与预留条件，减少现场变更和返工。</p>
+            </article>
+            <article class="step reveal">
+              <div class="step-num">04</div>
+              <h3>施工组织</h3>
+              <p>依据设计图纸分区分时组织施工，落实安全文明措施，减少对建筑正常使用的影响。</p>
+            </article>
+            <article class="step reveal">
+              <div class="step-num">05</div>
+              <h3>调试验收</h3>
+              <p>开展单机调试、系统联动和性能验证，确保设备与系统稳定可靠运行。</p>
+            </article>
+            <article class="step reveal">
+              <div class="step-num">06</div>
+              <h3>运维交接</h3>
+              <p>移交设备台账、竣工资料和运维建议，必要时接入智慧运维系统。</p>
+            </article>
+          </div>
+        </section>
+      </div>
     </div>
-  </div>
 
-  <div class="page" id="page-goals" hidden>
-    <div class="page-body">
-      <section class="container">
-        <div class="section-head center reveal">
-          <span class="eyebrow">更新目标</span>
-          <h2 class="two-line-title"><span class="keep-together">一次更新，</span><span class="keep-together">兼顾安全、能效与长期运维</span></h2>
-          <p>围绕实际使用需求与现状评估结果，形成可量化、可实施、可交接的更新目标。</p>
-        </div>
+    <div class="page" id="page-cases" hidden>
+      <div class="page-body">
+        <section class="container">
+          <div class="section-head center reveal">
+            <span class="eyebrow">案例场景</span>
+            <h2><span class="keep-together">适配不同建筑类型的</span><span class="keep-together">更新需求</span></h2>
+            <p>以下为典型场景示例，具体方案需结合建筑现状、使用需求和投资条件确定。</p>
+          </div>
 
-        <div class="goal-grid">
-          <article class="goal-card reveal">
-            <span class="goal-num">01</span>
-            <div>
-              <h3>安全合规</h3>
-              <p>让电气、给排水、暖通、电梯、消防、智能化等系统满足现行规范及使用要求，消除老旧线路、设备超期和消防联动不足等风险。</p>
-            </div>
-          </article>
+          <div class="case-grid">
+            <article class="case-card reveal">
+              <div class="case-visual"><span>办公楼更新场景</span></div>
+              <div class="case-body">
+                <h3>某办公建筑机电系统更新</h3>
+                <p>围绕空调能耗高、照明老化、弱电分散等问题开展系统更新。</p>
+                <ul>
+                  <li>空调机组与自控策略优化</li>
+                  <li>更新节能照明与分区控制</li>
+                  <li>设备监控与能耗计量完善</li>
+                </ul>
+              </div>
+            </article>
 
-          <article class="goal-card reveal">
-            <span class="goal-num">02</span>
-            <div>
-              <h3>能效提升</h3>
-              <p>通过高效设备替换老旧设备、系统优化和运行策略调整，力争实现空调、照明、用水等主要系统能耗下降10%—15%。</p>
-            </div>
-          </article>
+            <article class="case-card reveal">
+              <div class="case-visual"><span>公共建筑更新场景</span></div>
+              <div class="case-body">
+                <h3>某公共建筑安全合规更新</h3>
+                <p>解决消防联动不足、配电线路老化和给排水设施故障等问题。</p>
+                <ul>
+                  <li>消防报警与联动系统完善</li>
+                  <li>老旧配电设备及线路更新</li>
+                  <li>水泵水箱及管道设施改造</li>
+                </ul>
+              </div>
+            </article>
 
-          <article class="goal-card reveal">
-            <span class="goal-num">03</span>
-            <div>
-              <h3>功能完善</h3>
-              <p>解决温度不均、水压不足、照度不达标、弱电覆盖不足等问题，提升建筑的使用舒适性和功能适配性。</p>
-            </div>
-          </article>
+            <article class="case-card reveal">
+              <div class="case-visual"><span>住宅建筑更新场景</span></div>
+              <div class="case-body">
+                <h3>某住宅小区机电设施更新</h3>
+                <p>针对供水压力不足、公区照明能耗高、门禁与监控老化等问题分区分批实施更新。</p>
+                <ul>
+                  <li>二次供水泵房与管网改造</li>
+                  <li>公区照明节能与感应控制</li>
+                  <li>门禁对讲与视频监控更新</li>
+                  <li>电梯运行状态智能化监测</li>
+                </ul>
+              </div>
+            </article>
 
-          <article class="goal-card reveal">
-            <span class="goal-num">04</span>
-            <div>
-              <h3>智慧运维</h3>
-              <p>建设或完善机电设备监控与能源管理系统，实现关键设备状态监测、故障报警、能耗计量和数据分析。</p>
-            </div>
-          </article>
-
-          <article class="goal-card reveal">
-            <span class="goal-num">05</span>
-            <div>
-              <h3>绿色低碳</h3>
-              <p>优先选用高效节能、低噪声、低排放设备和可回收材料，减少更新及运行阶段的资源消耗和环境影响。</p>
-            </div>
-          </article>
-
-          <article class="goal-card reveal">
-            <span class="goal-num">06</span>
-            <div>
-              <h3>实施保障</h3>
-              <p>合理设计，减少对建筑正常使用的影响，确保更新能安全、文明、有序推进，并形成完整交付资料。</p>
-            </div>
-          </article>
-        </div>
-      </section>
+            <article class="case-card reveal">
+              <div class="case-visual"><span>园区更新场景</span></div>
+              <div class="case-body">
+                <h3>某园区机电系统综合提升</h3>
+                <p>统筹多栋建筑机电设施，提升运行可靠性和运维管理效率。</p>
+                <ul>
+                  <li>关键设备运行状态监测</li>
+                  <li>分区能耗的计量与分析</li>
+                  <li>运维技术措施制度建立</li>
+                </ul>
+              </div>
+            </article>
+          </div>
+        </section>
+      </div>
     </div>
-  </div>
 
-  <div class="page" id="page-why" hidden>
-    <div class="page-body">
-      <section class="container">
-        <div class="section-head center reveal">
-          <span class="eyebrow">推荐理由</span>
-          <h2>选择小匠机电更新</h2>
-          <p>既懂设备更新，也懂建筑运行；既关注一次性改造，也关注后续长期运维。</p>
-        </div>
+    <div class="page" id="page-contact" hidden>
+      <div class="page-body">
+        <section class="container">
+          <div class="section-head center reveal">
+            <span class="eyebrow">填写需求表单</span>
+            <h2>获取机电更新建议</h2>
+            <p>请留下您的需求，我们将尽快与您联系。</p>
+          </div>
 
-        <div class="advantage-grid">
-          <article class="advantage-card reveal">
-            <div class="adv-icon">评估</div>
-            <h3>评估定方案</h3>
-            <p>以现状诊断与分析为基础，严格比对现行规范。科学制定更新优先级，让每一次改造都有据可依，避免盲目更换设备与重复投资。</p>
-          </article>
+          <div class="contact-grid">
+            <form
+              class="lead-form reveal"
+              id="leadForm"
+              action="https://api.web3forms.com/submit"
+              method="POST"
+            >
+              <input type="hidden" name="access_key" value="a8ae379d-2b62-4830-afaf-d7d75d46a694" />
+              <input type="hidden" name="subject" value="小匠机电更新 - 新评估需求" />
+              <input type="checkbox" name="botcheck" style="display:none;" tabindex="-1" autocomplete="off" />
 
-          <article class="advantage-card reveal">
-            <div class="adv-icon">协同</div>
-            <h3>全专业协同</h3>
-            <p>打破专业壁垒，统筹水、暖、电、消防、弱电、电梯等全系统。通过多维度深度协同，提前化解管线冲突与界面遗漏，全面提升机电更新工程的实施效率。</p>
-          </article>
-
-          <article class="advantage-card reveal">
-            <div class="adv-icon">设计</div>
-            <h3>定制化设计</h3>
-            <p>不套用模板，紧密结合建筑的实际使用特点与未来需求，完成精准的机电图纸设计。以高标准的设计图纸，为后续的高质量施工提供可靠依据。</p>
-          </article>
-
-          <article class="advantage-card reveal">
-            <div class="adv-icon">落地</div>
-            <h3>全周期服务</h3>
-            <p>提供全周期的保驾护航，前期提供扎实的施工技术支持，中期协助完成竣工验收与资料归档，后期提供专业运维服务。让更新成果真正实现可追溯、易管理、可持续运行。</p>
-          </article>
-        </div>
-      </section>
+              <label>
+                您的称呼
+                <input type="text" name="name" placeholder="请输入姓名或称呼" autocomplete="name" required />
+              </label>
+              <label>
+                联系电话
+                <input type="tel" name="phone" placeholder="请输入联系电话" inputmode="tel" autocomplete="tel" required />
+              </label>
+              <label>
+                联系微信
+                <input type="text" name="wechat" placeholder="请输入微信号（选填）" autocomplete="off" />
+              </label>
+              <label>
+                联系邮箱
+                <input type="email" name="email" placeholder="请输入联系邮箱" inputmode="email" autocomplete="email" required />
+              </label>
+              <label>
+                建筑类型
+                <select name="building" autocomplete="off">
+                  <option value="">请选择</option>
+                  <option>办公</option>
+                  <option>商业</option>
+                  <option>住宅</option>
+                  <option>酒店</option>
+                  <option>医疗建筑</option>
+                  <option>教育建筑</option>
+                  <option>体育建筑</option>
+                  <option>产业园区</option>
+                  <option>厂房</option>
+                  <option>市政</option>
+                  <option>景观</option>
+                  <option>其他</option>
+                </select>
+              </label>
+              <label>
+                更新重点
+                <select name="focus" autocomplete="off">
+                  <option value="">请选择</option>
+                  <option>给排水系统</option>
+                  <option>暖通空调系统</option>
+                  <option>供配电与照明</option>
+                  <option>消防系统</option>
+                  <option>电梯与垂直交通</option>
+                  <option>智能化与智慧运维</option>
+                  <option>整体系统更新</option>
+                </select>
+              </label>
+              <label class="full">
+                需求说明
+                <textarea name="message" placeholder="如：空调能耗高、消防联动不足、配电线路老化、水压不足等"></textarea>
+              </label>
+              <button class="btn btn-primary" type="submit">提交需求</button>
+              <p class="form-status" id="formStatus" role="status"></p>
+            </form>
+          </div>
+        </section>
+      </div>
     </div>
-  </div>
 
-  <div class="page" id="page-process" hidden>
-    <div class="page-body">
-      <section class="container">
-        <div class="section-head center reveal">
-          <span class="eyebrow">实施流程</span>
-          <h2><span class="keep-together">六步推进，</span><span class="keep-together">更新过程清晰可控</span></h2>
-          <p>从现状诊断到运维交接，建立闭环实施路径，兼顾设计质量、更新过程安全、使用体验和交付成果。</p>
-        </div>
+  </main>
 
-        <div class="flow-grid">
-          <article class="step reveal">
-            <div class="step-num">01</div>
-            <h3>现状诊断</h3>
-            <p>现场踏勘、设备排查、能耗分析和规范比对，识别安全、能效与功能问题。</p>
-          </article>
-          <article class="step reveal">
-            <div class="step-num">02</div>
-            <h3>方案评估</h3>
-            <p>明确更新范围、技术路线、实施优先级和投资估算，形成可实施方案。</p>
-          </article>
-          <article class="step reveal">
-            <div class="step-num">03</div>
-            <h3>图纸设计</h3>
-            <p>完成更新所需图纸设计，明确设备参数、管线走向与预留条件，减少现场变更和返工。</p>
-          </article>
-          <article class="step reveal">
-            <div class="step-num">04</div>
-            <h3>施工组织</h3>
-            <p>依据设计图纸分区分时组织施工，落实安全文明措施，减少对建筑正常使用的影响。</p>
-          </article>
-          <article class="step reveal">
-            <div class="step-num">05</div>
-            <h3>调试验收</h3>
-            <p>开展单机调试、系统联动和性能验证，确保设备与系统稳定可靠运行。</p>
-          </article>
-          <article class="step reveal">
-            <div class="step-num">06</div>
-            <h3>运维交接</h3>
-            <p>移交设备台账、竣工资料和运维建议，必要时接入智慧运维系统。</p>
-          </article>
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-main">
+        <div class="footer-actions">
+          <button class="wechat-btn" type="button" aria-haspopup="dialog" aria-controls="wechatModal">微信联系</button>
+          <button class="phone-btn" type="button" aria-haspopup="dialog" aria-controls="phoneModal">电话联系</button>
+          <a class="email-btn" href="mailto:dxj@xjmep.com">邮件联系</a>
+          <a class="about-btn" href="about.html" target="_blank" rel="noopener">关于我们</a>
         </div>
-      </section>
+      </div>
+
+      <div class="footer-bottom">
+        <span class="copyright">©&nbsp;&nbsp;2026&nbsp;&nbsp;电小匠</span>
+        <span class="operator">四川电小匠工程设计有限公司</span>
+        <a href="https://www.xjmep.com" target="_blank" rel="noopener">www.xjmep.com</a>
+        <a href="mailto:dxj@xjmep.com">dxj@xjmep.com</a>
+      </div>
     </div>
-  </div>
-
-  <div class="page" id="page-cases" hidden>
-    <div class="page-body">
-      <section class="container">
-        <div class="section-head center reveal">
-          <span class="eyebrow">案例场景</span>
-          <h2><span class="keep-together">适配不同建筑类型的</span><span class="keep-together">更新需求</span></h2>
-          <p>以下为典型场景示例，具体方案需结合建筑现状、使用需求和投资条件确定。</p>
-        </div>
-
-        <div class="case-grid">
-          <article class="case-card reveal">
-            <div class="case-visual"><span>办公楼更新场景</span></div>
-            <div class="case-body">
-              <h3>某办公建筑机电系统更新</h3>
-              <p>围绕空调能耗高、照明老化、弱电分散等问题开展系统更新。</p>
-              <ul>
-                <li>空调机组与自控策略优化</li>
-                <li>更新节能照明与分区控制</li>
-                <li>设备监控与能耗计量完善</li>
-              </ul>
-            </div>
-          </article>
-
-          <article class="case-card reveal">
-            <div class="case-visual"><span>公共建筑更新场景</span></div>
-            <div class="case-body">
-              <h3>某公共建筑安全合规更新</h3>
-              <p>解决消防联动不足、配电线路老化和给排水设施故障等问题。</p>
-              <ul>
-                <li>消防报警与联动系统完善</li>
-                <li>老旧配电设备及线路更新</li>
-                <li>水泵水箱及管道设施改造</li>
-              </ul>
-            </div>
-          </article>
-
-          <article class="case-card reveal">
-            <div class="case-visual"><span>住宅建筑更新场景</span></div>
-            <div class="case-body">
-              <h3>某住宅小区机电设施更新</h3>
-              <p>针对供水压力不足、公区照明能耗高、门禁与监控老化等问题分区分批实施更新。</p>
-              <ul>
-                <li>二次供水泵房与管网改造</li>
-                <li>公区照明节能与感应控制</li>
-                <li>门禁对讲与视频监控更新</li>
-                <li>电梯运行状态智能化监测</li>
-              </ul>
-            </div>
-          </article>
-
-          <article class="case-card reveal">
-            <div class="case-visual"><span>园区更新场景</span></div>
-            <div class="case-body">
-              <h3>某园区机电系统综合提升</h3>
-              <p>统筹多栋建筑机电设施，提升运行可靠性和运维管理效率。</p>
-              <ul>
-                <li>关键设备运行状态监测</li>
-                <li>分区能耗的计量与分析</li>
-                <li>运维技术措施制度建立</li>
-              </ul>
-            </div>
-          </article>
-        </div>
-      </section>
-    </div>
-  </div>
-
-  <div class="page" id="page-contact" hidden>
-    <div class="page-body">
-      <section class="container">
-        <div class="section-head center reveal">
-          <span class="eyebrow">填写需求表单</span>
-          <h2>获取机电更新建议</h2>
-          <p>请留下您的需求，我们将尽快与您联系。</p>
-        </div>
-
-        <div class="contact-grid">
-          <form
-            class="lead-form reveal"
-            id="leadForm"
-            action="https://api.web3forms.com/submit"
-            method="POST"
-          >
-            <input type="hidden" name="access_key" value="a8ae379d-2b62-4830-afaf-d7d75d46a694" />
-            <input type="hidden" name="subject" value="小匠机电更新 - 新评估需求" />
-            <input type="checkbox" name="botcheck" style="display:none;" tabindex="-1" autocomplete="off" />
-
-            <label>
-              您的称呼
-              <input type="text" name="name" placeholder="请输入姓名或称呼" autocomplete="name" required />
-            </label>
-            <label>
-              联系电话
-              <input type="tel" name="phone" placeholder="请输入联系电话" inputmode="tel" autocomplete="tel" required />
-            </label>
-            <label>
-              联系微信
-              <input type="text" name="wechat" placeholder="请输入微信号（选填）" autocomplete="off" />
-            </label>
-            <label>
-              联系邮箱
-              <input type="email" name="email" placeholder="请输入联系邮箱" inputmode="email" autocomplete="email" required />
-            </label>
-            <label>
-              建筑类型
-              <select name="building" autocomplete="off">
-                <option value="">请选择</option>
-                <option>办公</option>
-                <option>商业</option>
-                <option>住宅</option>
-                <option>酒店</option>
-                <option>医疗建筑</option>
-                <option>教育建筑</option>
-                <option>体育建筑</option>
-                <option>产业园区</option>
-                <option>厂房</option>
-                <option>市政</option>
-                <option>景观</option>
-                <option>其他</option>
-              </select>
-            </label>
-            <label>
-              更新重点
-              <select name="focus" autocomplete="off">
-                <option value="">请选择</option>
-                <option>给排水系统</option>
-                <option>暖通空调系统</option>
-                <option>供配电与照明</option>
-                <option>消防系统</option>
-                <option>电梯与垂直交通</option>
-                <option>智能化与智慧运维</option>
-                <option>整体系统更新</option>
-              </select>
-            </label>
-            <label class="full">
-              需求说明
-              <textarea name="message" placeholder="如：空调能耗高、消防联动不足、配电线路老化、水压不足等"></textarea>
-            </label>
-            <button class="btn btn-primary" type="submit">提交需求</button>
-            <p class="form-status" id="formStatus" role="status"></p>
-          </form>
-        </div>
-      </section>
-    </div>
-  </div>
+  </footer>
 
 </div>
 
 <div class="modal" id="wechatModal" aria-hidden="true">
   <div class="modal-box" role="dialog" aria-modal="true" aria-label="微信二维码">
     <button class="modal-close" type="button" id="wechatClose" aria-label="关闭二维码">✕</button>
-    <img src="wechat.jpg" alt="小匠机电更新微信二维码" />
+    <img src="wechat.webp" alt="小匠机电更新微信二维码" />
     <p class="modal-tip">扫码添加微信，一对一咨询</p>
   </div>
 </div>
@@ -2026,7 +2040,7 @@
 <div class="modal" id="phoneModal" aria-hidden="true">
   <div class="modal-box" role="dialog" aria-modal="true" aria-label="电话联系二维码">
     <button class="modal-close" type="button" id="phoneClose" aria-label="关闭二维码">✕</button>
-    <img src="phone.png" alt="电话联系二维码" />
+    <img src="phone.webp" alt="电话联系二维码" />
     <p class="modal-tip">
       <span class="phone-label">联系电话：</span><a class="phone-dial" href="tel:18108010958">18108010958</a><br />
       点击号码或手机扫码直接拨打
@@ -2035,288 +2049,231 @@
 </div>
 
 <script>
-  const HEADER_HTML = `
-    <header class="site-header">
-      <div class="container nav">
-        <a class="logo" href="#home" aria-label="小匠机电更新首页">
-          <span class="logo-mark" aria-hidden="true">
-            <span class="mark-inner">
-              <span class="mark-top">XJ MEP</span>
-              <span class="mark-sub">Update</span>
-            </span>
-          </span>
-          <span class="logo-text">
-            <strong>小匠机电更新</strong>
-            <small class="sub-justify"><span>机</span><span>电</span><span>系</span><span>统</span><span>更</span><span>新</span><span>专</span><span>家</span></small>
-          </span>
-        </a>
+  (function () {
+    'use strict';
 
-        <button class="nav-toggle" type="button" aria-label="打开导航菜单" aria-expanded="false">
-          <span class="nav-toggle-bars" aria-hidden="true"></span>
-        </button>
+    /* ---------- 导航菜单（移动端） ---------- */
+    var navToggle = document.querySelector('.nav-toggle');
+    var navLinks = document.querySelector('.nav-links');
 
-        <nav class="nav-links" aria-label="主导航">
-          <a href="#home" data-nav="home"><span>机电</span><span>更新</span></a>
-          <a href="#pain" data-nav="pain"><span>现存</span><span>问题</span></a>
-          <a href="#services" data-nav="services"><span>服务</span><span>范围</span></a>
-          <a href="#goals" data-nav="goals"><span>更新</span><span>目标</span></a>
-          <a href="#process" data-nav="process"><span>实施</span><span>流程</span></a>
-          <a href="#cases" data-nav="cases"><span>案例</span><span>场景</span></a>
-          <a href="#why" data-nav="why"><span>推荐</span><span>理由</span></a>
-          <a href="#contact" data-nav="contact"><span>您的</span><span>需求</span></a>
-          <a href="esg.html" target="_blank" rel="noopener">ESG</a>
-        </nav>
-      </div>
-    </header>
-  `;
-
-  const FOOTER_HTML = `
-    <footer class="site-footer">
-      <div class="container">
-        <div class="footer-main">
-          <div class="footer-actions">
-            <button class="wechat-btn" type="button" aria-haspopup="dialog" aria-controls="wechatModal">微信联系</button>
-            <button class="phone-btn" type="button" aria-haspopup="dialog" aria-controls="phoneModal">电话联系</button>
-            <a class="email-btn" href="mailto:dxj@xjmep.com">邮件联系</a>
-            <a class="about-btn" href="about.html" target="_blank" rel="noopener">关于我们</a>
-          </div>
-        </div>
-
-        <div class="footer-bottom">
-          <span class="copyright">©&nbsp;&nbsp;2026&nbsp;&nbsp;电小匠</span>
-          <span class="operator">四川电小匠工程设计有限公司</span>
-          <a href="https://www.xjmep.com" target="_blank" rel="noopener">www.xjmep.com</a>
-          <a href="mailto:dxj@xjmep.com">dxj@xjmep.com</a>
-        </div>
-      </div>
-    </footer>
-  `;
-
-  document.querySelectorAll('.page').forEach((page) => {
-    page.insertAdjacentHTML('afterbegin', HEADER_HTML);
-    page.insertAdjacentHTML('beforeend', FOOTER_HTML);
-  });
-
-  document.querySelectorAll('.site-header').forEach((header) => {
-    const toggle = header.querySelector('.nav-toggle');
-    const links = header.querySelector('.nav-links');
-
-    toggle.addEventListener('click', () => {
-      const isOpen = links.classList.toggle('open');
-      toggle.setAttribute('aria-expanded', String(isOpen));
+    navToggle.addEventListener('click', function () {
+      var isOpen = navLinks.classList.toggle('open');
+      navToggle.setAttribute('aria-expanded', String(isOpen));
     });
 
-    links.querySelectorAll('a').forEach((link) => {
-      link.addEventListener('click', () => {
-        links.classList.remove('open');
-        toggle.setAttribute('aria-expanded', 'false');
-      });
-    });
-  });
-
-  const pages = Array.from(document.querySelectorAll('.page'));
-  const pageIds = new Set(pages.map((p) => p.id.replace('page-', '')));
-
-  function getRoute() {
-    const hash = (location.hash || '').replace('#', '').trim();
-    return pageIds.has(hash) ? hash : 'home';
-  }
-
-  function revealCurrentPage() {
-    const current = document.querySelector('.page:not([hidden])');
-    if (!current) return;
-    const vh = window.innerHeight || document.documentElement.clientHeight;
-    current.querySelectorAll('.reveal:not(.visible)').forEach((el) => {
-      const rect = el.getBoundingClientRect();
-      if (rect.top < vh && rect.bottom > 0) {
-        el.classList.add('visible');
+    navLinks.addEventListener('click', function (event) {
+      if (event.target.closest('a')) {
+        navLinks.classList.remove('open');
+        navToggle.setAttribute('aria-expanded', 'false');
       }
     });
-  }
 
-  function renderPage() {
-    const route = getRoute();
+    /* ---------- 页面路由 ---------- */
+    var pages = Array.prototype.slice.call(document.querySelectorAll('.page'));
+    var navItems = Array.prototype.slice.call(document.querySelectorAll('[data-nav]'));
+    var pageIds = new Set(pages.map(function (page) {
+      return page.id.replace('page-', '');
+    }));
 
-    pages.forEach((page) => {
-      page.hidden = page.id !== 'page-' + route;
-    });
+    function getRoute() {
+      var hash = (location.hash || '').replace('#', '').trim();
+      return pageIds.has(hash) ? hash : 'home';
+    }
 
-    document.querySelectorAll('[data-nav]').forEach((link) => {
-      link.classList.toggle('active', link.dataset.nav === route);
-    });
+    function revealCurrentPage() {
+      var current = document.querySelector('.page:not([hidden])');
+      if (!current) return;
+      var vh = window.innerHeight || document.documentElement.clientHeight;
+      current.querySelectorAll('.reveal:not(.visible)').forEach(function (el) {
+        var rect = el.getBoundingClientRect();
+        if (rect.top < vh && rect.bottom > 0) {
+          el.classList.add('visible');
+        }
+      });
+    }
 
-    window.scrollTo(0, 0);
+    function renderPage() {
+      var route = getRoute();
 
-    requestAnimationFrame(() => {
-      requestAnimationFrame(revealCurrentPage);
-    });
-  }
+      pages.forEach(function (page) {
+        page.hidden = page.id !== 'page-' + route;
+      });
 
-  window.addEventListener('hashchange', renderPage);
-  renderPage();
+      navItems.forEach(function (link) {
+        link.classList.toggle('active', link.dataset.nav === route);
+      });
 
-  const revealItems = document.querySelectorAll('.reveal');
+      window.scrollTo(0, 0);
 
-  if ('IntersectionObserver' in window) {
-    const revealObserver = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
+      requestAnimationFrame(function () {
+        requestAnimationFrame(revealCurrentPage);
+      });
+    }
+
+    window.addEventListener('hashchange', renderPage);
+    renderPage();
+
+    /* ---------- 滚动进入动画 ---------- */
+    var revealItems = document.querySelectorAll('.reveal');
+
+    if ('IntersectionObserver' in window) {
+      var revealObserver = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
           if (entry.isIntersecting) {
             entry.target.classList.add('visible');
             revealObserver.unobserve(entry.target);
           }
         });
-      },
-      { threshold: 0.12 }
-    );
+      }, { threshold: 0.12 });
 
-    revealItems.forEach((item) => revealObserver.observe(item));
-  } else {
-    revealItems.forEach((item) => item.classList.add('visible'));
-  }
-
-  function animateCounter(element) {
-    const target = Number(element.dataset.count);
-    const duration = 1200;
-    const startTime = performance.now();
-
-    function tick(now) {
-      const progress = Math.min((now - startTime) / duration, 1);
-      element.textContent = Math.floor(progress * target);
-
-      if (progress < 1) {
-        requestAnimationFrame(tick);
-      } else {
-        element.textContent = String(target);
-      }
+      revealItems.forEach(function (item) { revealObserver.observe(item); });
+    } else {
+      revealItems.forEach(function (item) { item.classList.add('visible'); });
     }
 
-    requestAnimationFrame(tick);
-  }
+    /* ---------- 数字滚动 ---------- */
+    function animateCounter(element) {
+      var target = Number(element.dataset.count);
+      var duration = 1200;
+      var startTime = performance.now();
 
-  const counters = document.querySelectorAll('[data-count]');
+      function tick(now) {
+        var progress = Math.min((now - startTime) / duration, 1);
+        element.textContent = Math.floor(progress * target);
 
-  if (counters.length && 'IntersectionObserver' in window) {
-    const counterObserver = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
+        if (progress < 1) {
+          requestAnimationFrame(tick);
+        } else {
+          element.textContent = String(target);
+        }
+      }
+
+      requestAnimationFrame(tick);
+    }
+
+    var counters = document.querySelectorAll('[data-count]');
+
+    if (counters.length && 'IntersectionObserver' in window) {
+      var counterObserver = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
           if (entry.isIntersecting) {
-            const el = entry.target;
+            var el = entry.target;
             el.textContent = '0';
             animateCounter(el);
             counterObserver.unobserve(el);
           }
         });
-      },
-      { threshold: 0.5 }
+      }, { threshold: 0.5 });
+
+      counters.forEach(function (counter) { counterObserver.observe(counter); });
+    }
+
+    /* ---------- 弹窗 ---------- */
+    function lockScroll(lock) {
+      document.documentElement.style.overflow = lock ? 'hidden' : '';
+      document.body.style.overflow = lock ? 'hidden' : '';
+    }
+
+    function initModal(modal, closeBtn, triggerSelector) {
+      if (!modal || !closeBtn) return;
+
+      var trigger = null;
+
+      function openModal(btn) {
+        trigger = btn || null;
+        modal.classList.add('open');
+        modal.setAttribute('aria-hidden', 'false');
+        lockScroll(true);
+        closeBtn.focus();
+      }
+
+      function closeModal() {
+        modal.classList.remove('open');
+        modal.setAttribute('aria-hidden', 'true');
+        lockScroll(false);
+        if (trigger) trigger.focus();
+      }
+
+      document.querySelectorAll(triggerSelector).forEach(function (btn) {
+        btn.addEventListener('click', function (event) {
+          event.preventDefault();
+          openModal(btn);
+        });
+      });
+
+      closeBtn.addEventListener('click', closeModal);
+
+      modal.addEventListener('click', function (event) {
+        if (event.target === modal) closeModal();
+      });
+
+      document.addEventListener('keydown', function (event) {
+        if (event.key === 'Escape' && modal.classList.contains('open')) {
+          closeModal();
+        }
+      });
+    }
+
+    initModal(
+      document.getElementById('wechatModal'),
+      document.getElementById('wechatClose'),
+      '.wechat-btn'
     );
 
-    counters.forEach((counter) => counterObserver.observe(counter));
-  }
+    initModal(
+      document.getElementById('phoneModal'),
+      document.getElementById('phoneClose'),
+      '.phone-btn'
+    );
 
-  function lockScroll(lock) {
-    document.documentElement.style.overflow = lock ? 'hidden' : '';
-    document.body.style.overflow = lock ? 'hidden' : '';
-  }
+    /* ---------- 表单提交 ---------- */
+    var leadForm = document.getElementById('leadForm');
+    var formStatus = document.getElementById('formStatus');
 
-  function initModal(modal, closeBtn, triggerSelector) {
-    if (!modal || !closeBtn) return;
-
-    let trigger = null;
-
-    function openModal(btn) {
-      trigger = btn || null;
-      modal.classList.add('open');
-      modal.setAttribute('aria-hidden', 'false');
-      lockScroll(true);
-      closeBtn.focus();
-    }
-
-    function closeModal() {
-      modal.classList.remove('open');
-      modal.setAttribute('aria-hidden', 'true');
-      lockScroll(false);
-      if (trigger) trigger.focus();
-    }
-
-    document.querySelectorAll(triggerSelector).forEach((btn) => {
-      btn.addEventListener('click', (event) => {
+    if (leadForm && formStatus) {
+      leadForm.addEventListener('submit', async function (event) {
         event.preventDefault();
-        openModal(btn);
-      });
-    });
 
-    closeBtn.addEventListener('click', closeModal);
+        var submitBtn = leadForm.querySelector('button[type="submit"]');
+        var originalText = submitBtn ? submitBtn.textContent : '';
 
-    modal.addEventListener('click', (event) => {
-      if (event.target === modal) closeModal();
-    });
-
-    document.addEventListener('keydown', (event) => {
-      if (event.key === 'Escape' && modal.classList.contains('open')) {
-        closeModal();
-      }
-    });
-  }
-
-  initModal(
-    document.getElementById('wechatModal'),
-    document.getElementById('wechatClose'),
-    '.wechat-btn'
-  );
-
-  initModal(
-    document.getElementById('phoneModal'),
-    document.getElementById('phoneClose'),
-    '.phone-btn'
-  );
-
-  const leadForm = document.getElementById('leadForm');
-  const formStatus = document.getElementById('formStatus');
-
-  if (leadForm && formStatus) {
-    leadForm.addEventListener('submit', async (event) => {
-      event.preventDefault();
-
-      const submitBtn = leadForm.querySelector('button[type="submit"]');
-      const originalText = submitBtn ? submitBtn.textContent : '';
-
-      if (submitBtn) {
-        submitBtn.disabled = true;
-        submitBtn.textContent = '提交中...';
-      }
-      formStatus.style.color = '';
-      formStatus.textContent = '正在提交，请稍候...';
-
-      try {
-        const formData = new FormData(leadForm);
-        const response = await fetch(leadForm.action, {
-          method: 'POST',
-          body: formData,
-          headers: { Accept: 'application/json' },
-        });
-        const result = await response.json();
-
-        if (result.success) {
-          formStatus.style.color = 'var(--primary-2)';
-          formStatus.textContent = '我们已关注到您的需求，我们将尽快与您取得联系，感谢您的等待。';
-          leadForm.reset();
-        } else {
-          formStatus.style.color = '#c0392b';
-          formStatus.textContent =
-            '提交失败：' + (result.message || '请稍后重试或直接电话联系。');
-        }
-      } catch (error) {
-        formStatus.style.color = '#c0392b';
-        formStatus.textContent = '网络异常，请检查连接后重试，或直接电话联系。';
-      } finally {
         if (submitBtn) {
-          submitBtn.disabled = false;
-          submitBtn.textContent = originalText;
+          submitBtn.disabled = true;
+          submitBtn.textContent = '提交中...';
         }
-      }
-    });
-  }
+        formStatus.style.color = '';
+        formStatus.textContent = '正在提交，请稍候...';
+
+        try {
+          var formData = new FormData(leadForm);
+          var response = await fetch(leadForm.action, {
+            method: 'POST',
+            body: formData,
+            headers: { Accept: 'application/json' }
+          });
+          var result = await response.json();
+
+          if (result.success) {
+            formStatus.style.color = 'var(--primary-2)';
+            formStatus.textContent = '我们已关注到您的需求，我们将尽快与您取得联系，感谢您的等待。';
+            leadForm.reset();
+          } else {
+            formStatus.style.color = '#c0392b';
+            formStatus.textContent =
+              '提交失败：' + (result.message || '请稍后重试或直接电话联系。');
+          }
+        } catch (error) {
+          formStatus.style.color = '#c0392b';
+          formStatus.textContent = '网络异常，请检查连接后重试，或直接电话联系。';
+        } finally {
+          if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.textContent = originalText;
+          }
+        }
+      });
+    }
+  })();
 </script>
 </body>
 </html>

@@ -59,7 +59,6 @@
 
   :root{
     --bg:#F79F19;
-    --bg-dark:#F79F19;
     --ink:#000000;
     --paper:#FFFFFF;
     --ink-soft:#9A5B00;
@@ -81,10 +80,6 @@
 
     /* ===== 卡片标题字号：比正文大两号（1.1rem = 0.98rem + 0.12rem） ===== */
     --fs-card-title:1.1rem;
-
-    /* ===== 五次超椭圆圆角（n≈5） ===== */
-    --corner-shape:squircle;
-    --corner-radius:14px;
   }
   *{
     margin:0;padding:0;box-sizing:border-box;
@@ -105,7 +100,7 @@
 
   /* ===== Hero 首屏 ===== */
   .hero{
-    background:linear-gradient(160deg,var(--bg) 0%,var(--bg-dark) 100%);
+    background:var(--bg);
     min-height:100vh;
     display:flex;flex-direction:column;justify-content:center;align-items:center;
     text-align:center;
@@ -307,8 +302,6 @@
 
   .detail-grid{grid-template-columns:repeat(auto-fit,minmax(220px,1fr));}
   .detail-grid .card{padding:20px 18px;}
-  .detail-grid .card h3{font-size:var(--fs-card-title);}
-  .detail-grid .card p{font-size:var(--fs-body);}
 
   /* ===== 二维码外框：统一为正方形，尺寸以微信二维码为准 ===== */
   .note-qr{
@@ -368,9 +361,6 @@
     cursor:pointer;
     -webkit-tap-highlight-color:transparent;
   }
-  #phone-modal .tel:visited,
-  #phone-modal .tel:hover,
-  #phone-modal .tel:active{color:#000000;text-decoration:none;}
   #phone-modal .tel-sub{
     font-family:var(--font-sans);
     font-size:clamp(.98rem,3.9vw,1.12rem);
@@ -475,7 +465,7 @@
 
   /* ==========================================================================
      字体绑定：全部以自托管 woff2 为首选
-     1) 所有标题类文字（含 b / strong）统一使用 SourceHanSansCN-Bold；
+     1) 所有标题类文字统一使用 SourceHanSansCN-Bold；
         若某个字不在 Bold 子集内，则自动落到同名字体 Noto Sans SC 的 700 字重分片。
      2) 正文、页脚、说明性小字统一使用 SourceHanSansCN-Regular；
         缺失字符同样自动由同名字体 Noto Sans SC 的 400 字重分片补齐。
@@ -490,9 +480,7 @@
   .card h3,
   .step .num,
   th,
-  footer,
-  b,
-  strong{
+  footer{
     font-family:var(--font-title);
   }
 
@@ -659,13 +647,13 @@
   <div id="wechat-contact" style="text-align:center; padding:0; margin:0;">
     <span class="sec-title" style="background:none;font-size:clamp(1.1rem,4vw,1.8rem);">添加微信</span>
     <br>
-    <img class="note-qr" src="wechat.jpg" alt="微信二维码" style="cursor:pointer;" onclick="document.getElementById('qr-modal').style.display='flex'">
+    <img class="note-qr" src="wechat.webp" alt="微信二维码" loading="lazy" decoding="async" style="cursor:pointer;" onclick="document.getElementById('qr-modal').style.display='flex'">
   </div>
 
   <div id="phone-contact" style="text-align:center; padding:0; margin:0;">
     <span class="sec-title" style="background:none;font-size:clamp(1.1rem,4vw,1.8rem);">拨打电话</span>
     <br>
-    <img class="note-qr" src="phone.png" alt="电话二维码" style="cursor:pointer;" onclick="document.getElementById('phone-modal').style.display='flex'">
+    <img class="note-qr" src="phone.webp" alt="电话二维码" loading="lazy" decoding="async" style="cursor:pointer;" onclick="document.getElementById('phone-modal').style.display='flex'">
   </div>
 
 </div>
@@ -677,32 +665,32 @@
           data-href="https://xjmep.taobao.com"
           data-scheme="taobao://"
           data-name="淘宝">
-    <img src="tb.png" alt="淘宝" width="50" height="50">
+    <img src="tb.webp" alt="淘宝" width="50" height="50" loading="lazy" decoding="async">
   </button>
 
   <button type="button" class="ib"
           data-href="https://m.tb.cn/h.jjUVHO1?tk=DIip62OVrU2"
           data-scheme="xianyu://"
           data-name="闲鱼">
-    <img src="xy.png" alt="闲鱼" width="50" height="50">
+    <img src="xy.webp" alt="闲鱼" width="50" height="50" loading="lazy" decoding="async">
   </button>
 
   <button type="button" class="ib"
           data-href="https://xhslink.cn/o/4xR7lu616uu"
           data-scheme="xhsdiscover://"
           data-name="小红书">
-    <img src="xhs.png" alt="小红书" width="50" height="50">
+    <img src="xhs.webp" alt="小红书" width="50" height="50" loading="lazy" decoding="async">
   </button>
 
   <button type="button" class="ib"
           data-modal="gzh-modal"
           data-name="公众号">
-    <img src="gzh.png" alt="公众号" width="50" height="50">
+    <img src="gzh.webp" alt="公众号" width="50" height="50" loading="lazy" decoding="async">
   </button>
 
   <button type="button" class="ib"
           data-href="xjmepupdate.html">
-    <img src="xjmepupdate.png" alt="XJ MEP 更新" width="50" height="50">
+    <img src="xjmepupdate.webp" alt="XJ MEP 更新" width="50" height="50" loading="lazy" decoding="async">
   </button>
 
 </div>
@@ -984,7 +972,7 @@ document.querySelectorAll('.icon-strip .ib').forEach(function(btn){
 <div id="qr-modal" onclick="if(event.target===this)this.style.display='none'">
   <div class="box">
     <button class="close" onclick="document.getElementById('qr-modal').style.display='none'">×</button>
-    <img src="wechat.jpg" alt="微信二维码">
+    <img src="wechat.webp" alt="微信二维码" decoding="async">
     <p>扫码添加微信，一对一咨询</p>
   </div>
 </div>
@@ -993,7 +981,7 @@ document.querySelectorAll('.icon-strip .ib').forEach(function(btn){
 <div id="phone-modal" onclick="if(event.target===this)this.style.display='none'">
   <div class="box">
     <button class="close" onclick="document.getElementById('phone-modal').style.display='none'">×</button>
-    <img src="phone.png" alt="电话二维码">
+    <img src="phone.webp" alt="电话二维码" decoding="async">
     <a class="tel" href="tel:18108010958">联系电话：18108010958</a>
     <p class="tel-sub">点击号码或手机扫码直接拨打</p>
   </div>
@@ -1003,7 +991,7 @@ document.querySelectorAll('.icon-strip .ib').forEach(function(btn){
 <div id="gzh-modal" onclick="if(event.target===this)this.style.display='none'">
   <div class="box">
     <button class="close" onclick="document.getElementById('gzh-modal').style.display='none'">×</button>
-    <img src="gzhewm.png" alt="公众号二维码">
+    <img src="gzhewm.webp" alt="公众号二维码" decoding="async">
     <p>扫码关注公众号</p>
   </div>
 </div>

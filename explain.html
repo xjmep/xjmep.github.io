@@ -1,260 +1,182 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>产品说明</title>
-    <!--
-      字体授权说明：
-      本页面使用的思源黑体（Source Han Sans）
-      采用 SIL Open Font License 1.1（OFL 1.1）授权。
-      OFL 允许免费商业使用、修改、嵌入与再分发。
-      条件：不得单独售卖字体文件；修改后不得使用 “Source” 等保留字体名称；
-      再分发时需保留版权声明与 OFL 许可证文本。
-      许可证全文：https://scripts.sil.org/OFL
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>产品说明</title>
+<!--
+  字体：思源黑体（Source Han Sans），SIL Open Font License 1.1（OFL 1.1）授权。
+  本地字体（首选）：fonts/SourceHanSansCN-Bold.woff2 / fonts/SourceHanSansCN-Regular.woff2
+  在线字体（兜底）：仅当本地字体缺失某字形、或本地文件整体缺失时才会被请求。
+  许可证全文：https://scripts.sil.org/OFL
+-->
+<style>
+/* ============ 1. 字体声明 ============ */
+@font-face {
+    font-family: "SourceHanSansCN-Bold";
+    src: url("fonts/SourceHanSansCN-Bold.woff2") format("woff2");
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: "SourceHanSansCN-Regular";
+    src: url("fonts/SourceHanSansCN-Regular.woff2") format("woff2");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: "SourceHanSansCN-Bold-Online";
+    src: url("https://cdn.jsdelivr.net/gh/adobe-fonts/source-han-sans@release/SubsetOTF/CN/SourceHanSansCN-Bold.otf") format("opentype");
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: "SourceHanSansCN-Regular-Online";
+    src: url("https://cdn.jsdelivr.net/gh/adobe-fonts/source-han-sans@release/SubsetOTF/CN/SourceHanSansCN-Regular.otf") format("opentype");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
 
-      字体文件放置说明（与本 HTML 文件同级目录）：
-        fonts/SourceHanSansCN-Bold.woff2
-        fonts/SourceHanSansCN-Regular.woff2
-    -->
-    <style>
-        /* =========================================================
-           一、字体声明（自托管，默认首选）
-           标题：SourceHanSansCN-Bold   字重 700
-           正文：SourceHanSansCN-Regular 字重 400
-           文件均为 woff2 格式，位于同级 fonts 文件夹内
-           ========================================================= */
-        @font-face {
-            font-family: "SourceHanSansCN-Bold";
-            src: url("fonts/SourceHanSansCN-Bold.woff2") format("woff2");
-            font-weight: 700;
-            font-style: normal;
-            font-display: swap;
-        }
+:root {
+    --font-regular: "SourceHanSansCN-Regular", "SourceHanSansCN-Regular-Online", sans-serif;
+    --font-bold: "SourceHanSansCN-Bold", "SourceHanSansCN-Bold-Online", sans-serif;
+}
 
-        @font-face {
-            font-family: "SourceHanSansCN-Regular";
-            src: url("fonts/SourceHanSansCN-Regular.woff2") format("woff2");
-            font-weight: 400;
-            font-style: normal;
-            font-display: swap;
-        }
+/* ============ 2. 全局重置 ============ */
+html, body {
+    margin: 0;
+    padding: 0;
+    background-color: #ffffff;
+    color: #000000;
+    font-family: var(--font-regular);
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 1.8;
+    overflow-wrap: break-word;
+    -webkit-text-size-adjust: 100%;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
 
-        /* =========================================================
-           二、在线兜底字体（同名字体，仅用于本地子集中缺失的文字）
-           说明：只有在本地字体缺少某字形的字符时，浏览器才会去下载
-           对应在线字体；命中本地子集的文字不会触发网络请求。
-           若本地字体文件整体缺失，也会自动回退到这两个在线字体。
-           ========================================================= */
-        @font-face {
-            font-family: "SourceHanSansCN-Bold-Online";
-            src: url("https://cdn.jsdelivr.net/gh/adobe-fonts/source-han-sans@release/SubsetOTF/CN/SourceHanSansCN-Bold.otf") format("opentype");
-            font-weight: 700;
-            font-style: normal;
-            font-display: swap;
-        }
+h1, .slogan, .section-title {
+    font-family: var(--font-bold);
+    font-weight: 700;
+    color: #000000;
+}
 
-        @font-face {
-            font-family: "SourceHanSansCN-Regular-Online";
-            src: url("https://cdn.jsdelivr.net/gh/adobe-fonts/source-han-sans@release/SubsetOTF/CN/SourceHanSansCN-Regular.otf") format("opentype");
-            font-weight: 400;
-            font-style: normal;
-            font-display: swap;
-        }
+.container {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 30px 20px;
+}
 
-        /* 字体族变量：本地自托管字体为首选 → 在线同名兜底 → 系统无衬线 */
-        :root {
-            --font-regular: "SourceHanSansCN-Regular", "SourceHanSansCN-Regular-Online", sans-serif;
-            --font-bold: "SourceHanSansCN-Bold", "SourceHanSansCN-Bold-Online", sans-serif;
-        }
+/* ============ 3. 头部 ============ */
+.header-title {
+    margin-bottom: 40px;
+    text-align: center;
+}
+.header-title h1 {
+    margin: 0;
+    font-size: 28px;
+    letter-spacing: 2px;
+}
+.slogan {
+    margin-bottom: 40px;
+    font-size: 20px;
+    line-height: 1.6;
+    text-align: center;
+}
 
-        /* =========================================================
-           三、基本重置与全局样式，优先适配移动端和微信浏览器
-           ========================================================= */
-        html, body {
-            background-color: #ffffff;
-            /* 正文统一使用自托管的思源黑体 Regular */
-            font-family: var(--font-regular);
-            font-weight: 400;
-            color: #000000;
-            line-height: 1.8;
-            margin: 0;
-            padding: 0;
-            font-size: 15px;
-            word-wrap: break-word;
-            overflow-wrap: break-word;
-            -webkit-text-size-adjust: 100%; /* 防止微信字体缩放 */
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
+/* ============ 4. 正文与章节 ============ */
+p {
+    margin: 0 0 20px;
+    text-align: justify;
+}
 
-        /* 标题类统一使用自托管的思源黑体 Bold */
-        h1,
-        .slogan,
-        .section-title {
-            font-family: var(--font-bold);
-            font-weight: 700;
-            color: #000000;
-        }
+.section-card {
+    margin-bottom: 30px;
+}
+.section-title {
+    display: flex;
+    align-items: center;
+    margin-bottom: 18px;
+    padding: 10px 15px;
+    font-size: 17px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03);
+}
+.section-icon {
+    display: inline-flex;
+    flex-shrink: 0;
+    justify-content: center;
+    align-items: center;
+    width: 18px;
+    height: 18px;
+    margin-right: 10px;
+    border: 2px solid #FF9800;
+    border-radius: 50%;
+    background-color: #ffffff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    color: #FF9800;
+    font-size: 13px;
+}
 
-        /* 主容器 */
-        .container {
-            width: 100%;
-            box-sizing: border-box;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 30px 20px;
-        }
+ol {
+    margin: 0 0 20px;
+    padding-left: 20px;
+}
+ol li {
+    margin-bottom: 12px;
+    text-align: justify;
+}
 
-        /* 标题区域 */
-        .header-title {
-            text-align: center;
-            margin-bottom: 40px;
-        }
+/* ============ 5. 合作流程 ============ */
+.workflow {
+    margin-bottom: 30px;
+    padding-left: 2px;
+    text-align: justify;
+}
+.workflow .workflow-overview {
+    display: block;
+    margin-bottom: 12px;
+}
+.workflow .workflow-line {
+    display: block;
+    margin-bottom: 8px;
+}
+.workflow .workflow-line:last-child {
+    margin-bottom: 0;
+}
 
-        .header-title h1 {
-            font-size: 28px;
-            font-weight: 700;
-            color: #000000;
-            margin: 0;
-            letter-spacing: 2px;
-        }
+/* ============ 6. 底部邮箱 ============ */
+.footer-email {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    margin: 45px 0 10px;
+    font-size: 14px;
+}
+.footer-email a {
+    color: #000000;
+    text-decoration: none;
+}
 
-        /* 强调标语 */
-        .slogan {
-            text-align: center;
-            font-size: 20px;
-            font-weight: 700;
-            color: #000000;
-            margin-bottom: 40px;
-            line-height: 1.6;
-        }
-
-        /* 通用段落：正文 Regular */
-        p {
-            margin-top: 0;
-            margin-bottom: 20px;
-            text-align: justify;
-            color: #000000;
-            font-weight: 400;
-        }
-
-        /* 章节卡片样式 */
-        .section-card {
-            margin-bottom: 30px;
-        }
-
-        .section-title {
-            display: flex;
-            align-items: center;
-            font-size: 17px;
-            font-weight: 700;
-            color: #000000;
-            margin-bottom: 18px;
-            padding: 10px 15px;
-            background-color: #f8f9fa;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03);
-        }
-
-        .section-icon {
-            display: inline-flex;
-            justify-content: center;
-            align-items: center;
-            width: 18px;
-            height: 18px;
-            background-color: #ffffff;
-            border: 2px solid #FF9800;
-            border-radius: 50%;
-            color: #FF9800;
-            font-size: 13px;
-            font-weight: 700;
-            margin-right: 10px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-            flex-shrink: 0;
-            /* 符号“!”沿用标题字体族 */
-            font-family: var(--font-bold);
-        }
-
-        /* 列表样式：正文 Regular */
-        ol {
-            padding-left: 20px;
-            margin-top: 0;
-            margin-bottom: 20px;
-            color: #000000;
-            font-weight: 400;
-        }
-
-        ol li {
-            margin-bottom: 12px;
-            text-align: justify;
-            color: #000000;
-        }
-
-        /* 合作流程特殊样式 */
-        .workflow {
-            margin-bottom: 30px;
-            color: #000000;
-            text-align: justify;
-            padding-left: 2px;
-            font-weight: 400;
-        }
-
-        /* 合作流程：每一行独立成行 */
-        .workflow .workflow-overview {
-            display: block;
-            margin-bottom: 12px;
-        }
-
-        .workflow .workflow-line {
-            display: block;
-            margin-bottom: 8px;
-        }
-
-        .workflow .workflow-line:last-child {
-            margin-bottom: 0;
-        }
-
-        /* 底部邮箱区域 */
-        .footer-email {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-top: 45px;
-            margin-bottom: 10px;
-            font-size: 14px;
-            font-weight: 400;
-            color: #000000;
-            gap: 2px;
-        }
-
-        /* 邮箱链接样式 */
-        .footer-email a {
-            display: inline-flex;
-            align-items: center;
-            color: #000000;
-            text-decoration: none;
-            font-size: 14px;
-            font-weight: 400;
-            font-family: var(--font-regular);
-        }
-
-        /* 适配极小屏幕的手机 */
-        @media (max-width: 480px) {
-            .container {
-                padding: 20px 15px;
-            }
-            .slogan {
-                font-size: 17px;
-            }
-            .header-title h1 {
-                font-size: 24px;
-            }
-            .section-title {
-                font-size: 16px;
-            }
-        }
-    </style>
+/* ============ 7. 小屏适配 ============ */
+@media (max-width: 480px) {
+    .container { padding: 20px 15px; }
+    .header-title h1 { font-size: 24px; }
+    .slogan { font-size: 17px; }
+    .section-title { font-size: 16px; }
+}
+</style>
 </head>
 <body>
 
@@ -320,7 +242,7 @@
         </p>
     </div>
 
-    <!-- 平台订单-->
+    <!-- 平台订单 -->
     <div class="section-card">
         <div class="section-title">
             <span class="section-icon">!</span> 平台订单
@@ -361,12 +283,11 @@
         </ol>
     </div>
 
-    <!-- 底部联系邮箱（点击邮箱地址唤起邮箱应用） -->
+    <!-- 底部联系邮箱 -->
     <div class="footer-email">
         <span>联系邮箱：</span>
         <a href="mailto:dxj@xjmep.com">dxj@xjmep.com</a>
     </div>
-
 </div>
 
 </body>

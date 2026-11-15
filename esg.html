@@ -6,14 +6,19 @@
 <title>ESG</title>
 
 <!--
-  网络补字（兜底）：
-  自托管思源黑体子集中缺少某个字形时，浏览器会按字体栈顺序
-  自动回退到下面的 Noto Sans SC（思源黑体 Google 版），
+  在线缺字兜底：保留 Noto Sans SC
+  仅当自托管思源黑体子集缺少某个字形时，浏览器才按字体栈回退到该字体，
   并且只请求缺失字符对应的 unicode-range 分片。
+  这里改为非阻塞加载（media=print + onload 切换），不阻塞首屏渲染。
 -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700&display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700&display=swap"></noscript>
+
+<!-- 自托管字体预加载：消除首屏字体延迟 -->
+<link rel="preload" href="fonts/SourceHanSansCN-Regular.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/SourceHanSansCN-Bold.woff2" as="font" type="font/woff2" crossorigin>
 
 <style>
   /* ============================================================
@@ -48,7 +53,6 @@
     --card: #ffffff;
     --green: #2f6b4f;
     --green-light: #e8f1ec;
-    --blue: #1f4e6b;
     --line: #dce4e1;
     --accent: #c4a35a;
     --radius: 10px;
@@ -58,19 +62,19 @@
     --font-regular: "SourceHanSansCN-Regular", "Noto Sans SC", sans-serif;
     --font-bold: "SourceHanSansCN-Bold", "Noto Sans SC", sans-serif;
   }
-  
-  * { 
-    margin: 0; 
-    padding: 0; 
-    box-sizing: border-box; 
-    -webkit-tap-highlight-color: transparent; 
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
   }
 
-  html { 
-    scroll-behavior: smooth; 
+  html {
+    scroll-behavior: smooth;
     overflow-x: hidden;
   }
-  
+
   body {
     font-family: var(--font-regular);
     background: var(--paper);
@@ -88,11 +92,15 @@
   strong, b {
     font-family: var(--font-bold);
   }
-  
-  .wrap { max-width: var(--max); margin:0 auto; padding:0 24px; width: 100%; }
+
+  .wrap { max-width: var(--max); margin: 0 auto; padding: 0 24px; width: 100%; }
 
   /* ===== 窄屏换行标记 ===== */
   .m-br { display: none; }
+
+  /* ===== 间距工具类（替代原行内样式） ===== */
+  .mt-18 { margin-top: 18px; }
+  .mt-44 { margin-top: 44px; }
 
   /* ===== 固定页眉 ===== */
   .site-header {
@@ -113,18 +121,17 @@
   }
 
   .header-left { max-width: 620px; }
-  
+
   .eyebrow {
     display: inline-block; font-family: var(--font-regular);
-    font-size: 14px; 
+    font-size: 14px;
     letter-spacing: 0.16em; text-transform: uppercase;
-    color: #ffffff; 
+    color: #ffffff;
     background: rgba(255, 255, 255, 0.15);
     border: 1px solid rgba(255, 255, 255, 0.3);
     padding: 6px 14px; border-radius: 100px; margin-bottom: 20px;
     font-weight: 400;
   }
-  .eyebrow .sep { display: inline; }
 
   .hero-title {
     font-family: var(--font-bold);
@@ -132,8 +139,8 @@
     line-height: 1.28; font-weight: 600;
     letter-spacing: -0.01em; margin-bottom: 14px;
   }
-  .hero-title span { 
-    color: #d9f7e8; 
+  .hero-title span {
+    color: #d9f7e8;
     text-shadow: 0 2px 4px rgba(0,0,0,0.15);
   }
   .hero-sub {
@@ -222,21 +229,18 @@
   }
   .esg-card::before {
     content: ""; position: absolute; left: 0; top: 28px; bottom: 28px;
-    width: 3px; border-radius: 3px;
+    width: 3px; border-radius: 3px; background: #1f4e6b;
   }
-  .esg-card.e::before { background: #1f4e6b; }
-  .esg-card.s::before { background: #1f4e6b; }
-  .esg-card.g::before { background: #1f4e6b; }
-  
+
   .esg-label {
     font-family: var(--font-bold);
-    font-size: 16.5px; 
-    letter-spacing: 0.08em; 
-    font-weight: 600; 
+    font-size: 16.5px;
+    letter-spacing: 0.08em;
+    font-weight: 600;
     margin-bottom: 14px;
-    color: #000000; 
+    color: #000000;
   }
-  
+
   .esg-card h3 {
     font-family: var(--font-bold);
     font-size: 20px; font-weight: 600; margin-bottom: 16px; line-height: 1.45;
@@ -564,7 +568,7 @@
     .hero-title { font-size: 22px; margin-bottom: 8px; }
     .hero-sub { font-size: 13px; }
     .eyebrow { margin-bottom: 12px; font-size: 12px; padding: 4px 10px; }
-    
+
     .header-right { display: block; }
     .tabs-container {
       display: grid;
@@ -592,10 +596,10 @@
     .sec-head { margin-bottom: 16px; }
     .sec-head h2 { font-size: 20px; }
     .lead { font-size: 15px; margin-bottom: 20px; }
-    
+
     .esg-card, .case-card, .faq-item, .policy-box { padding: 22px 18px; }
     .commit-box { padding: 24px 20px; }
-    
+
     .sub-grid { grid-template-columns: 1fr; gap: 12px; }
     .flow-cols { grid-template-columns: 1fr; gap: 16px; }
     .flow-step { padding: 22px 18px; }
@@ -604,10 +608,10 @@
     .action-index { font-size: 24px; width: 38px; }
     .action-body h3 { font-size: 15px; }
     .action-body p { font-size: 13.5px; }
-    
+
     .data-strip { grid-template-columns: 1fr 1fr; gap: 1px; }
     .data-item { padding: 16px; }
-    
+
     .map-table th, .map-table td { padding: 12px 14px; font-size: 13px; }
 
     /* 承诺区提前改单列，避免平板竖屏两列过窄导致折行位置不可控 */
@@ -690,7 +694,7 @@
 <header class="site-header">
   <div class="wrap">
     <div class="header-body">
-      
+
       <div class="header-left">
         <div class="eyebrow">
           Environmental <span class="sep">·</span><br class="m-br">
@@ -808,7 +812,7 @@
         </div>
       </div>
 
-      <p style="margin-top:18px;">把这些制度固定下来，对小微企业的意义是双重的：<strong>对内守住人的安全，对外满足供应链与项目准入的基本要求。</strong>大型建筑央企和国企的供应商履约评价中，安全绩效和环境合规正在成为与价格、质量并列的考察项。安全制度不是成本，是小微企业进入更大市场的“通行证”。</p>
+      <p class="mt-18">把这些制度固定下来，对小微企业的意义是双重的：<strong>对内守住人的安全，对外满足供应链与项目准入的基本要求。</strong>大型建筑央企和国企的供应商履约评价中，安全绩效和环境合规正在成为与价格、质量并列的考察项。安全制度不是成本，是小微企业进入更大市场的“通行证”。</p>
 
       <div class="callout"><strong>还有一层社会价值常被忽略：</strong>机电更新是技术密集型工种。变频控制、智慧调试、能效诊断这些能力，不会停留在旧设备上——让一线技术人员在真实项目中持续积累新技能，是小微企业能够提供给员工的最实在的成长路径。</div>
     </div>
@@ -836,7 +840,7 @@
         </div>
       </div>
 
-      <p style="margin-top:18px;">对小微企业的治理要求因此变得清晰而务实：<strong>不必编制一份“漂亮”的ESG报告，但需要能够向客户提供真实、可核对的数据和制度记录</strong>——用了多少能、减了多少碳、旧设备去了哪里、安全制度是否执行、用工是否合规。真实披露优先于完美披露，有据可查优先于包装叙事。这恰恰是小微企业能够做到的治理。</p>
+      <p class="mt-18">对小微企业的治理要求因此变得清晰而务实：<strong>不必编制一份“漂亮”的ESG报告，但需要能够向客户提供真实、可核对的数据和制度记录</strong>——用了多少能、减了多少碳、旧设备去了哪里、安全制度是否执行、用工是否合规。真实披露优先于完美披露，有据可查优先于包装叙事。这恰恰是小微企业能够做到的治理。</p>
 
       <div class="callout"><strong>具体做法：</strong>合同约定的能效目标与实际运行数据对标；施工过程文件与验收记录完整留存；废旧设备去向有据可查；对客户如实说明改造的预期效果与边界条件。不夸大单次改造的减碳量，但每一个给出的数字都有运行数据支撑。</div>
     </div>
@@ -926,9 +930,9 @@
     <div class="sec-head">
       <h2>用真实的改造数据说话</h2>
     </div>
-    <p class="lead" style="margin-bottom:32px;">机电更新不是只讲概念，落地效果最终要体现在电表与运行记录里。以下是在不同建筑类型中的典型实践路径。</p>
+    <p class="lead">机电更新不是只讲概念，落地效果最终要体现在电表与运行记录里。以下是在不同建筑类型中的典型实践路径。</p>
     <div class="case-grid">
-      
+
       <div class="case-card">
         <h4>某2万平方米办公大楼：<br class="m-br">中央空调系统+智慧控制改造</h4>
         <div class="case-meta">商业办公 · 综合能效提升</div>
@@ -1060,7 +1064,7 @@
 
     </div>
 
-    <div class="sec-head" style="margin-top:44px;">
+    <div class="sec-head mt-44">
       <h2>三个环节，回扣前面模块</h2>
     </div>
     <div class="table-responsive">
@@ -1166,7 +1170,7 @@
       var isSticky = window.getComputedStyle(header).position === 'sticky';
       var headerH = isSticky ? header.offsetHeight : 0;
       var top = mainEl.getBoundingClientRect().top + window.pageYOffset - headerH;
-      
+
       if (window.pageYOffset > top + 1) {
         window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
       }

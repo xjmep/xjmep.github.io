@@ -47,10 +47,8 @@
 
   /* ----- 品牌字：Rubik Medium Italic -----
      文件本身为 Medium Italic 字形。
-     为确保浏览器在 font-style:italic 请求下稳定命中，
-     这里注册 italic 描述符；同时注册 normal 描述符指向同一文件，
-     避免个别浏览器因字体内部元数据不匹配而回退。
-     两处均声明 font-weight:500。 */
+     同时注册 italic 与 normal 两个描述符指向同一文件，
+     避免个别浏览器因字体内部元数据不匹配而回退。 */
   @font-face{
     font-family:"Rubik-MediumItalic";
     src:url("./fonts/Rubik-MediumItalic.woff2") format("woff2");
@@ -253,11 +251,10 @@
     color:#ffffff;
   }
 
-  .footer-left{color:#ffffff;gap:.55em;}
+  .footer-left{gap:.55em;}
   .footer-left .latin{color:#ffffff;}
 
   .footer-center{
-    color:#ffffff;
     font-size:.82rem;
     letter-spacing:.01em;
     transition:color .2s ease;
@@ -267,13 +264,10 @@
     text-decoration:none;
   }
 
-  .footer-org{color:#ffffff;}
-
   .footer-mail{
     display:inline-flex;
     align-items:center;
     gap:0;
-    color:#ffffff;
     font-size:.82rem;
     font-family:var(--font-body);
     font-weight:var(--w-body);
@@ -967,11 +961,11 @@
       letter-spacing:0;
     }
 
-    .page-footer{font-size:.7rem;color:#ffffff;}
+    .page-footer{font-size:.7rem;}
     .page-footer-inner{gap:4px 14px;padding:8px 0;}
-    .footer-item{font-size:.7rem;color:#ffffff;}
-    .footer-center{font-size:.74rem;color:#ffffff;letter-spacing:.01em;}
-    .footer-mail{font-size:.74rem;gap:0;color:#ffffff;font-weight:var(--w-body);white-space:nowrap;}
+    .footer-item{font-size:.7rem;}
+    .footer-center{font-size:.74rem;letter-spacing:.01em;}
+    .footer-mail{font-size:.74rem;gap:0;font-weight:var(--w-body);white-space:nowrap;}
 
     .about-text p:not(.eyebrow){font-size:.94rem;}
     .lead{font-size:.96rem;}
@@ -1359,8 +1353,9 @@
 <script>
   document.getElementById('year').textContent = new Date().getFullYear();
 
+  var nav = document.getElementById('nav');
+
   function syncNavHeight(){
-    var nav = document.getElementById('nav');
     if(!nav) return;
     var h = Math.round(nav.offsetHeight);
     if(h > 0){
@@ -1368,7 +1363,6 @@
     }
   }
 
-  var nav = document.getElementById('nav');
   var onScroll = function () {
     if (window.scrollY > 8) { nav.classList.add('is-scrolled'); }
     else { nav.classList.remove('is-scrolled'); }
@@ -1400,32 +1394,6 @@
     document.querySelectorAll('.reveal').forEach(function (el) { io.observe(el); });
   } else {
     document.querySelectorAll('.reveal').forEach(function (el) { el.classList.add('in'); });
-  }
-
-  /* =========================================================
-     字体加载检测：三种自托管 woff2 是否成功加载
-     ========================================================= */
-  if (document.fonts && document.fonts.check) {
-    document.fonts.ready.then(function () {
-      var checks = [
-        { label: 'SourceHanSansCN-Bold', css: '700 16px "SourceHanSansCN-Bold"' },
-        { label: 'SourceHanSansCN-Regular', css: '400 16px "SourceHanSansCN-Regular"' },
-        { label: 'Rubik-MediumItalic', css: 'italic 500 16px "Rubik-MediumItalic"' }
-      ];
-      checks.forEach(function (item) {
-        if (!document.fonts.check(item.css)) {
-          console.warn(
-            '[字体检测] "' + item.label + '" 未成功加载。\n' +
-            '请检查：\n' +
-            '  1. 文件是否存在于 ./fonts/ 目录（注意大小写）；\n' +
-            '  2. 文件是否为有效的 woff2 字体；\n' +
-            '  3. 页面是否通过 http(s) 访问（file:// 协议可能拦截字体加载）。'
-          );
-        } else {
-          console.info('[字体检测] "' + item.label + '" 已成功加载。');
-        }
-      });
-    });
   }
 </script>
 

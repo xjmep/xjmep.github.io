@@ -4,13 +4,16 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>网站协议</title>
+
+<!-- 本地字体提前预取，让字体尽早开始下载，减少首屏字体闪烁 -->
+<link rel="preload" href="fonts/SourceHanSansCN-Regular.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/SourceHanSansCN-Bold.woff2" as="font" type="font/woff2" crossorigin>
+
 <style>
     /* ============================================================
        一、本地自托管字体（位于本页面同级 fonts 目录）
        均为 .woff2，且作为默认首选字体
        ============================================================ */
-
-    /* 思源黑体 Bold —— 标题 */
     @font-face {
         font-family: "SourceHanSansCN-Bold";
         src: url("fonts/SourceHanSansCN-Bold.woff2") format("woff2");
@@ -19,7 +22,6 @@
         font-display: swap;
     }
 
-    /* 思源黑体 Regular —— 正文、页脚 */
     @font-face {
         font-family: "SourceHanSansCN-Regular";
         src: url("fonts/SourceHanSansCN-Regular.woff2") format("woff2");
@@ -28,7 +30,6 @@
         font-display: swap;
     }
 
-    /* Rubik Medium Italic —— 页眉标识“XJ MEP” */
     @font-face {
         font-family: "Rubik-MediumItalic";
         src: url("fonts/Rubik-MediumItalic.woff2") format("woff2");
@@ -42,8 +43,6 @@
        仅当本地字体子集中缺少某个字形时，浏览器才会在字体栈中
        继续向下查找，从而“只针对缺字”按需联网取字。
        ============================================================ */
-
-    /* 思源黑体 Bold 网络版（Adobe 官方 Source Han Sans，CN 子集） */
     @font-face {
         font-family: "SourceHanSansCN-Bold-Web";
         src: url("https://cdn.jsdelivr.net/gh/adobe-fonts/source-han-sans@release/SubsetOTF/CN/SourceHanSansCN-Bold.otf") format("opentype");
@@ -52,7 +51,6 @@
         font-display: swap;
     }
 
-    /* 思源黑体 Regular 网络版 */
     @font-face {
         font-family: "SourceHanSansCN-Regular-Web";
         src: url("https://cdn.jsdelivr.net/gh/adobe-fonts/source-han-sans@release/SubsetOTF/CN/SourceHanSansCN-Regular.otf") format("opentype");
@@ -61,7 +59,6 @@
         font-display: swap;
     }
 
-    /* Rubik Medium Italic 网络版 */
     @font-face {
         font-family: "Rubik-Web";
         src: url("https://cdn.jsdelivr.net/npm/@fontsource/rubik@5.0.0/files/rubik-latin-500-italic.woff2") format("woff2");
@@ -80,13 +77,11 @@
         --paper: #fafaf7;
         --line: #dcd9d0;
 
-        /* 正文 / 页脚字体栈：本地子集 → 网络同名字体 → 通用兜底 */
+        /* 正文 / 页脚：本地子集 → 网络同名兜底 → 系统兜底 */
         --regular: "SourceHanSansCN-Regular", "SourceHanSansCN-Regular-Web", sans-serif;
-
-        /* 标题字体栈 */
+        /* 标题 */
         --bold: "SourceHanSansCN-Bold", "SourceHanSansCN-Bold-Web", sans-serif;
-
-        /* 页眉标识字体栈 */
+        /* 页眉标识 */
         --rubik: "Rubik-MediumItalic", "Rubik-Web", sans-serif;
     }
 
@@ -99,12 +94,11 @@
 
     body {
         font-family: var(--regular);
-        background: var(--paper);
-        color: var(--ink);
-        line-height: 2.05;
         font-size: 15.5px;
         font-size: clamp(14.5px, 1.6vw + 12px, 15.5px);
-        word-wrap: break-word;
+        line-height: 2.05;
+        color: var(--ink);
+        background: var(--paper);
         overflow-wrap: break-word;
         overflow-x: hidden;
         -webkit-font-smoothing: antialiased;
@@ -126,7 +120,6 @@
         justify-content: space-between;
         align-items: baseline;
         gap: 8px 16px;
-        font-family: var(--regular);
     }
 
     .top-tag {
@@ -154,10 +147,7 @@
         padding-right: max(28px, env(safe-area-inset-right));
     }
 
-    .doc-title {
-        text-align: center;
-        margin-bottom: 0;
-    }
+    .doc-title { text-align: center; }
 
     .doc-title h1 {
         font-family: var(--bold);
@@ -180,7 +170,6 @@
         margin-top: 28px;
         padding: 4px 0 4px 24px;
         border-left: 2px solid var(--ink);
-        font-family: var(--regular);
         font-size: 14px;
         font-size: clamp(13.5px, 1.4vw + 11px, 14.5px);
         line-height: 1.9;
@@ -189,10 +178,8 @@
         text-align: justify;
     }
 
-    .doc-preamble p { margin: 0; }
     .doc-preamble p + p { margin-top: 4px; }
 
-    /* 更新日期 / 生效日期 */
     .doc-preamble p.doc-dates {
         margin-top: 8px;
         font-size: 13px;
@@ -201,13 +188,9 @@
         line-height: 1.8;
     }
 
-    section.clause {
-        margin-top: 44px;
-    }
+    section.clause { margin-top: 44px; }
 
     .clause-head {
-        display: flex;
-        align-items: baseline;
         border-bottom: 1px solid var(--line);
         padding-bottom: 10px;
         margin-bottom: 18px;
@@ -224,7 +207,6 @@
     }
 
     .clause-body p {
-        font-family: var(--regular);
         font-weight: 400;
         text-align: justify;
         margin-bottom: 13px;
@@ -250,30 +232,19 @@
         display: grid;
         grid-template-columns: 1fr auto 1fr;
         align-items: center;
-        font-family: var(--regular);
         font-weight: 400;
         font-size: 13.5px;
         color: var(--ink-faint);
-        letter-spacing: 0;
         line-height: 1.9;
     }
 
-    .footer-inner .copyright { justify-self: start; letter-spacing: 0; }
-    .footer-inner .copyright .year { letter-spacing: 0; }
-    .footer-inner .site { justify-self: center; letter-spacing: 0; }
-    .footer-inner .mail { justify-self: end; letter-spacing: 0; }
+    .footer-inner .copyright { justify-self: start; }
+    .footer-inner .site { justify-self: center; }
+    .footer-inner .mail { justify-self: end; }
 
     /* 页脚链接（域名 / 邮箱）：去掉下划线，保持原色 */
     .footer-inner a.site,
     .footer-inner a.mail {
-        text-decoration: none;
-        color: inherit;
-    }
-
-    .footer-inner a.site:hover,
-    .footer-inner a.site:focus,
-    .footer-inner a.mail:hover,
-    .footer-inner a.mail:focus {
         text-decoration: none;
         color: inherit;
     }
@@ -335,14 +306,6 @@
             gap: 6px;
             justify-items: center;
             font-size: 13px;
-            letter-spacing: 0;
-        }
-
-        .footer-inner .copyright,
-        .footer-inner .site,
-        .footer-inner .mail {
-            justify-self: center;
-            letter-spacing: 0;
         }
     }
 
