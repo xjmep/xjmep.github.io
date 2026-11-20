@@ -249,6 +249,11 @@
         color: inherit;
     }
 
+    /* ============================================================
+       四、移动端（手机浏览器 / 微信内置浏览器）
+       页眉：单行显示，左右与页边距对齐
+       页脚：三行显示，整体居中
+       ============================================================ */
     @media (max-width: 600px) {
         body { line-height: 1.95; }
 
@@ -287,25 +292,59 @@
             margin-bottom: 11px;
         }
 
+        /* ---------- 页眉：强制单行，两端对齐 ---------- */
         .top-inner {
-            flex-direction: column;
-            gap: 4px;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
             padding: 14px 20px;
+            padding-left: max(20px, env(safe-area-inset-left));
+            padding-right: max(20px, env(safe-area-inset-right));
         }
 
-        .top-tag { font-size: 17px; }
+        .top-tag {
+            font-size: 17px;
+            letter-spacing: 2px;
+            white-space: nowrap;
+            flex: 0 0 auto;
+        }
 
         .top-company {
             font-size: 14px;
             letter-spacing: 2px;
+            white-space: nowrap;
+            flex: 0 0 auto;
+            text-align: right;
         }
 
+        /* ---------- 页脚：三行，逐行居中 ---------- */
         .footer-inner {
-            padding: 16px 20px;
+            display: grid;
             grid-template-columns: 1fr;
-            gap: 6px;
+            grid-auto-rows: auto;
+            gap: 4px;
             justify-items: center;
+            align-items: center;
+            text-align: center;
+            padding: 16px 20px;
+            padding-left: max(20px, env(safe-area-inset-left));
+            padding-right: max(20px, env(safe-area-inset-right));
+            padding-bottom: max(16px, env(safe-area-inset-bottom));
             font-size: 13px;
+            line-height: 1.8;
+        }
+
+        /* 覆盖桌面端的 justify-self，确保三行全部居中 */
+        .footer-inner .copyright,
+        .footer-inner .site,
+        .footer-inner .mail {
+            justify-self: center;
+            align-self: center;
+            text-align: center;
+            width: 100%;
         }
     }
 
@@ -322,6 +361,9 @@
 
         .clause-title { font-size: 16px; }
         body { font-size: 14.5px; }
+
+        .top-tag { font-size: 16px; letter-spacing: 1.5px; }
+        .top-company { font-size: 13px; letter-spacing: 1.5px; }
     }
 </style>
 </head>
