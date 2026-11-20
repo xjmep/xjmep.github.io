@@ -874,22 +874,38 @@
       letter-spacing:normal !important;
     }
 
+    /* =========================================================
+       页脚：手机浏览器 / 微信内置浏览器
+       当 © / 网址 / 邮箱 三项无法在一行内完整显示时，
+       改为纵向排列，分三行显示（电脑端不受影响）
+       ========================================================= */
     .page-footer-inner{
-      display:grid;
-      grid-template-columns:repeat(2, minmax(0, 1fr));
+      display:flex;
+      flex-direction:column;
+      flex-wrap:nowrap;
       justify-content:center;
-      justify-items:center;
       align-items:center;
-      gap:6px 22px;
-      padding:8px 0;
+      gap:4px;
+      padding:9px 0;
       text-align:center;
     }
     .footer-item{
+      display:flex;
+      width:100%;
       white-space:normal;
       text-align:center;
+      justify-content:center;
       min-width:0;
     }
-    .footer-mail{white-space:nowrap;}
+    .footer-left{
+      flex-wrap:wrap;
+      gap:0 .55em;
+    }
+    .footer-mail{
+      display:flex;
+      justify-content:center;
+      white-space:nowrap;
+    }
     .footer-center{letter-spacing:.01em;}
   }
 
@@ -961,8 +977,9 @@
       letter-spacing:0;
     }
 
+    /* 页脚：三行显示时的字号与间距 */
     .page-footer{font-size:.7rem;}
-    .page-footer-inner{gap:4px 14px;padding:8px 0;}
+    .page-footer-inner{gap:4px;padding:8px 0;}
     .footer-item{font-size:.7rem;}
     .footer-center{font-size:.74rem;letter-spacing:.01em;}
     .footer-mail{font-size:.74rem;gap:0;font-weight:var(--w-body);white-space:nowrap;}
@@ -1353,12 +1370,24 @@
   document.getElementById('year').textContent = new Date().getFullYear();
 
   var nav = document.getElementById('nav');
+  var footerInner = document.querySelector('.page-footer-inner');
 
-  function syncNavHeight(){
-    if(!nav) return;
-    var h = Math.round(nav.offsetHeight);
-    if(h > 0){
-      document.documentElement.style.setProperty('--nav-h', h + 'px');
+  /* 同步页眉 / 页脚实际高度，避免固定栏遮挡内容 */
+  function syncChromeHeight(){
+    if (nav) {
+      var nh = Math.round(nav.offsetHeight);
+      if (nh > 0) {
+        document.documentElement.style.setProperty('--nav-h', nh + 'px');
+      }
+    }
+    if (footerInner) {
+      /* 先解除 min-height 限制，测得内容真实高度后再恢复 */
+      footerInner.style.minHeight = '0px';
+      var fh = Math.round(footerInner.offsetHeight);
+      footerInner.style.minHeight = '';
+      if (fh > 0) {
+        document.documentElement.style.setProperty('--footer-h', fh + 'px');
+      }
     }
   }
 
@@ -1369,15 +1398,15 @@
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
 
-  syncNavHeight();
-  window.addEventListener('load', syncNavHeight);
-  window.addEventListener('resize', syncNavHeight, { passive: true });
+  syncChromeHeight();
+  window.addEventListener('load', syncChromeHeight);
+  window.addEventListener('resize', syncChromeHeight, { passive: true });
   window.addEventListener('orientationchange', function(){
-    setTimeout(syncNavHeight, 120);
+    setTimeout(syncChromeHeight, 120);
   });
 
   if (document.fonts && document.fonts.ready) {
-    document.fonts.ready.then(syncNavHeight);
+    document.fonts.ready.then(syncChromeHeight);
   }
 
   if ('IntersectionObserver' in window) {
