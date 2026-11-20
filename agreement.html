@@ -118,25 +118,31 @@
         padding-right: max(28px, env(safe-area-inset-right));
         display: flex;
         justify-content: space-between;
-        align-items: baseline;
+        align-items: center;
         gap: 8px 16px;
+    }
+
+    /* ---------- 页眉两段文字：统一字号、行高，视觉高度一致 ---------- */
+    .top-tag,
+    .top-company {
+        font-size: 16px;
+        line-height: 1.2;
+        letter-spacing: 2px;
+        white-space: nowrap;
     }
 
     .top-tag {
         font-family: var(--rubik);
         font-style: italic;
         font-weight: 500;
-        font-size: 18px;
-        letter-spacing: 2px;
         color: var(--ink-faint);
     }
 
     .top-company {
         font-family: var(--bold);
         font-weight: 700;
-        font-size: 15px;
-        letter-spacing: 3px;
         color: var(--ink);
+        text-align: right;
     }
 
     .doc {
@@ -251,7 +257,7 @@
 
     /* ============================================================
        四、移动端（手机浏览器 / 微信内置浏览器）
-       页眉：单行显示，左右与页边距对齐
+       页眉：单行显示，左右与页边距对齐，两段文字高度大小一致
        页脚：三行显示，整体居中
        ============================================================ */
     @media (max-width: 600px) {
@@ -292,7 +298,7 @@
             margin-bottom: 11px;
         }
 
-        /* ---------- 页眉：强制单行，两端对齐 ---------- */
+        /* ---------- 页眉：强制单行，两端对齐，字号统一 ---------- */
         .top-inner {
             display: flex;
             flex-direction: row;
@@ -305,19 +311,13 @@
             padding-right: max(20px, env(safe-area-inset-right));
         }
 
-        .top-tag {
-            font-size: 17px;
-            letter-spacing: 2px;
-            white-space: nowrap;
-            flex: 0 0 auto;
-        }
-
+        .top-tag,
         .top-company {
-            font-size: 14px;
+            font-size: 15px;
+            line-height: 1.2;
             letter-spacing: 2px;
             white-space: nowrap;
             flex: 0 0 auto;
-            text-align: right;
         }
 
         /* ---------- 页脚：三行，逐行居中 ---------- */
@@ -362,8 +362,11 @@
         .clause-title { font-size: 16px; }
         body { font-size: 14.5px; }
 
-        .top-tag { font-size: 16px; letter-spacing: 1.5px; }
-        .top-company { font-size: 13px; letter-spacing: 1.5px; }
+        .top-tag,
+        .top-company {
+            font-size: 14px;
+            letter-spacing: 1.5px;
+        }
     }
 </style>
 </head>
